@@ -789,7 +789,6 @@ components:
               example: credit
             billing_address:
               description: The credit card's billing address
-              writeOnly: true
               $ref: '#/components/schemas/address-reference'
             billing_address_id:
               description: The ID of credit card's billing address
