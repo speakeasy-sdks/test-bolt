@@ -791,11 +791,10 @@ components:
               description: The credit card's billing address
               writeOnly: true
               $ref: '#/components/schemas/address-reference'
-            billing_address_id:
-              description: The ID of credit card's billing address
-              deprecated: true
-              type: string
-              example: D4g3h5tBuVYK9
+            # billing_address_id:
+            #   description: The ID of credit card's billing address
+            #   type: string
+            #   example: D4g3h5tBuVYK9
         - $ref: '#/components/schemas/credit-card'
     payment-method:
       oneOf:
