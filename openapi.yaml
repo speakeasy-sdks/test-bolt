@@ -779,7 +779,6 @@ components:
               example: credit_card
             id:
               type: string
-              readOnly: true
               example: X5h6j8uLpVGK0
             type:
               type: string
