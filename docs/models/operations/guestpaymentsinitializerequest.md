@@ -1,0 +1,9 @@
+# GuestPaymentsInitializeRequest
+
+
+## Fields
+
+| Field                                                                                                    | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
+| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `XPublishableKey`                                                                                        | *string*                                                                                                 | :heavy_check_mark:                                                                                       | The publicly viewable identifier used to identify a merchant division.                                   |
+| `GuestPaymentMethodInitializeRequest`                                                                    | [shared.GuestPaymentMethodInitializeRequest](../../models/shared/guestpaymentmethodinitializerequest.md) | :heavy_check_mark:                                                                                       | N/A                                                                                                      |
