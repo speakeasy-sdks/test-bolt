@@ -685,7 +685,7 @@ components:
             is_default:
               type: boolean
               example: true
-    address-reference-id:
+    address-reference-identifier:
       type: object
       required:
         - .tag
@@ -716,12 +716,12 @@ components:
         - $ref: '#/components/schemas/address'
     address-reference:
       oneOf:
-        - $ref: '#/components/schemas/address-reference-id'
+        - $ref: '#/components/schemas/address-reference-identifier'
         - $ref: '#/components/schemas/address-reference-explicit'
       discriminator:
         propertyName: .tag
         mapping:
-          id: '#/components/schemas/address-reference-id'
+          id: '#/components/schemas/address-reference-identifier'
           explicit: '#/components/schemas/address-reference-explicit'
     credit-card:
       required:
