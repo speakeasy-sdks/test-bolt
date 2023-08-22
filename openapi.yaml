@@ -779,7 +779,6 @@ components:
               example: credit_card
             id:
               type: string
-              readOnly: true
               example: X5h6j8uLpVGK0
             type:
               type: string
@@ -795,7 +794,6 @@ components:
             billing_address_id:
               description: The ID of credit card's billing address
               type: string
-              readOnly: true
               example: D4g3h5tBuVYK9
         - $ref: '#/components/schemas/credit-card'
     payment-method:
