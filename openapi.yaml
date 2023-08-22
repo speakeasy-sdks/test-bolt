@@ -685,7 +685,7 @@ components:
             is_default:
               type: boolean
               example: true
-    address-reference-identifier:
+    address-reference-id:
       type: object
       required:
         - .tag
@@ -716,12 +716,12 @@ components:
         - $ref: '#/components/schemas/address'
     address-reference:
       oneOf:
-        - $ref: '#/components/schemas/address-reference-identifier'
+        - $ref: '#/components/schemas/address-reference-id'
         - $ref: '#/components/schemas/address-reference-explicit'
       discriminator:
         propertyName: .tag
         mapping:
-          id: '#/components/schemas/address-reference-identifier'
+          id: '#/components/schemas/address-reference-id'
           explicit: '#/components/schemas/address-reference-explicit'
     credit-card:
       required:
@@ -779,6 +779,7 @@ components:
               example: credit_card
             id:
               type: string
+              readOnly: true
               example: X5h6j8uLpVGK0
             type:
               type: string
@@ -789,10 +790,13 @@ components:
               example: credit
             billing_address:
               description: The credit card's billing address
+              writeOnly: true
               $ref: '#/components/schemas/address-reference'
             billing_address_id:
               description: The ID of credit card's billing address
+              deprecated: true
               type: string
+              readOnly: true
               example: D4g3h5tBuVYK9
         - $ref: '#/components/schemas/credit-card'
     payment-method:
