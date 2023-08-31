@@ -4,14 +4,12 @@ package sdkerrors
 
 import (
 	"encoding/json"
-	"net/http"
 )
 
 // Error - The specified resource was not found
 type Error struct {
 	// The type of error returned
-	DotTag      string         `json:".tag"`
-	RawResponse *http.Response `json:"-"`
+	DotTag string `json:".tag"`
 	// A human-readable error message, which might include information specific to
 	// the request that was made.
 	//
