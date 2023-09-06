@@ -26,9 +26,9 @@ import(
 	"context"
 	"log"
 	"github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/types"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 )
 
 func main() {
@@ -134,9 +134,9 @@ import(
 	"context"
 	"log"
 	"github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/types"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 )
 
 func main() {
@@ -150,15 +150,6 @@ func main() {
         DeliveryDate: types.MustTimeFromString("2014-08-23:T06:00:00Z"),
         Status: shared.ShipmentTrackingUpdateStatusInTransit,
         TrackingDetails: []shared.ShipmentTrackingUpdateTrackingDetails{
-            shared.ShipmentTrackingUpdateTrackingDetails{
-                CountryCode: testbolt.String("US"),
-                EventDate: testbolt.String("2014-08-21:T14:24:00Z"),
-                Locality: testbolt.String("San Francisco"),
-                Message: testbolt.String("Billing information received"),
-                PostalCode: testbolt.String("94105"),
-                Region: testbolt.String("CA"),
-                Status: shared.ShipmentTrackingUpdateTrackingDetailsStatusPreTransit.ToPointer(),
-            },
             shared.ShipmentTrackingUpdateTrackingDetails{
                 CountryCode: testbolt.String("US"),
                 EventDate: testbolt.String("2014-08-21:T14:24:00Z"),

@@ -56,36 +56,9 @@ func main() {
                         Code: testbolt.String("SUMMER10DISCOUNT"),
                         DetailsURL: testbolt.String("https://www.example.com/SUMMER-SALE"),
                     },
-                    shared.CartDiscount{
-                        Amounts: shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                        Code: testbolt.String("SUMMER10DISCOUNT"),
-                        DetailsURL: testbolt.String("https://www.example.com/SUMMER-SALE"),
-                    },
-                    shared.CartDiscount{
-                        Amounts: shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                        Code: testbolt.String("SUMMER10DISCOUNT"),
-                        DetailsURL: testbolt.String("https://www.example.com/SUMMER-SALE"),
-                    },
                 },
                 DisplayID: testbolt.String("215614191"),
                 Items: []shared.CartItem{
-                    shared.CartItem{
-                        Description: testbolt.String("Large tote with Bolt logo."),
-                        ImageURL: testbolt.String("https://www.example.com/products/123456/images/1.png"),
-                        Name: "Bolt Swag Bag",
-                        Quantity: 1,
-                        Reference: "item_100",
-                        TotalAmount: 1000,
-                        UnitPrice: 1000,
-                    },
                     shared.CartItem{
                         Description: testbolt.String("Large tote with Bolt logo."),
                         ImageURL: testbolt.String("https://www.example.com/products/123456/images/1.png"),
@@ -99,15 +72,6 @@ func main() {
                 OrderDescription: testbolt.String("Order #1234567890"),
                 OrderReference: "order_100",
                 Shipments: []shared.CartShipment{
-                    shared.CartShipment{
-                        Address: &shared.AddressReference{},
-                        Carrier: testbolt.String("FedEx"),
-                        Cost: &shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                    },
                     shared.CartShipment{
                         Address: &shared.AddressReference{},
                         Carrier: testbolt.String("FedEx"),
@@ -174,7 +138,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Payments.PaymentsInitialize(ctx, operations.PaymentsInitializeRequest{
-        XPublishableKey: "magnam",
+        XPublishableKey: "deserunt",
         PaymentMethodInitializeRequest: shared.PaymentMethodInitializeRequest{
             Cart: shared.Cart{
                 Amounts: shared.Amounts{
@@ -183,33 +147,6 @@ func main() {
                     Total: 900,
                 },
                 Discounts: []shared.CartDiscount{
-                    shared.CartDiscount{
-                        Amounts: shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                        Code: testbolt.String("SUMMER10DISCOUNT"),
-                        DetailsURL: testbolt.String("https://www.example.com/SUMMER-SALE"),
-                    },
-                    shared.CartDiscount{
-                        Amounts: shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                        Code: testbolt.String("SUMMER10DISCOUNT"),
-                        DetailsURL: testbolt.String("https://www.example.com/SUMMER-SALE"),
-                    },
-                    shared.CartDiscount{
-                        Amounts: shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                        Code: testbolt.String("SUMMER10DISCOUNT"),
-                        DetailsURL: testbolt.String("https://www.example.com/SUMMER-SALE"),
-                    },
                     shared.CartDiscount{
                         Amounts: shared.Amounts{
                             Currency: "USD",
@@ -235,33 +172,6 @@ func main() {
                 OrderDescription: testbolt.String("Order #1234567890"),
                 OrderReference: "order_100",
                 Shipments: []shared.CartShipment{
-                    shared.CartShipment{
-                        Address: &shared.AddressReference{},
-                        Carrier: testbolt.String("FedEx"),
-                        Cost: &shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                    },
-                    shared.CartShipment{
-                        Address: &shared.AddressReference{},
-                        Carrier: testbolt.String("FedEx"),
-                        Cost: &shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                    },
-                    shared.CartShipment{
-                        Address: &shared.AddressReference{},
-                        Carrier: testbolt.String("FedEx"),
-                        Cost: &shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                    },
                     shared.CartShipment{
                         Address: &shared.AddressReference{},
                         Carrier: testbolt.String("FedEx"),

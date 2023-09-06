@@ -27,8 +27,8 @@ import(
 	"context"
 	"log"
 	"github.com/speakeasy-sdks/test-bolt"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/callbacks"
 	"net/http"
 )
