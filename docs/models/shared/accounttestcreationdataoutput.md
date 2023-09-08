@@ -1,7 +1,5 @@
 # AccountTestCreationDataOutput
 
-The account was successfully created
-
 
 ## Fields
 

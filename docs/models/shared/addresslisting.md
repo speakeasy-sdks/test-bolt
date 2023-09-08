@@ -1,7 +1,5 @@
 # AddressListing
 
-The address was successfully added
-
 
 ## Fields
 

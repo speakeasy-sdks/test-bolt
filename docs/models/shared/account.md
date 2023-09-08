@@ -1,7 +1,5 @@
 # Account
 
-The account details were successfully retrieved
-
 
 ## Fields
 

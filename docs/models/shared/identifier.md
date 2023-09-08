@@ -1,9 +1,5 @@
 # Identifier
 
-A type and value combination that defines the identifier used to detect
-the existence of an account.
-
-
 
 ## Fields
 

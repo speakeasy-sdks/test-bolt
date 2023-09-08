@@ -50,6 +50,7 @@ type sdkConfiguration struct {
 	OpenAPIDocVersion string
 	SDKVersion        string
 	GenVersion        string
+	RetryConfig       *utils.RetryConfig
 }
 
 func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
@@ -62,24 +63,25 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // TestBolt - Bolt API Reference: A comprehensive Bolt API reference for interacting with Transactions, Orders, Product Catalog, Configuration, Testing, and much more.
 type TestBolt struct {
-	// Account - Account endpoints allow you to view and manage shoppers' accounts. For example,
+	// Account endpoints allow you to view and manage shoppers' accounts. For example,
 	// you can add or remove addresses and payment information.
 	//
 	Account *account
-	// Configuration - Merchant configuration endpoints allow you to retrieve and configure merchant-level
+	// Merchant configuration endpoints allow you to retrieve and configure merchant-level
 	// configuration, such as callback URLs, identifiers, secrets, etc...
 	//
 	Configuration *configuration
-	// Payments - Use the Payments API to tokenize and process alternative payment methods including Paypal with Bolt. This API is for the Bolt
+	// Use the Payments API to tokenize and process alternative payment methods including Paypal with Bolt. This API is for the Bolt
 	// Accounts package.
 	//
 	Payments *payments
-	// Testing - Endpoints that allow you to generate and retrieve test data to verify certain
+	// Endpoints that allow you to generate and retrieve test data to verify certain
 	// flows in non-production environments.
 	//
 	Testing *testing
-	// Webhooks - Set up webhooks to notify your backend of events within Bolt. These webhooks
+	// Set up webhooks to notify your backend of events within Bolt. These webhooks
 	// can communicate with your OMS or other systems to keep them up to date with Bolt.
+	//
 	//
 	// https://help.bolt.com/get-started/during-checkout/webhooks/
 	Webhooks *webhooks
@@ -148,7 +150,7 @@ func (e *ServerEnvironment) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// WithEnvironment allows setting the $name variable for url substitution
+// WithEnvironment allows setting the environment variable for url substitution
 func WithEnvironment(environment ServerEnvironment) SDKOption {
 	return func(sdk *TestBolt) {
 		for idx := range sdk.sdkConfiguration.ServerDefaults {
@@ -161,7 +163,7 @@ func WithEnvironment(environment ServerEnvironment) SDKOption {
 	}
 }
 
-// WithUsername allows setting the $name variable for url substitution
+// WithUsername allows setting the username variable for url substitution
 func WithUsername(username string) SDKOption {
 	return func(sdk *TestBolt) {
 		for idx := range sdk.sdkConfiguration.ServerDefaults {
@@ -181,14 +183,20 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
+func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
+	return func(sdk *SDK) {
+		sdk.sdkConfiguration.RetryConfig = &retryConfig
+	}
+}
+
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *TestBolt {
 	sdk := &TestBolt{
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "3.0.1",
-			SDKVersion:        "0.3.0",
-			GenVersion:        "2.96.9",
+			SDKVersion:        "0.4.0",
+			GenVersion:        "2.107.0",
 			ServerDefaults: []map[string]string{
 				{
 					"username": "BL_DOMAIN",

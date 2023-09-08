@@ -111,7 +111,6 @@ func (o *AccountTestCreationDataInput) GetPhoneState() AccountTestCreationDataPh
 	return o.PhoneState
 }
 
-// AccountTestCreationDataOutput - The account was successfully created
 type AccountTestCreationDataOutput struct {
 	DeactivateAt time.Time                         `json:"deactivate_at"`
 	Email        string                            `json:"email"`

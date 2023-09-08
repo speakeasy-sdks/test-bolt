@@ -2,7 +2,6 @@
 
 package shared
 
-// Account - The account details were successfully retrieved
 type Account struct {
 	Addresses      []AddressListing `json:"addresses"`
 	PaymentMethods []PaymentMethod  `json:"payment_methods"`

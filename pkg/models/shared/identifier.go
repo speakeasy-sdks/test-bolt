@@ -35,8 +35,6 @@ func (e *IdentifierIdentifierType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Identifier - A type and value combination that defines the identifier used to detect
-// the existence of an account.
 type Identifier struct {
 	// The type of identifier
 	IdentifierType IdentifierIdentifierType `queryParam:"name=identifier_type"`

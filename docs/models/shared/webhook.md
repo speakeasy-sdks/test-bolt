@@ -1,7 +1,5 @@
 # Webhook
 
-The webhook was successfully created
-
 
 ## Fields
 

@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-// configuration - Merchant configuration endpoints allow you to retrieve and configure merchant-level
+// Merchant configuration endpoints allow you to retrieve and configure merchant-level
 // configuration, such as callback URLs, identifiers, secrets, etc...
 type configuration struct {
 	sdkConfiguration sdkConfiguration

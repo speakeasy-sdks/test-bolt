@@ -2,7 +2,6 @@
 
 package shared
 
-// CallbackUrls - Callbacks URLs were successfully retrieved
 type CallbackUrls struct {
 	AccountPage                   *string `json:"account_page,omitempty"`
 	BaseDomain                    *string `json:"base_domain,omitempty"`

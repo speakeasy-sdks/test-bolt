@@ -96,7 +96,6 @@ func (u WebhookEvent) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// Webhook - The webhook was successfully created
 type Webhook struct {
 	// The time at which the webhook was created
 	CreatedAt *time.Time   `json:"created_at,omitempty"`
