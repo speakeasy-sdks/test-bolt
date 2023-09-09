@@ -1,7 +1,5 @@
 # PaymentMethodInitializeResponse
 
-Payment token retrieved
-
 
 ## Fields
 

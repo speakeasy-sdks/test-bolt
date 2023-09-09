@@ -1,7 +1,5 @@
 # CallbackUrls
 
-Callbacks URLs were successfully retrieved
-
 
 ## Fields
 

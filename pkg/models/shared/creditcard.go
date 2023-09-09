@@ -53,7 +53,6 @@ func (e *CreditCardNetwork) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// CreditCard - Successfully generated test credit card details
 type CreditCard struct {
 	// The Bank Identification Number for the credit card. This is typically the first 4-6 digits of the credit card number.
 	Bin string `json:"bin"`

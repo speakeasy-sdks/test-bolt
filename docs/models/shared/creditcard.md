@@ -1,7 +1,5 @@
 # CreditCard
 
-Successfully generated test credit card details
-
 
 ## Fields
 

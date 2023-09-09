@@ -2,7 +2,6 @@
 
 package shared
 
-// AddressListing - The address was successfully added
 type AddressListing struct {
 	Company        *string `json:"company,omitempty"`
 	CountryCode    string  `json:"country_code"`

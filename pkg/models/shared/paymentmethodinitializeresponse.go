@@ -121,7 +121,6 @@ func (e *PaymentMethodInitializeResponseStatus) UnmarshalJSON(data []byte) error
 	}
 }
 
-// PaymentMethodInitializeResponse - Payment token retrieved
 type PaymentMethodInitializeResponse struct {
 	Action *PaymentMethodInitializeResponseAction `json:"action,omitempty"`
 	ID     *string                                `json:"id,omitempty"`

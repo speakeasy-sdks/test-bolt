@@ -1,7 +1,5 @@
 # Identifiers
 
-Identifiers were successfully retrieved
-
 
 ## Fields
 
