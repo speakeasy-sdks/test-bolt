@@ -3,9 +3,9 @@
 package shared
 
 type Account struct {
-	Addresses      []AddressListing `json:"addresses"`
-	PaymentMethods []PaymentMethod  `json:"payment_methods"`
-	Profile        *Profile         `json:"profile,omitempty"`
+	Addresses      []AddressListing          `json:"addresses"`
+	PaymentMethods []PaymentMethodCreditCard `json:"payment_methods"`
+	Profile        *Profile                  `json:"profile,omitempty"`
 }
 
 func (o *Account) GetAddresses() []AddressListing {
@@ -15,9 +15,9 @@ func (o *Account) GetAddresses() []AddressListing {
 	return o.Addresses
 }
 
-func (o *Account) GetPaymentMethods() []PaymentMethod {
+func (o *Account) GetPaymentMethods() []PaymentMethodCreditCard {
 	if o == nil {
-		return []PaymentMethod{}
+		return []PaymentMethodCreditCard{}
 	}
 	return o.PaymentMethods
 }

@@ -38,7 +38,6 @@ pkg/models/operations/webhookscreate.go
 pkg/models/operations/webhooksdelete.go
 pkg/models/operations/webhooksget.go
 pkg/models/operations/webhooksgetall.go
-pkg/models/shared/paymentmethod.go
 pkg/models/shared/paymentmethodcreditcard.go
 pkg/models/shared/addressreference.go
 pkg/models/shared/addressreferenceid.go
@@ -71,7 +70,7 @@ pkg/models/shared/eventlist.go
 pkg/models/sdkerrors/accountaddresscreate.go
 pkg/models/sdkerrors/error.go
 pkg/models/sdkerrors/accountaddressedit.go
-pkg/models/sdkerrors/merchantcallbacksupdate.go
+pkg/models/sdkerrors/callbackurlerrorinvalidurl.go
 pkg/models/callbacks/webhookscreate.go
 docs/sdks/testbolt/README.md
 docs/sdks/account/README.md
@@ -129,7 +128,6 @@ docs/models/operations/webhooksgetallsecurity.md
 docs/models/operations/webhooksgetallrequest.md
 docs/models/operations/webhooksgetall200applicationjson.md
 docs/models/operations/webhooksgetallresponse.md
-docs/models/shared/paymentmethod.md
 docs/models/shared/paymentmethodcreditcardtag.md
 docs/models/shared/paymentmethodcreditcardnetwork.md
 docs/models/shared/paymentmethodcreditcardtype.md
@@ -150,7 +148,6 @@ docs/models/shared/account.md
 docs/models/shared/profile.md
 docs/models/shared/callbackurls.md
 docs/models/shared/callbackurlerrorinvalidurltag.md
-docs/models/shared/callbackurlerrorinvalidurl.md
 docs/models/shared/identifiersmerchantdivisions.md
 docs/models/shared/identifiers.md
 docs/models/shared/paymentmethodinitializeresponseactionmethod.md
@@ -158,7 +155,6 @@ docs/models/shared/paymentmethodinitializeresponseactiontype.md
 docs/models/shared/paymentmethodinitializeresponseaction.md
 docs/models/shared/paymentmethodinitializeresponsestatus.md
 docs/models/shared/paymentmethodinitializeresponse.md
-docs/models/shared/guestpaymentmethodinitializerequestpaymentmethod.md
 docs/models/shared/guestpaymentmethodinitializerequest.md
 docs/models/shared/paymentmethodpaypaltag.md
 docs/models/shared/paymentmethodpaypal.md
@@ -167,7 +163,6 @@ docs/models/shared/cartshipment.md
 docs/models/shared/amounts.md
 docs/models/shared/cartitem.md
 docs/models/shared/cartdiscount.md
-docs/models/shared/paymentmethodinitializerequestpaymentmethod.md
 docs/models/shared/paymentmethodinitializerequest.md
 docs/models/shared/paymentmethodsavedpaymentmethodtag.md
 docs/models/shared/paymentmethodsavedpaymentmethod.md
@@ -193,7 +188,7 @@ docs/models/shared/eventlist.md
 docs/models/errors/accountaddresscreate400applicationjson.md
 docs/models/errors/error.md
 docs/models/errors/accountaddressedit400applicationjson.md
-docs/models/errors/merchantcallbacksupdate400applicationjson.md
+docs/models/errors/callbackurlerrorinvalidurl.md
 docs/models/callbacks/webhookscreatewebhookeventresponse.md
 docs/models/callbacks/webhookscreatewebhookeventrequestbody.md
 .gitattributes

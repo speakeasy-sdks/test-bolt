@@ -93,7 +93,8 @@ func (u WebhookEvent) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.EventList)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
+
 }
 
 type Webhook struct {

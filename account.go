@@ -36,7 +36,7 @@ func (s *account) AccountAddPaymentMethod(ctx context.Context, request operation
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/account/payment-methods"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "PaymentMethod", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "PaymentMethodCreditCard", "json")
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -83,12 +83,12 @@ func (s *account) AccountAddPaymentMethod(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.PaymentMethod
+			var out *shared.PaymentMethodCreditCard
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
-			res.PaymentMethod = out
+			res.PaymentMethodCreditCard = out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

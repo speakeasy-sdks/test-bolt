@@ -83,7 +83,11 @@ func main() {
                     },
                 },
             },
-            PaymentMethod: shared.GuestPaymentMethodInitializeRequestPaymentMethod{},
+            PaymentMethod: shared.PaymentMethodPaypal{
+                DotTag: shared.PaymentMethodPaypalTagPaypal,
+                Cancel: "www.example.com/handle_paypal_cancel",
+                Success: "www.example.com/handle_paypal_success",
+            },
         },
     }, operationSecurity)
     if err != nil {
@@ -183,7 +187,10 @@ func main() {
                     },
                 },
             },
-            PaymentMethod: shared.PaymentMethodInitializeRequestPaymentMethod{},
+            PaymentMethod: shared.PaymentMethodSavedPaymentMethod{
+                DotTag: shared.PaymentMethodSavedPaymentMethodTagSavedPaymentMethod,
+                ID: "id",
+            },
         },
     }, operationSecurity)
     if err != nil {

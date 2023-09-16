@@ -195,8 +195,8 @@ func New(opts ...SDKOption) *TestBolt {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "3.0.1",
-			SDKVersion:        "0.4.0",
-			GenVersion:        "2.107.3",
+			SDKVersion:        "0.5.0",
+			GenVersion:        "2.115.2",
 			ServerDefaults: []map[string]string{
 				{
 					"username": "BL_DOMAIN",

@@ -28,8 +28,8 @@ func (o *AccountAddPaymentMethodSecurity) GetOauth() string {
 
 type AccountAddPaymentMethodRequest struct {
 	// The publicly viewable identifier used to identify a merchant division.
-	XPublishableKey string               `header:"style=simple,explode=false,name=X-Publishable-Key"`
-	PaymentMethod   shared.PaymentMethod `request:"mediaType=application/json"`
+	XPublishableKey         string                         `header:"style=simple,explode=false,name=X-Publishable-Key"`
+	PaymentMethodCreditCard shared.PaymentMethodCreditCard `request:"mediaType=application/json"`
 }
 
 func (o *AccountAddPaymentMethodRequest) GetXPublishableKey() string {
@@ -39,15 +39,11 @@ func (o *AccountAddPaymentMethodRequest) GetXPublishableKey() string {
 	return o.XPublishableKey
 }
 
-func (o *AccountAddPaymentMethodRequest) GetPaymentMethod() shared.PaymentMethod {
+func (o *AccountAddPaymentMethodRequest) GetPaymentMethodCreditCard() shared.PaymentMethodCreditCard {
 	if o == nil {
-		return shared.PaymentMethod{}
+		return shared.PaymentMethodCreditCard{}
 	}
-	return o.PaymentMethod
-}
-
-func (o *AccountAddPaymentMethodRequest) GetPaymentMethodCreditCard() *shared.PaymentMethodCreditCard {
-	return o.GetPaymentMethod().PaymentMethodCreditCard
+	return o.PaymentMethodCreditCard
 }
 
 type AccountAddPaymentMethodResponse struct {
@@ -55,7 +51,7 @@ type AccountAddPaymentMethodResponse struct {
 	StatusCode  int
 	RawResponse *http.Response
 	// The payment method was successfully added
-	PaymentMethod *shared.PaymentMethod
+	PaymentMethodCreditCard *shared.PaymentMethodCreditCard
 }
 
 func (o *AccountAddPaymentMethodResponse) GetContentType() string {
@@ -79,16 +75,9 @@ func (o *AccountAddPaymentMethodResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *AccountAddPaymentMethodResponse) GetPaymentMethod() *shared.PaymentMethod {
+func (o *AccountAddPaymentMethodResponse) GetPaymentMethodCreditCard() *shared.PaymentMethodCreditCard {
 	if o == nil {
 		return nil
 	}
-	return o.PaymentMethod
-}
-
-func (o *AccountAddPaymentMethodResponse) GetPaymentMethodCreditCard() *shared.PaymentMethodCreditCard {
-	if v := o.GetPaymentMethod(); v != nil {
-		return v.PaymentMethodCreditCard
-	}
-	return nil
+	return o.PaymentMethodCreditCard
 }

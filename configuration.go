@@ -153,12 +153,10 @@ func (s *configuration) MerchantCallbacksUpdate(ctx context.Context, request ope
 	case httpRes.StatusCode == 400:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *sdkerrors.MerchantCallbacksUpdate400ApplicationJSON
+			var out *sdkerrors.CallbackURLErrorInvalidURL
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
-			out.RawResponse = httpRes
-
 			return nil, out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)

@@ -92,5 +92,6 @@ func (u AddressReference) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.AddressReferenceExplicit)
 	}
 
-	return nil, nil
+	return nil, errors.New("could not marshal union type: all fields are null")
+
 }
