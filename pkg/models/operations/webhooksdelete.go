@@ -6,17 +6,6 @@ import (
 	"net/http"
 )
 
-type WebhooksDeleteSecurity struct {
-	APIKey string `security:"scheme,type=apiKey,subtype=header,name=X-API-Key"`
-}
-
-func (o *WebhooksDeleteSecurity) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type WebhooksDeleteRequest struct {
 	// The ID of the webhook to delete
 	ID string `pathParam:"style=simple,explode=false,name=id"`

@@ -36,7 +36,7 @@ func (s *account) AccountAddPaymentMethod(ctx context.Context, request operation
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/account/payment-methods"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "PaymentMethodCreditCard", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "PaymentMethodCreditCard", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -83,12 +83,12 @@ func (s *account) AccountAddPaymentMethod(ctx context.Context, request operation
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.PaymentMethodCreditCard
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.PaymentMethodCreditCard
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.PaymentMethodCreditCard = out
+			res.PaymentMethodCreditCard = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -107,7 +107,7 @@ func (s *account) AccountAddressCreate(ctx context.Context, request operations.A
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/account/addresses"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "AddressListing", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "AddressListing", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -154,25 +154,25 @@ func (s *account) AccountAddressCreate(ctx context.Context, request operations.A
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.AddressListing
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.AddressListing
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.AddressListing = out
+			res.AddressListing = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 400:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *sdkerrors.AccountAddressCreate400ApplicationJSON
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out sdkerrors.AccountAddressCreate400ApplicationJSON
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 			out.RawResponse = httpRes
 
-			return nil, out
+			return nil, &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -188,7 +188,7 @@ func (s *account) AccountAddressCreate(ctx context.Context, request operations.A
 // AccountAddressDelete - Delete an existing address
 // Delete an existing address. Deleting an address does not invalidate transactions or
 // shipments that are associated with it.
-func (s *account) AccountAddressDelete(ctx context.Context, request operations.AccountAddressDeleteRequest, security operations.AccountAddressDeleteSecurity) (*operations.AccountAddressDeleteResponse, error) {
+func (s *account) AccountAddressDelete(ctx context.Context, request operations.AccountAddressDeleteRequest) (*operations.AccountAddressDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/account/addresses/{id}", request, nil)
 	if err != nil {
@@ -204,7 +204,7 @@ func (s *account) AccountAddressDelete(ctx context.Context, request operations.A
 
 	utils.PopulateHeaders(ctx, req, request)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -233,11 +233,11 @@ func (s *account) AccountAddressDelete(ctx context.Context, request operations.A
 	case httpRes.StatusCode == 422:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *sdkerrors.Error
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out sdkerrors.Error
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
-			return nil, out
+			return nil, &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -261,7 +261,7 @@ func (s *account) AccountAddressEdit(ctx context.Context, request operations.Acc
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "AddressListing", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "AddressListing", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -308,25 +308,25 @@ func (s *account) AccountAddressEdit(ctx context.Context, request operations.Acc
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.AddressListing
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.AddressListing
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.AddressListing = out
+			res.AddressListing = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 400:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *sdkerrors.AccountAddressEdit400ApplicationJSON
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out sdkerrors.AccountAddressEdit400ApplicationJSON
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 			out.RawResponse = httpRes
 
-			return nil, out
+			return nil, &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -358,7 +358,7 @@ func (s *account) AccountExists(ctx context.Context, request operations.AccountE
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -387,11 +387,11 @@ func (s *account) AccountExists(ctx context.Context, request operations.AccountE
 	case httpRes.StatusCode == 422:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *sdkerrors.Error
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out sdkerrors.Error
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
-			return nil, out
+			return nil, &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -447,12 +447,12 @@ func (s *account) AccountGet(ctx context.Context, request operations.AccountGetR
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Account
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.Account
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Account = out
+			res.Account = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

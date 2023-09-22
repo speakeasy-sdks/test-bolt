@@ -4,12 +4,11 @@ package sdkerrors
 
 import (
 	"encoding/json"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
 
 type CallbackURLErrorInvalidURL struct {
 	// The type of error returned
-	DotTag shared.CallbackURLErrorInvalidURLTag `json:".tag"`
+	DotTag string `const:"invalid_url" json:".tag"`
 	// A human-readable error message, which might include information specific to
 	// the request that was made.
 	//

@@ -29,7 +29,7 @@ func newConfiguration(sdkConfig sdkConfiguration) *configuration {
 
 // MerchantCallbacksGet - Retrieve callback URLs for the merchant
 // Return callback URLs configured on the merchant such as OAuth URLs.
-func (s *configuration) MerchantCallbacksGet(ctx context.Context, request operations.MerchantCallbacksGetRequest, security operations.MerchantCallbacksGetSecurity) (*operations.MerchantCallbacksGetResponse, error) {
+func (s *configuration) MerchantCallbacksGet(ctx context.Context, request operations.MerchantCallbacksGetRequest) (*operations.MerchantCallbacksGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/merchant/callbacks"
 
@@ -42,7 +42,7 @@ func (s *configuration) MerchantCallbacksGet(ctx context.Context, request operat
 
 	utils.PopulateHeaders(ctx, req, request)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -70,12 +70,12 @@ func (s *configuration) MerchantCallbacksGet(ctx context.Context, request operat
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.CallbackUrls
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.CallbackUrls
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CallbackUrls = out
+			res.CallbackUrls = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -90,11 +90,11 @@ func (s *configuration) MerchantCallbacksGet(ctx context.Context, request operat
 
 // MerchantCallbacksUpdate - Update callback URLs for the merchant
 // Update and configure callback URLs on the merchant such as OAuth URLs.
-func (s *configuration) MerchantCallbacksUpdate(ctx context.Context, request operations.MerchantCallbacksUpdateRequest, security operations.MerchantCallbacksUpdateSecurity) (*operations.MerchantCallbacksUpdateResponse, error) {
+func (s *configuration) MerchantCallbacksUpdate(ctx context.Context, request operations.MerchantCallbacksUpdateRequest) (*operations.MerchantCallbacksUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/merchant/callbacks"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "CallbackUrls", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CallbackUrls", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -113,7 +113,7 @@ func (s *configuration) MerchantCallbacksUpdate(ctx context.Context, request ope
 
 	utils.PopulateHeaders(ctx, req, request)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -141,23 +141,23 @@ func (s *configuration) MerchantCallbacksUpdate(ctx context.Context, request ope
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.CallbackUrls
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.CallbackUrls
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CallbackUrls = out
+			res.CallbackUrls = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 400:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *sdkerrors.CallbackURLErrorInvalidURL
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out sdkerrors.CallbackURLErrorInvalidURL
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
-			return nil, out
+			return nil, &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -172,7 +172,7 @@ func (s *configuration) MerchantCallbacksUpdate(ctx context.Context, request ope
 
 // MerchantIdentifiersGet - Retrieve identifiers for the merchant
 // Return several identifiers for the merchant, such as public IDs, publishable keys, signing secrets, etc...
-func (s *configuration) MerchantIdentifiersGet(ctx context.Context, security operations.MerchantIdentifiersGetSecurity) (*operations.MerchantIdentifiersGetResponse, error) {
+func (s *configuration) MerchantIdentifiersGet(ctx context.Context) (*operations.MerchantIdentifiersGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/merchant/identifiers"
 
@@ -183,7 +183,7 @@ func (s *configuration) MerchantIdentifiersGet(ctx context.Context, security ope
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -211,12 +211,12 @@ func (s *configuration) MerchantIdentifiersGet(ctx context.Context, security ope
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Identifiers
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.Identifiers
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Identifiers = out
+			res.Identifiers = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
