@@ -7,17 +7,6 @@ import (
 	"net/http"
 )
 
-type TestingAccountCreateSecurity struct {
-	APIKey string `security:"scheme,type=apiKey,subtype=header,name=X-API-Key"`
-}
-
-func (o *TestingAccountCreateSecurity) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type TestingAccountCreateResponse struct {
 	ContentType string
 	StatusCode  int
