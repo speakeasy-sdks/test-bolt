@@ -7,17 +7,6 @@ import (
 	"net/http"
 )
 
-type MerchantIdentifiersGetSecurity struct {
-	APIKey string `security:"scheme,type=apiKey,subtype=header,name=X-API-Key"`
-}
-
-func (o *MerchantIdentifiersGetSecurity) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type MerchantIdentifiersGetResponse struct {
 	ContentType string
 	StatusCode  int

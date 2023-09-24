@@ -3,47 +3,29 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 )
-
-// AddressReferenceIDTag - The type of address reference
-type AddressReferenceIDTag string
-
-const (
-	AddressReferenceIDTagID AddressReferenceIDTag = "id"
-)
-
-func (e AddressReferenceIDTag) ToPointer() *AddressReferenceIDTag {
-	return &e
-}
-
-func (e *AddressReferenceIDTag) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "id":
-		*e = AddressReferenceIDTag(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AddressReferenceIDTag: %v", v)
-	}
-}
 
 type AddressReferenceID struct {
 	// The type of address reference
-	DotTag AddressReferenceIDTag `json:".tag"`
+	dotTag string `const:"id" json:".tag"`
 	// The address's ID
 	ID string `json:"id"`
 }
 
-func (o *AddressReferenceID) GetDotTag() AddressReferenceIDTag {
-	if o == nil {
-		return AddressReferenceIDTag("")
+func (a AddressReferenceID) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AddressReferenceID) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
 	}
-	return o.DotTag
+	return nil
+}
+
+func (o *AddressReferenceID) GetDotTag() string {
+	return "id"
 }
 
 func (o *AddressReferenceID) GetID() string {

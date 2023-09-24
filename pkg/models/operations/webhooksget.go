@@ -7,17 +7,6 @@ import (
 	"net/http"
 )
 
-type WebhooksGetSecurity struct {
-	APIKey string `security:"scheme,type=apiKey,subtype=header,name=X-API-Key"`
-}
-
-func (o *WebhooksGetSecurity) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type WebhooksGetRequest struct {
 	// The ID of the webhook whose information to retrieve
 	ID string `pathParam:"style=simple,explode=false,name=id"`

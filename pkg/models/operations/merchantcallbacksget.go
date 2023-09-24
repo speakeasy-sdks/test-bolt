@@ -7,17 +7,6 @@ import (
 	"net/http"
 )
 
-type MerchantCallbacksGetSecurity struct {
-	APIKey string `security:"scheme,type=apiKey,subtype=header,name=X-API-Key"`
-}
-
-func (o *MerchantCallbacksGetSecurity) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type MerchantCallbacksGetRequest struct {
 	// The publicly viewable identifier used to identify a merchant division.
 	XPublishableKey string `header:"style=simple,explode=false,name=X-Publishable-Key"`

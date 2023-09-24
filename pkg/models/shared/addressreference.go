@@ -3,10 +3,10 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 )
 
 type AddressReferenceType string
@@ -25,7 +25,7 @@ type AddressReference struct {
 
 func CreateAddressReferenceExplicit(explicit AddressReferenceExplicit) AddressReference {
 	typ := AddressReferenceTypeExplicit
-	typStr := AddressReferenceExplicitTag(typ)
+	typStr := string(typ)
 	explicit.DotTag = typStr
 
 	return AddressReference{
@@ -36,7 +36,7 @@ func CreateAddressReferenceExplicit(explicit AddressReferenceExplicit) AddressRe
 
 func CreateAddressReferenceID(id AddressReferenceID) AddressReference {
 	typ := AddressReferenceTypeID
-	typStr := AddressReferenceIDTag(typ)
+	typStr := string(typ)
 	id.DotTag = typStr
 
 	return AddressReference{
@@ -46,7 +46,6 @@ func CreateAddressReferenceID(id AddressReferenceID) AddressReference {
 }
 
 func (u *AddressReference) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	type discriminator struct {
 		DotTag string
@@ -59,9 +58,8 @@ func (u *AddressReference) UnmarshalJSON(data []byte) error {
 
 	switch dis.DotTag {
 	case "explicit":
-		d = json.NewDecoder(bytes.NewReader(data))
 		addressReferenceExplicit := new(AddressReferenceExplicit)
-		if err := d.Decode(&addressReferenceExplicit); err != nil {
+		if err := utils.UnmarshalJSON(data, &addressReferenceExplicit, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
@@ -69,9 +67,8 @@ func (u *AddressReference) UnmarshalJSON(data []byte) error {
 		u.Type = AddressReferenceTypeExplicit
 		return nil
 	case "id":
-		d = json.NewDecoder(bytes.NewReader(data))
 		addressReferenceID := new(AddressReferenceID)
-		if err := d.Decode(&addressReferenceID); err != nil {
+		if err := utils.UnmarshalJSON(data, &addressReferenceID, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
@@ -85,13 +82,12 @@ func (u *AddressReference) UnmarshalJSON(data []byte) error {
 
 func (u AddressReference) MarshalJSON() ([]byte, error) {
 	if u.AddressReferenceID != nil {
-		return json.Marshal(u.AddressReferenceID)
+		return utils.MarshalJSON(u.AddressReferenceID, "", true)
 	}
 
 	if u.AddressReferenceExplicit != nil {
-		return json.Marshal(u.AddressReferenceExplicit)
+		return utils.MarshalJSON(u.AddressReferenceExplicit, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
-
 }

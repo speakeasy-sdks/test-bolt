@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 	"time"
 )
 
@@ -167,6 +168,17 @@ type ShipmentTrackingUpdate struct {
 	TrackingDetails []ShipmentTrackingUpdateTrackingDetails `json:"tracking_details"`
 	// The carrier's tracking number for the shipment. Must be prefixed with `MockBolt`.
 	TrackingNumber string `json:"tracking_number"`
+}
+
+func (s ShipmentTrackingUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *ShipmentTrackingUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ShipmentTrackingUpdate) GetDeliveryDate() *time.Time {
