@@ -30,11 +30,11 @@ func newPayments(sdkConfig sdkConfiguration) *payments {
 // GuestPaymentsInitialize - Initialize a Bolt payment for guest shoppers
 // Initialize a Bolt payment token that will be used to reference this payment to
 // Bolt when it is updated or finalized for guest shoppers.
-func (s *payments) GuestPaymentsInitialize(ctx context.Context, request operations.GuestPaymentsInitializeRequest, security operations.GuestPaymentsInitializeSecurity) (*operations.GuestPaymentsInitializeResponse, error) {
+func (s *payments) GuestPaymentsInitialize(ctx context.Context, request operations.GuestPaymentsInitializeRequest) (*operations.GuestPaymentsInitializeResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/guest/payments"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "GuestPaymentMethodInitializeRequest", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "GuestPaymentMethodInitializeRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -53,7 +53,7 @@ func (s *payments) GuestPaymentsInitialize(ctx context.Context, request operatio
 
 	utils.PopulateHeaders(ctx, req, request)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -81,12 +81,12 @@ func (s *payments) GuestPaymentsInitialize(ctx context.Context, request operatio
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.PaymentMethodInitializeResponse
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.PaymentMethodInitializeResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.PaymentMethodInitializeResponse = out
+			res.PaymentMethodInitializeResponse = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -106,7 +106,7 @@ func (s *payments) PaymentsInitialize(ctx context.Context, request operations.Pa
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/payments"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "PaymentMethodInitializeRequest", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "PaymentMethodInitializeRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -153,12 +153,12 @@ func (s *payments) PaymentsInitialize(ctx context.Context, request operations.Pa
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.PaymentMethodInitializeResponse
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.PaymentMethodInitializeResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.PaymentMethodInitializeResponse = out
+			res.PaymentMethodInitializeResponse = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
