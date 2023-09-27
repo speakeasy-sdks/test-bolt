@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 	"time"
 )
 
@@ -76,6 +77,17 @@ type AccountTestCreationDataInput struct {
 	PhoneState   AccountTestCreationDataPhoneState `json:"phone_state"`
 }
 
+func (a AccountTestCreationDataInput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AccountTestCreationDataInput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *AccountTestCreationDataInput) GetDeactivateAt() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -119,6 +131,17 @@ type AccountTestCreationDataOutput struct {
 	OtpCode      string                            `json:"otp_code"`
 	Phone        string                            `json:"phone"`
 	PhoneState   AccountTestCreationDataPhoneState `json:"phone_state"`
+}
+
+func (a AccountTestCreationDataOutput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AccountTestCreationDataOutput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AccountTestCreationDataOutput) GetDeactivateAt() time.Time {

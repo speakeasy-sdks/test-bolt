@@ -5,6 +5,7 @@ package testbolt
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 	"net/http"
 	"time"
@@ -40,9 +41,9 @@ func Float32(f float32) *float32 { return &f }
 func Float64(f float64) *float64 { return &f }
 
 type sdkConfiguration struct {
-	DefaultClient  HTTPClient
-	SecurityClient HTTPClient
-
+	DefaultClient     HTTPClient
+	SecurityClient    HTTPClient
+	Security          *shared.Security
 	ServerURL         string
 	ServerIndex       int
 	ServerDefaults    []map[string]string
@@ -183,6 +184,13 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
+// WithSecurity configures the SDK to use the provided security details
+func WithSecurity(security shared.Security) SDKOption {
+	return func(sdk *TestBolt) {
+		sdk.sdkConfiguration.Security = &security
+	}
+}
+
 func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
 	return func(sdk *TestBolt) {
 		sdk.sdkConfiguration.RetryConfig = &retryConfig
@@ -195,8 +203,8 @@ func New(opts ...SDKOption) *TestBolt {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "3.0.1",
-			SDKVersion:        "0.5.0",
-			GenVersion:        "2.115.2",
+			SDKVersion:        "0.6.0",
+			GenVersion:        "2.131.1",
 			ServerDefaults: []map[string]string{
 				{
 					"username": "BL_DOMAIN",
@@ -216,7 +224,11 @@ func New(opts ...SDKOption) *TestBolt {
 		sdk.sdkConfiguration.DefaultClient = &http.Client{Timeout: 60 * time.Second}
 	}
 	if sdk.sdkConfiguration.SecurityClient == nil {
-		sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
+		if sdk.sdkConfiguration.Security != nil {
+			sdk.sdkConfiguration.SecurityClient = utils.ConfigureSecurityClient(sdk.sdkConfiguration.DefaultClient, sdk.sdkConfiguration.Security)
+		} else {
+			sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
+		}
 	}
 
 	sdk.Account = newAccount(sdk.sdkConfiguration)
