@@ -1,4 +1,5 @@
 # Payments
+(*Payments*)
 
 ## Overview
 
@@ -25,20 +26,21 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 )
 
 func main() {
-    s := testbolt.New()
-    operationSecurity := operations.GuestPaymentsInitializeSecurity{
+    s := testbolt.New(
+        testbolt.WithSecurity(shared.Security{
             APIKey: "",
-        }
+        }),
+    )
 
     ctx := context.Background()
     res, err := s.Payments.GuestPaymentsInitialize(ctx, operations.GuestPaymentsInitializeRequest{
-        XPublishableKey: "error",
+        XPublishableKey: "deserunt",
         GuestPaymentMethodInitializeRequest: shared.GuestPaymentMethodInitializeRequest{
             Cart: shared.Cart{
                 Amounts: shared.Amounts{
@@ -84,12 +86,12 @@ func main() {
                 },
             },
             PaymentMethod: shared.PaymentMethodPaypal{
-                DotTag: shared.PaymentMethodPaypalTagPaypal,
+                DotTag: "paypal",
                 Cancel: "www.example.com/handle_paypal_cancel",
                 Success: "www.example.com/handle_paypal_success",
             },
         },
-    }, operationSecurity)
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -102,11 +104,10 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                                | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
-| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                                    | [context.Context](https://pkg.go.dev/context#Context)                                                    | :heavy_check_mark:                                                                                       | The context to use for the request.                                                                      |
-| `request`                                                                                                | [operations.GuestPaymentsInitializeRequest](../../models/operations/guestpaymentsinitializerequest.md)   | :heavy_check_mark:                                                                                       | The request object to use for the request.                                                               |
-| `security`                                                                                               | [operations.GuestPaymentsInitializeSecurity](../../models/operations/guestpaymentsinitializesecurity.md) | :heavy_check_mark:                                                                                       | The security requirements to use for the request.                                                        |
+| Parameter                                                                                              | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                                  | :heavy_check_mark:                                                                                     | The context to use for the request.                                                                    |
+| `request`                                                                                              | [operations.GuestPaymentsInitializeRequest](../../models/operations/guestpaymentsinitializerequest.md) | :heavy_check_mark:                                                                                     | The request object to use for the request.                                                             |
 
 
 ### Response
@@ -128,7 +129,7 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
@@ -142,7 +143,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Payments.PaymentsInitialize(ctx, operations.PaymentsInitializeRequest{
-        XPublishableKey: "deserunt",
+        XPublishableKey: "suscipit",
         PaymentMethodInitializeRequest: shared.PaymentMethodInitializeRequest{
             Cart: shared.Cart{
                 Amounts: shared.Amounts{
@@ -188,7 +189,7 @@ func main() {
                 },
             },
             PaymentMethod: shared.PaymentMethodSavedPaymentMethod{
-                DotTag: shared.PaymentMethodSavedPaymentMethodTagSavedPaymentMethod,
+                DotTag: "saved_payment_method",
                 ID: "id",
             },
         },

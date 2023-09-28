@@ -1,4 +1,5 @@
 # Webhooks
+(*Webhooks*)
 
 ## Overview
 
@@ -26,24 +27,24 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/callbacks"
 	"net/http"
 )
 
 func main() {
-    s := testbolt.New()
-    operationSecurity := operations.WebhooksCreateSecurity{
+    s := testbolt.New(
+        testbolt.WithSecurity(shared.Security{
             APIKey: "",
-        }
+        }),
+    )
 
     ctx := context.Background()
     res, err := s.Webhooks.WebhooksCreate(ctx, shared.WebhookInput{
         Event: shared.WebhookEvent{},
         URL: "https://www.example.com/webhook",
-    }, operationSecurity)
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -56,11 +57,10 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `ctx`                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                  | :heavy_check_mark:                                                                     | The context to use for the request.                                                    |
-| `request`                                                                              | [shared.WebhookInput](../../models/shared/webhookinput.md)                             | :heavy_check_mark:                                                                     | The request object to use for the request.                                             |
-| `security`                                                                             | [operations.WebhooksCreateSecurity](../../models/operations/webhookscreatesecurity.md) | :heavy_check_mark:                                                                     | The security requirements to use for the request.                                      |
+| Parameter                                                  | Type                                                       | Required                                                   | Description                                                |
+| ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
+| `ctx`                                                      | [context.Context](https://pkg.go.dev/context#Context)      | :heavy_check_mark:                                         | The context to use for the request.                        |
+| `request`                                                  | [shared.WebhookInput](../../models/shared/webhookinput.md) | :heavy_check_mark:                                         | The request object to use for the request.                 |
 
 
 ### Response
@@ -80,20 +80,22 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 )
 
 func main() {
-    s := testbolt.New()
-    operationSecurity := operations.WebhooksDeleteSecurity{
+    s := testbolt.New(
+        testbolt.WithSecurity(shared.Security{
             APIKey: "",
-        }
+        }),
+    )
 
     ctx := context.Background()
     res, err := s.Webhooks.WebhooksDelete(ctx, operations.WebhooksDeleteRequest{
         ID: "wh_za7VbYcSQU2zRgGQXQAm-g",
-    }, operationSecurity)
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -106,11 +108,10 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `ctx`                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                  | :heavy_check_mark:                                                                     | The context to use for the request.                                                    |
-| `request`                                                                              | [operations.WebhooksDeleteRequest](../../models/operations/webhooksdeleterequest.md)   | :heavy_check_mark:                                                                     | The request object to use for the request.                                             |
-| `security`                                                                             | [operations.WebhooksDeleteSecurity](../../models/operations/webhooksdeletesecurity.md) | :heavy_check_mark:                                                                     | The security requirements to use for the request.                                      |
+| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `ctx`                                                                                | [context.Context](https://pkg.go.dev/context#Context)                                | :heavy_check_mark:                                                                   | The context to use for the request.                                                  |
+| `request`                                                                            | [operations.WebhooksDeleteRequest](../../models/operations/webhooksdeleterequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
 
 
 ### Response
@@ -130,20 +131,22 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 )
 
 func main() {
-    s := testbolt.New()
-    operationSecurity := operations.WebhooksGetSecurity{
+    s := testbolt.New(
+        testbolt.WithSecurity(shared.Security{
             APIKey: "",
-        }
+        }),
+    )
 
     ctx := context.Background()
     res, err := s.Webhooks.WebhooksGet(ctx, operations.WebhooksGetRequest{
         ID: "wh_za7VbYcSQU2zRgGQXQAm-g",
-    }, operationSecurity)
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -156,11 +159,10 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `ctx`                                                                            | [context.Context](https://pkg.go.dev/context#Context)                            | :heavy_check_mark:                                                               | The context to use for the request.                                              |
-| `request`                                                                        | [operations.WebhooksGetRequest](../../models/operations/webhooksgetrequest.md)   | :heavy_check_mark:                                                               | The request object to use for the request.                                       |
-| `security`                                                                       | [operations.WebhooksGetSecurity](../../models/operations/webhooksgetsecurity.md) | :heavy_check_mark:                                                               | The security requirements to use for the request.                                |
+| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `ctx`                                                                          | [context.Context](https://pkg.go.dev/context#Context)                          | :heavy_check_mark:                                                             | The context to use for the request.                                            |
+| `request`                                                                      | [operations.WebhooksGetRequest](../../models/operations/webhooksgetrequest.md) | :heavy_check_mark:                                                             | The request object to use for the request.                                     |
 
 
 ### Response
@@ -180,20 +182,22 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 )
 
 func main() {
-    s := testbolt.New()
-    operationSecurity := operations.WebhooksGetAllSecurity{
+    s := testbolt.New(
+        testbolt.WithSecurity(shared.Security{
             APIKey: "",
-        }
+        }),
+    )
 
     ctx := context.Background()
     res, err := s.Webhooks.WebhooksGetAll(ctx, operations.WebhooksGetAllRequest{
-        XPublishableKey: "suscipit",
-    }, operationSecurity)
+        XPublishableKey: "iure",
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -206,11 +210,10 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `ctx`                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                  | :heavy_check_mark:                                                                     | The context to use for the request.                                                    |
-| `request`                                                                              | [operations.WebhooksGetAllRequest](../../models/operations/webhooksgetallrequest.md)   | :heavy_check_mark:                                                                     | The request object to use for the request.                                             |
-| `security`                                                                             | [operations.WebhooksGetAllSecurity](../../models/operations/webhooksgetallsecurity.md) | :heavy_check_mark:                                                                     | The security requirements to use for the request.                                      |
+| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `ctx`                                                                                | [context.Context](https://pkg.go.dev/context#Context)                                | :heavy_check_mark:                                                                   | The context to use for the request.                                                  |
+| `request`                                                                            | [operations.WebhooksGetAllRequest](../../models/operations/webhooksgetallrequest.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
 
 
 ### Response

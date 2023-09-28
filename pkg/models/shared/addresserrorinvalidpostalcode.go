@@ -3,49 +3,31 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 )
-
-// AddressErrorInvalidPostalCodeTag - The type of error returned
-type AddressErrorInvalidPostalCodeTag string
-
-const (
-	AddressErrorInvalidPostalCodeTagInvalidPostalCode AddressErrorInvalidPostalCodeTag = "invalid_postal_code"
-)
-
-func (e AddressErrorInvalidPostalCodeTag) ToPointer() *AddressErrorInvalidPostalCodeTag {
-	return &e
-}
-
-func (e *AddressErrorInvalidPostalCodeTag) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "invalid_postal_code":
-		*e = AddressErrorInvalidPostalCodeTag(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AddressErrorInvalidPostalCodeTag: %v", v)
-	}
-}
 
 type AddressErrorInvalidPostalCode struct {
 	// The type of error returned
-	DotTag AddressErrorInvalidPostalCodeTag `json:".tag"`
+	dotTag string `const:"invalid_postal_code" json:".tag"`
 	// A human-readable error message, which might include information specific to
 	// the request that was made.
 	//
 	Message string `json:"message"`
 }
 
-func (o *AddressErrorInvalidPostalCode) GetDotTag() AddressErrorInvalidPostalCodeTag {
-	if o == nil {
-		return AddressErrorInvalidPostalCodeTag("")
+func (a AddressErrorInvalidPostalCode) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AddressErrorInvalidPostalCode) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
 	}
-	return o.DotTag
+	return nil
+}
+
+func (o *AddressErrorInvalidPostalCode) GetDotTag() string {
+	return "invalid_postal_code"
 }
 
 func (o *AddressErrorInvalidPostalCode) GetMessage() string {

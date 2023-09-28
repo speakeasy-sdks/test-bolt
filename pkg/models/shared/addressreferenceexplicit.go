@@ -3,57 +3,39 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 )
-
-// AddressReferenceExplicitTag - The type of address reference
-type AddressReferenceExplicitTag string
-
-const (
-	AddressReferenceExplicitTagExplicit AddressReferenceExplicitTag = "explicit"
-)
-
-func (e AddressReferenceExplicitTag) ToPointer() *AddressReferenceExplicitTag {
-	return &e
-}
-
-func (e *AddressReferenceExplicitTag) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "explicit":
-		*e = AddressReferenceExplicitTag(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AddressReferenceExplicitTag: %v", v)
-	}
-}
 
 type AddressReferenceExplicit struct {
 	// The type of address reference
-	DotTag         AddressReferenceExplicitTag `json:".tag"`
-	Company        *string                     `json:"company,omitempty"`
-	CountryCode    string                      `json:"country_code"`
-	Email          *string                     `json:"email,omitempty"`
-	FirstName      string                      `json:"first_name"`
-	ID             string                      `json:"id"`
-	LastName       string                      `json:"last_name"`
-	Locality       string                      `json:"locality"`
-	Phone          *string                     `json:"phone,omitempty"`
-	PostalCode     string                      `json:"postal_code"`
-	Region         *string                     `json:"region,omitempty"`
-	StreetAddress1 string                      `json:"street_address1"`
-	StreetAddress2 *string                     `json:"street_address2,omitempty"`
+	dotTag         string  `const:"explicit" json:".tag"`
+	Company        *string `json:"company,omitempty"`
+	CountryCode    string  `json:"country_code"`
+	Email          *string `json:"email,omitempty"`
+	FirstName      string  `json:"first_name"`
+	ID             string  `json:"id"`
+	LastName       string  `json:"last_name"`
+	Locality       string  `json:"locality"`
+	Phone          *string `json:"phone,omitempty"`
+	PostalCode     string  `json:"postal_code"`
+	Region         *string `json:"region,omitempty"`
+	StreetAddress1 string  `json:"street_address1"`
+	StreetAddress2 *string `json:"street_address2,omitempty"`
 }
 
-func (o *AddressReferenceExplicit) GetDotTag() AddressReferenceExplicitTag {
-	if o == nil {
-		return AddressReferenceExplicitTag("")
+func (a AddressReferenceExplicit) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AddressReferenceExplicit) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
+		return err
 	}
-	return o.DotTag
+	return nil
+}
+
+func (o *AddressReferenceExplicit) GetDotTag() string {
+	return "explicit"
 }
 
 func (o *AddressReferenceExplicit) GetCompany() *string {
