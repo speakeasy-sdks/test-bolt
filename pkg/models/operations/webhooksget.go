@@ -7,17 +7,6 @@ import (
 	"net/http"
 )
 
-type WebhooksGetSecurity struct {
-	APIKey string `security:"scheme,type=apiKey,subtype=header,name=X-API-Key"`
-}
-
-func (o *WebhooksGetSecurity) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type WebhooksGetRequest struct {
 	// The ID of the webhook whose information to retrieve
 	ID string `pathParam:"style=simple,explode=false,name=id"`
@@ -31,8 +20,11 @@ func (o *WebhooksGetRequest) GetID() string {
 }
 
 type WebhooksGetResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Webhook information has been retrieved
 	Webhook *shared.Webhook

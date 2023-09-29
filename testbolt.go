@@ -3,8 +3,10 @@
 package testbolt
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 	"net/http"
 	"time"
@@ -40,9 +42,9 @@ func Float32(f float32) *float32 { return &f }
 func Float64(f float64) *float64 { return &f }
 
 type sdkConfiguration struct {
-	DefaultClient  HTTPClient
-	SecurityClient HTTPClient
-
+	DefaultClient     HTTPClient
+	SecurityClient    HTTPClient
+	Security          func(context.Context) (interface{}, error)
 	ServerURL         string
 	ServerIndex       int
 	ServerDefaults    []map[string]string
@@ -50,6 +52,7 @@ type sdkConfiguration struct {
 	OpenAPIDocVersion string
 	SDKVersion        string
 	GenVersion        string
+	UserAgent         string
 	RetryConfig       *utils.RetryConfig
 }
 
@@ -182,6 +185,27 @@ func WithClient(client HTTPClient) SDKOption {
 		sdk.sdkConfiguration.DefaultClient = client
 	}
 }
+func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
+	return func(context.Context) (interface{}, error) {
+		return &security, nil
+	}
+}
+
+// WithSecurity configures the SDK to use the provided security details
+func WithSecurity(security shared.Security) SDKOption {
+	return func(sdk *TestBolt) {
+		sdk.sdkConfiguration.Security = withSecurity(security)
+	}
+}
+
+// WithSecuritySource configures the SDK to invoke the Security Source function on each method call to determine authentication
+func WithSecuritySource(security func(context.Context) (shared.Security, error)) SDKOption {
+	return func(sdk *TestBolt) {
+		sdk.sdkConfiguration.Security = func(ctx context.Context) (interface{}, error) {
+			return security(ctx)
+		}
+	}
+}
 
 func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
 	return func(sdk *TestBolt) {
@@ -195,8 +219,9 @@ func New(opts ...SDKOption) *TestBolt {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "3.0.1",
-			SDKVersion:        "0.5.0",
-			GenVersion:        "2.115.2",
+			SDKVersion:        "0.6.0",
+			GenVersion:        "2.139.1",
+			UserAgent:         "speakeasy-sdk/go 0.6.0 2.139.1 3.0.1 github.com/speakeasy-sdks/test-bolt",
 			ServerDefaults: []map[string]string{
 				{
 					"username": "BL_DOMAIN",
@@ -216,7 +241,11 @@ func New(opts ...SDKOption) *TestBolt {
 		sdk.sdkConfiguration.DefaultClient = &http.Client{Timeout: 60 * time.Second}
 	}
 	if sdk.sdkConfiguration.SecurityClient == nil {
-		sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
+		if sdk.sdkConfiguration.Security != nil {
+			sdk.sdkConfiguration.SecurityClient = utils.ConfigureSecurityClient(sdk.sdkConfiguration.DefaultClient, sdk.sdkConfiguration.Security)
+		} else {
+			sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
+		}
 	}
 
 	sdk.Account = newAccount(sdk.sdkConfiguration)
