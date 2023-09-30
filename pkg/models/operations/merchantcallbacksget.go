@@ -7,17 +7,6 @@ import (
 	"net/http"
 )
 
-type MerchantCallbacksGetSecurity struct {
-	APIKey string `security:"scheme,type=apiKey,subtype=header,name=X-API-Key"`
-}
-
-func (o *MerchantCallbacksGetSecurity) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type MerchantCallbacksGetRequest struct {
 	// The publicly viewable identifier used to identify a merchant division.
 	XPublishableKey string `header:"style=simple,explode=false,name=X-Publishable-Key"`
@@ -31,8 +20,11 @@ func (o *MerchantCallbacksGetRequest) GetXPublishableKey() string {
 }
 
 type MerchantCallbacksGetResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Callbacks URLs were successfully retrieved
 	CallbackUrls *shared.CallbackUrls

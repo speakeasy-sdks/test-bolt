@@ -9,6 +9,7 @@ import (
 
 // AccountAddressCreate400ApplicationJSON - The address is invalid and cannot be added
 type AccountAddressCreate400ApplicationJSON struct {
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response `json:"-"`
 }
 

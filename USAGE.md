@@ -7,7 +7,7 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
@@ -21,9 +21,9 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
-        XPublishableKey: "corrupti",
+        XPublishableKey: "maroon Silicon female",
         PaymentMethodCreditCard: shared.PaymentMethodCreditCard{
-            DotTag: shared.PaymentMethodCreditCardTagCreditCard,
+            DotTag: "credit_card",
             BillingAddress: shared.AddressReference{},
             Bin: "411111",
             Expiration: "2025-03",

@@ -31,11 +31,11 @@ func newWebhooks(sdkConfig sdkConfiguration) *webhooks {
 
 // WebhooksCreate - Create a webhook to subscribe to certain events
 // Create a new webhook to receive notifications from Bolt about various events, such as transaction status.
-func (s *webhooks) WebhooksCreate(ctx context.Context, request shared.WebhookInput, security operations.WebhooksCreateSecurity) (*operations.WebhooksCreateResponse, error) {
+func (s *webhooks) WebhooksCreate(ctx context.Context, request shared.WebhookInput) (*operations.WebhooksCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/webhooks"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -48,11 +48,11 @@ func (s *webhooks) WebhooksCreate(ctx context.Context, request shared.WebhookInp
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -80,12 +80,12 @@ func (s *webhooks) WebhooksCreate(ctx context.Context, request shared.WebhookInp
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Webhook
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.Webhook
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Webhook = out
+			res.Webhook = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -100,7 +100,7 @@ func (s *webhooks) WebhooksCreate(ctx context.Context, request shared.WebhookInp
 
 // WebhooksDelete - Delete an existing webhook
 // Delete an existing webhook. You will no longer receive notifications from Bolt about its events.
-func (s *webhooks) WebhooksDelete(ctx context.Context, request operations.WebhooksDeleteRequest, security operations.WebhooksDeleteSecurity) (*operations.WebhooksDeleteResponse, error) {
+func (s *webhooks) WebhooksDelete(ctx context.Context, request operations.WebhooksDeleteRequest) (*operations.WebhooksDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/webhooks/{id}", request, nil)
 	if err != nil {
@@ -112,9 +112,9 @@ func (s *webhooks) WebhooksDelete(ctx context.Context, request operations.Webhoo
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -143,11 +143,11 @@ func (s *webhooks) WebhooksDelete(ctx context.Context, request operations.Webhoo
 	case httpRes.StatusCode == 422:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *sdkerrors.Error
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out sdkerrors.Error
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
-			return nil, out
+			return nil, &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -162,7 +162,7 @@ func (s *webhooks) WebhooksDelete(ctx context.Context, request operations.Webhoo
 
 // WebhooksGet - Retrieve information for a specific webhook
 // Retrieve information for an existing webhook.
-func (s *webhooks) WebhooksGet(ctx context.Context, request operations.WebhooksGetRequest, security operations.WebhooksGetSecurity) (*operations.WebhooksGetResponse, error) {
+func (s *webhooks) WebhooksGet(ctx context.Context, request operations.WebhooksGetRequest) (*operations.WebhooksGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/webhooks/{id}", request, nil)
 	if err != nil {
@@ -174,9 +174,9 @@ func (s *webhooks) WebhooksGet(ctx context.Context, request operations.WebhooksG
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -204,23 +204,23 @@ func (s *webhooks) WebhooksGet(ctx context.Context, request operations.WebhooksG
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Webhook
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.Webhook
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Webhook = out
+			res.Webhook = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	case httpRes.StatusCode == 422:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *sdkerrors.Error
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out sdkerrors.Error
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
-			return nil, out
+			return nil, &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -235,7 +235,7 @@ func (s *webhooks) WebhooksGet(ctx context.Context, request operations.WebhooksG
 
 // WebhooksGetAll - Retrieve information about all existing webhooks
 // Retrieve information about all existing webhooks.
-func (s *webhooks) WebhooksGetAll(ctx context.Context, request operations.WebhooksGetAllRequest, security operations.WebhooksGetAllSecurity) (*operations.WebhooksGetAllResponse, error) {
+func (s *webhooks) WebhooksGetAll(ctx context.Context, request operations.WebhooksGetAllRequest) (*operations.WebhooksGetAllResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/webhooks"
 
@@ -244,11 +244,11 @@ func (s *webhooks) WebhooksGetAll(ctx context.Context, request operations.Webhoo
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	utils.PopulateHeaders(ctx, req, request)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -276,12 +276,12 @@ func (s *webhooks) WebhooksGetAll(ctx context.Context, request operations.Webhoo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *operations.WebhooksGetAll200ApplicationJSON
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out operations.WebhooksGetAll200ApplicationJSON
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.WebhooksGetAll200ApplicationJSONObject = out
+			res.WebhooksGetAll200ApplicationJSONObject = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

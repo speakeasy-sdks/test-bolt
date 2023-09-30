@@ -1,4 +1,5 @@
 # Account
+(*Account*)
 
 ## Overview
 
@@ -31,7 +32,7 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
@@ -45,9 +46,9 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
-        XPublishableKey: "provident",
+        XPublishableKey: "maroon Silicon female",
         PaymentMethodCreditCard: shared.PaymentMethodCreditCard{
-            DotTag: shared.PaymentMethodCreditCardTagCreditCard,
+            DotTag: "credit_card",
             BillingAddress: shared.AddressReference{},
             Bin: "411111",
             Expiration: "2025-03",
@@ -94,7 +95,7 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
@@ -108,7 +109,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountAddressCreate(ctx, operations.AccountAddressCreateRequest{
-        XPublishableKey: "distinctio",
+        XPublishableKey: "Corporate Designer",
         AddressListing: shared.AddressListing{
             Company: testbolt.String("ACME Corporation"),
             CountryCode: "US",
@@ -163,21 +164,23 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 )
 
 func main() {
-    s := testbolt.New()
-    operationSecurity := operations.AccountAddressDeleteSecurity{
+    s := testbolt.New(
+        testbolt.WithSecurity(shared.Security{
             APIKey: "",
-        }
+        }),
+    )
 
     ctx := context.Background()
     res, err := s.Account.AccountAddressDelete(ctx, operations.AccountAddressDeleteRequest{
-        XPublishableKey: "quibusdam",
+        XPublishableKey: "bypassing Interactions inasmuch",
         ID: "D4g3h5tBuVYK9",
-    }, operationSecurity)
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -190,11 +193,10 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        |
-| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                              | [context.Context](https://pkg.go.dev/context#Context)                                              | :heavy_check_mark:                                                                                 | The context to use for the request.                                                                |
-| `request`                                                                                          | [operations.AccountAddressDeleteRequest](../../models/operations/accountaddressdeleterequest.md)   | :heavy_check_mark:                                                                                 | The request object to use for the request.                                                         |
-| `security`                                                                                         | [operations.AccountAddressDeleteSecurity](../../models/operations/accountaddressdeletesecurity.md) | :heavy_check_mark:                                                                                 | The security requirements to use for the request.                                                  |
+| Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                            | :heavy_check_mark:                                                                               | The context to use for the request.                                                              |
+| `request`                                                                                        | [operations.AccountAddressDeleteRequest](../../models/operations/accountaddressdeleterequest.md) | :heavy_check_mark:                                                                               | The request object to use for the request.                                                       |
 
 
 ### Response
@@ -217,7 +219,7 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
@@ -231,7 +233,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountAddressEdit(ctx, operations.AccountAddressEditRequest{
-        XPublishableKey: "unde",
+        XPublishableKey: "Convertible",
         AddressListing: shared.AddressListing{
             Company: testbolt.String("ACME Corporation"),
             CountryCode: "US",
@@ -285,17 +287,21 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 )
 
 func main() {
-    s := testbolt.New()
+    s := testbolt.New(
+        testbolt.WithSecurity(shared.Security{
+            APIKey: "",
+        }),
+    )
 
     ctx := context.Background()
     res, err := s.Account.AccountExists(ctx, operations.AccountExistsRequest{
-        XPublishableKey: "nulla",
+        XPublishableKey: "productize South Manager",
         Identifier: shared.Identifier{
             IdentifierType: shared.IdentifierIdentifierTypeEmail,
             IdentifierValue: "alice@example.com",
@@ -336,7 +342,7 @@ package main
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 )
 
@@ -349,7 +355,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountGet(ctx, operations.AccountGetRequest{
-        XPublishableKey: "corrupti",
+        XPublishableKey: "shrilly",
     }, operationSecurity)
     if err != nil {
         log.Fatal(err)
