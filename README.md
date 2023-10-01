@@ -10,15 +10,13 @@ go get github.com/speakeasy-sdks/test-bolt
 
 ## SDK Example Usage
 <!-- Start SDK Example Usage -->
-
-
 ```go
 package main
 
 import(
 	"context"
 	"log"
-	"github.com/speakeasy-sdks/test-bolt"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
@@ -32,24 +30,14 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
-        XPublishableKey: "corrupti",
-        PaymentMethodCreditCard: shared.PaymentMethodCreditCard{
-            DotTag: shared.PaymentMethodCreditCardTagCreditCard,
-            BillingAddress: shared.AddressReference{},
-            Bin: "411111",
-            Expiration: "2025-03",
-            ID: testbolt.String("X5h6j8uLpVGK0"),
-            Last4: "1004",
-            Network: shared.PaymentMethodCreditCardNetworkVisa,
-            Token: "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
-            Type: shared.PaymentMethodCreditCardTypeCredit,
-        },
+        XPublishableKey: "maroon Silicon female",
+        PaymentMethod: shared.PaymentMethod{},
     }, operationSecurity)
     if err != nil {
         log.Fatal(err)
     }
 
-    if res.PaymentMethodCreditCard != nil {
+    if res.PaymentMethod != nil {
         // handle response
     }
 }
@@ -93,6 +81,38 @@ func main() {
 * [WebhooksGet](docs/sdks/webhooks/README.md#webhooksget) - Retrieve information for a specific webhook
 * [WebhooksGetAll](docs/sdks/webhooks/README.md#webhooksgetall) - Retrieve information about all existing webhooks
 <!-- End SDK Available Operations -->
+
+
+
+<!-- Start Dev Containers -->
+
+
+
+<!-- End Dev Containers -->
+
+
+
+<!-- Start Pagination -->
+# Pagination
+
+Some of the endpoints in this SDK support pagination. To use pagination, you make your SDK calls as usual, but the
+returned response object will have a `Next` method that can be called to pull down the next group of results. If the
+return value of `Next` is `nil`, then there are no more pages to be fetched.
+
+Here's an example of one such pagination call:
+
+
+<!-- End Pagination -->
+
+
+
+<!-- Start Go Types -->
+
+<!-- End Go Types -->
+
+<!-- Placeholder for Future Speakeasy SDK Sections -->
+
+
 
 ### Maturity
 

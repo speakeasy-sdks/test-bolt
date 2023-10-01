@@ -7,17 +7,6 @@ import (
 	"net/http"
 )
 
-type GuestPaymentsInitializeSecurity struct {
-	APIKey string `security:"scheme,type=apiKey,subtype=header,name=X-API-Key"`
-}
-
-func (o *GuestPaymentsInitializeSecurity) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type GuestPaymentsInitializeRequest struct {
 	// The publicly viewable identifier used to identify a merchant division.
 	XPublishableKey                     string                                     `header:"style=simple,explode=false,name=X-Publishable-Key"`
@@ -39,8 +28,11 @@ func (o *GuestPaymentsInitializeRequest) GetGuestPaymentMethodInitializeRequest(
 }
 
 type GuestPaymentsInitializeResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Payment token retrieved
 	PaymentMethodInitializeResponse *shared.PaymentMethodInitializeResponse

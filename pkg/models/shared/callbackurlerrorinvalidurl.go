@@ -3,31 +3,36 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 )
 
-// CallbackURLErrorInvalidURLTag - The type of error returned
-type CallbackURLErrorInvalidURLTag string
-
-const (
-	CallbackURLErrorInvalidURLTagInvalidURL CallbackURLErrorInvalidURLTag = "invalid_url"
-)
-
-func (e CallbackURLErrorInvalidURLTag) ToPointer() *CallbackURLErrorInvalidURLTag {
-	return &e
+type CallbackURLErrorInvalidURL struct {
+	// The type of error returned
+	dotTag string `const:"invalid_url" json:".tag"`
+	// A human-readable error message, which might include information specific to
+	// the request that was made.
+	//
+	Message string `json:"message"`
 }
 
-func (e *CallbackURLErrorInvalidURLTag) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
+func (c CallbackURLErrorInvalidURL) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CallbackURLErrorInvalidURL) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, true); err != nil {
 		return err
 	}
-	switch v {
-	case "invalid_url":
-		*e = CallbackURLErrorInvalidURLTag(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CallbackURLErrorInvalidURLTag: %v", v)
+	return nil
+}
+
+func (o *CallbackURLErrorInvalidURL) GetDotTag() string {
+	return "invalid_url"
+}
+
+func (o *CallbackURLErrorInvalidURL) GetMessage() string {
+	if o == nil {
+		return ""
 	}
+	return o.Message
 }

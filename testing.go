@@ -29,11 +29,11 @@ func newTesting(sdkConfig sdkConfiguration) *testing {
 
 // TestingAccountCreate - Create a test account
 // Create a Bolt shopper account for testing purposes.
-func (s *testing) TestingAccountCreate(ctx context.Context, request shared.AccountTestCreationDataInput, security operations.TestingAccountCreateSecurity) (*operations.TestingAccountCreateResponse, error) {
+func (s *testing) TestingAccountCreate(ctx context.Context, request shared.AccountTestCreationDataInput) (*operations.TestingAccountCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/testing/accounts"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -46,11 +46,11 @@ func (s *testing) TestingAccountCreate(ctx context.Context, request shared.Accou
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -78,12 +78,12 @@ func (s *testing) TestingAccountCreate(ctx context.Context, request shared.Accou
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.AccountTestCreationDataOutput
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.AccountTestCreationDataOutput
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.AccountTestCreationData = out
+			res.AccountTestCreationData = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -99,7 +99,7 @@ func (s *testing) TestingAccountCreate(ctx context.Context, request shared.Accou
 // TestingCreditCardGet - Retrieve a test credit card, including its token
 // Retrieve test credit card information. This includes its token, which is
 // generated against the `4111 1111 1111 1004` test card.
-func (s *testing) TestingCreditCardGet(ctx context.Context, security operations.TestingCreditCardGetSecurity) (*operations.TestingCreditCardGetResponse, error) {
+func (s *testing) TestingCreditCardGet(ctx context.Context) (*operations.TestingCreditCardGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/testing/credit-cards"
 
@@ -108,9 +108,9 @@ func (s *testing) TestingCreditCardGet(ctx context.Context, security operations.
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -138,12 +138,12 @@ func (s *testing) TestingCreditCardGet(ctx context.Context, security operations.
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.CreditCard
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+			var out shared.CreditCard
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreditCard = out
+			res.CreditCard = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
@@ -160,11 +160,11 @@ func (s *testing) TestingCreditCardGet(ctx context.Context, security operations.
 // Simulate a shipment tracking update, such as those that Bolt would ingest from
 // third-party shipping providers that would allow updating tracking and delivery
 // information to shipments associated with orders.
-func (s *testing) TestingShipmentTrackingCreate(ctx context.Context, request shared.ShipmentTrackingUpdate, security operations.TestingShipmentTrackingCreateSecurity) (*operations.TestingShipmentTrackingCreateResponse, error) {
+func (s *testing) TestingShipmentTrackingCreate(ctx context.Context, request shared.ShipmentTrackingUpdate) (*operations.TestingShipmentTrackingCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/testing/shipments"
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -177,11 +177,11 @@ func (s *testing) TestingShipmentTrackingCreate(ctx context.Context, request sha
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "*/*")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := utils.ConfigureSecurityClient(s.sdkConfiguration.DefaultClient, security)
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

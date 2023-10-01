@@ -2,9 +2,55 @@
 
 package shared
 
+import (
+	"errors"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
+)
+
+type PaymentMethodInitializeRequestPaymentMethodType string
+
+const (
+	PaymentMethodInitializeRequestPaymentMethodTypePaymentMethodSavedPaymentMethod PaymentMethodInitializeRequestPaymentMethodType = "payment-method-saved-payment-method"
+)
+
+type PaymentMethodInitializeRequestPaymentMethod struct {
+	PaymentMethodSavedPaymentMethod *PaymentMethodSavedPaymentMethod
+
+	Type PaymentMethodInitializeRequestPaymentMethodType
+}
+
+func CreatePaymentMethodInitializeRequestPaymentMethodPaymentMethodSavedPaymentMethod(paymentMethodSavedPaymentMethod PaymentMethodSavedPaymentMethod) PaymentMethodInitializeRequestPaymentMethod {
+	typ := PaymentMethodInitializeRequestPaymentMethodTypePaymentMethodSavedPaymentMethod
+
+	return PaymentMethodInitializeRequestPaymentMethod{
+		PaymentMethodSavedPaymentMethod: &paymentMethodSavedPaymentMethod,
+		Type:                            typ,
+	}
+}
+
+func (u *PaymentMethodInitializeRequestPaymentMethod) UnmarshalJSON(data []byte) error {
+
+	paymentMethodSavedPaymentMethod := new(PaymentMethodSavedPaymentMethod)
+	if err := utils.UnmarshalJSON(data, &paymentMethodSavedPaymentMethod, "", true, true); err == nil {
+		u.PaymentMethodSavedPaymentMethod = paymentMethodSavedPaymentMethod
+		u.Type = PaymentMethodInitializeRequestPaymentMethodTypePaymentMethodSavedPaymentMethod
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u PaymentMethodInitializeRequestPaymentMethod) MarshalJSON() ([]byte, error) {
+	if u.PaymentMethodSavedPaymentMethod != nil {
+		return utils.MarshalJSON(u.PaymentMethodSavedPaymentMethod, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
+}
+
 type PaymentMethodInitializeRequest struct {
-	Cart          Cart                            `json:"cart"`
-	PaymentMethod PaymentMethodSavedPaymentMethod `json:"payment_method"`
+	Cart          Cart                                        `json:"cart"`
+	PaymentMethod PaymentMethodInitializeRequestPaymentMethod `json:"payment_method"`
 }
 
 func (o *PaymentMethodInitializeRequest) GetCart() Cart {
@@ -14,9 +60,9 @@ func (o *PaymentMethodInitializeRequest) GetCart() Cart {
 	return o.Cart
 }
 
-func (o *PaymentMethodInitializeRequest) GetPaymentMethod() PaymentMethodSavedPaymentMethod {
+func (o *PaymentMethodInitializeRequest) GetPaymentMethod() PaymentMethodInitializeRequestPaymentMethod {
 	if o == nil {
-		return PaymentMethodSavedPaymentMethod{}
+		return PaymentMethodInitializeRequestPaymentMethod{}
 	}
 	return o.PaymentMethod
 }

@@ -5,31 +5,8 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 )
-
-type EventListTag string
-
-const (
-	EventListTagList EventListTag = "list"
-)
-
-func (e EventListTag) ToPointer() *EventListTag {
-	return &e
-}
-
-func (e *EventListTag) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "list":
-		*e = EventListTag(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for EventListTag: %v", v)
-	}
-}
 
 type EventListEventList string
 
@@ -89,15 +66,23 @@ func (e *EventListEventList) UnmarshalJSON(data []byte) error {
 }
 
 type EventList struct {
-	DotTag    EventListTag         `json:".tag"`
+	dotTag    string               `const:"list" json:".tag"`
 	EventList []EventListEventList `json:"event_list"`
 }
 
-func (o *EventList) GetDotTag() EventListTag {
-	if o == nil {
-		return EventListTag("")
+func (e EventList) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EventList) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, true); err != nil {
+		return err
 	}
-	return o.DotTag
+	return nil
+}
+
+func (o *EventList) GetDotTag() string {
+	return "list"
 }
 
 func (o *EventList) GetEventList() []EventListEventList {

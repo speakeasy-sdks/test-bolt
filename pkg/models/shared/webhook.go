@@ -3,10 +3,10 @@
 package shared
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 	"time"
 )
 
@@ -26,8 +26,6 @@ type WebhookEvent struct {
 
 func CreateWebhookEventGroup(group EventGroup) WebhookEvent {
 	typ := WebhookEventTypeGroup
-	typStr := EventGroupTag(typ)
-	group.DotTag = typStr
 
 	return WebhookEvent{
 		EventGroup: &group,
@@ -37,8 +35,6 @@ func CreateWebhookEventGroup(group EventGroup) WebhookEvent {
 
 func CreateWebhookEventList(list EventList) WebhookEvent {
 	typ := WebhookEventTypeList
-	typStr := EventListTag(typ)
-	list.DotTag = typStr
 
 	return WebhookEvent{
 		EventList: &list,
@@ -47,7 +43,6 @@ func CreateWebhookEventList(list EventList) WebhookEvent {
 }
 
 func (u *WebhookEvent) UnmarshalJSON(data []byte) error {
-	var d *json.Decoder
 
 	type discriminator struct {
 		DotTag string
@@ -60,9 +55,8 @@ func (u *WebhookEvent) UnmarshalJSON(data []byte) error {
 
 	switch dis.DotTag {
 	case "group":
-		d = json.NewDecoder(bytes.NewReader(data))
 		eventGroup := new(EventGroup)
-		if err := d.Decode(&eventGroup); err != nil {
+		if err := utils.UnmarshalJSON(data, &eventGroup, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
@@ -70,9 +64,8 @@ func (u *WebhookEvent) UnmarshalJSON(data []byte) error {
 		u.Type = WebhookEventTypeGroup
 		return nil
 	case "list":
-		d = json.NewDecoder(bytes.NewReader(data))
 		eventList := new(EventList)
-		if err := d.Decode(&eventList); err != nil {
+		if err := utils.UnmarshalJSON(data, &eventList, "", true, true); err != nil {
 			return fmt.Errorf("could not unmarshal expected type: %w", err)
 		}
 
@@ -86,15 +79,14 @@ func (u *WebhookEvent) UnmarshalJSON(data []byte) error {
 
 func (u WebhookEvent) MarshalJSON() ([]byte, error) {
 	if u.EventGroup != nil {
-		return json.Marshal(u.EventGroup)
+		return utils.MarshalJSON(u.EventGroup, "", true)
 	}
 
 	if u.EventList != nil {
-		return json.Marshal(u.EventList)
+		return utils.MarshalJSON(u.EventList, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type: all fields are null")
-
 }
 
 type Webhook struct {
@@ -105,6 +97,17 @@ type Webhook struct {
 	ID *string `json:"id,omitempty"`
 	// The webhook's URL
 	URL string `json:"url"`
+}
+
+func (w Webhook) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(w, "", false)
+}
+
+func (w *Webhook) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &w, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *Webhook) GetCreatedAt() *time.Time {

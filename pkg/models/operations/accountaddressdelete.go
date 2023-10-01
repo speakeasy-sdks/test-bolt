@@ -6,17 +6,6 @@ import (
 	"net/http"
 )
 
-type AccountAddressDeleteSecurity struct {
-	APIKey string `security:"scheme,type=apiKey,subtype=header,name=X-API-Key"`
-}
-
-func (o *AccountAddressDeleteSecurity) GetAPIKey() string {
-	if o == nil {
-		return ""
-	}
-	return o.APIKey
-}
-
 type AccountAddressDeleteRequest struct {
 	// The publicly viewable identifier used to identify a merchant division.
 	XPublishableKey string `header:"style=simple,explode=false,name=X-Publishable-Key"`
@@ -39,8 +28,11 @@ func (o *AccountAddressDeleteRequest) GetID() string {
 }
 
 type AccountAddressDeleteResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 }
 
