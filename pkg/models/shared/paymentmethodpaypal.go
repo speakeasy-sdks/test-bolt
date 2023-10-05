@@ -3,30 +3,47 @@
 package shared
 
 import (
-	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
+	"encoding/json"
+	"fmt"
 )
 
+type PaymentMethodPaypalTag string
+
+const (
+	PaymentMethodPaypalTagPaypal PaymentMethodPaypalTag = "paypal"
+)
+
+func (e PaymentMethodPaypalTag) ToPointer() *PaymentMethodPaypalTag {
+	return &e
+}
+
+func (e *PaymentMethodPaypalTag) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "paypal":
+		*e = PaymentMethodPaypalTag(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for PaymentMethodPaypalTag: %v", v)
+	}
+}
+
 type PaymentMethodPaypal struct {
-	dotTag string `const:"paypal" json:".tag"`
+	DotTag PaymentMethodPaypalTag `json:".tag"`
 	// Redirect URL for canceled PayPal transaction.
 	Cancel string `json:"cancel"`
 	// Redirect URL for successful PayPal transaction.
 	Success string `json:"success"`
 }
 
-func (p PaymentMethodPaypal) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(p, "", false)
-}
-
-func (p *PaymentMethodPaypal) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
-		return err
+func (o *PaymentMethodPaypal) GetDotTag() PaymentMethodPaypalTag {
+	if o == nil {
+		return PaymentMethodPaypalTag("")
 	}
-	return nil
-}
-
-func (o *PaymentMethodPaypal) GetDotTag() string {
-	return "paypal"
+	return o.DotTag
 }
 
 func (o *PaymentMethodPaypal) GetCancel() string {

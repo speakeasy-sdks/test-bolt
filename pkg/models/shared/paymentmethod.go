@@ -23,6 +23,8 @@ type PaymentMethod struct {
 
 func CreatePaymentMethodCreditCard(creditCard PaymentMethodCreditCard) PaymentMethod {
 	typ := PaymentMethodTypeCreditCard
+	typStr := PaymentMethodCreditCardTag(typ)
+	creditCard.DotTag = typStr
 
 	return PaymentMethod{
 		PaymentMethodCreditCard: &creditCard,

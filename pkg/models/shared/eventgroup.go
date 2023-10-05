@@ -3,29 +3,73 @@
 package shared
 
 import (
-	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
+	"encoding/json"
+	"fmt"
 )
 
-type EventGroup struct {
-	dotTag     string `const:"group" json:".tag"`
-	eventGroup string `const:"all" json:"event_group"`
+type EventGroupTag string
+
+const (
+	EventGroupTagGroup EventGroupTag = "group"
+)
+
+func (e EventGroupTag) ToPointer() *EventGroupTag {
+	return &e
 }
 
-func (e EventGroup) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(e, "", false)
-}
-
-func (e *EventGroup) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, true); err != nil {
+func (e *EventGroupTag) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	return nil
+	switch v {
+	case "group":
+		*e = EventGroupTag(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for EventGroupTag: %v", v)
+	}
 }
 
-func (o *EventGroup) GetDotTag() string {
-	return "group"
+type EventGroupEventGroup string
+
+const (
+	EventGroupEventGroupAll EventGroupEventGroup = "all"
+)
+
+func (e EventGroupEventGroup) ToPointer() *EventGroupEventGroup {
+	return &e
 }
 
-func (o *EventGroup) GetEventGroup() string {
-	return "all"
+func (e *EventGroupEventGroup) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "all":
+		*e = EventGroupEventGroup(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for EventGroupEventGroup: %v", v)
+	}
+}
+
+type EventGroup struct {
+	DotTag     EventGroupTag        `json:".tag"`
+	EventGroup EventGroupEventGroup `json:"event_group"`
+}
+
+func (o *EventGroup) GetDotTag() EventGroupTag {
+	if o == nil {
+		return EventGroupTag("")
+	}
+	return o.DotTag
+}
+
+func (o *EventGroup) GetEventGroup() EventGroupEventGroup {
+	if o == nil {
+		return EventGroupEventGroup("")
+	}
+	return o.EventGroup
 }

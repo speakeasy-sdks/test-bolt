@@ -3,31 +3,49 @@
 package shared
 
 import (
-	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
+	"encoding/json"
+	"fmt"
 )
+
+// AddressErrorInvalidRegionTag - The type of error returned
+type AddressErrorInvalidRegionTag string
+
+const (
+	AddressErrorInvalidRegionTagInvalidRegion AddressErrorInvalidRegionTag = "invalid_region"
+)
+
+func (e AddressErrorInvalidRegionTag) ToPointer() *AddressErrorInvalidRegionTag {
+	return &e
+}
+
+func (e *AddressErrorInvalidRegionTag) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "invalid_region":
+		*e = AddressErrorInvalidRegionTag(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for AddressErrorInvalidRegionTag: %v", v)
+	}
+}
 
 type AddressErrorInvalidRegion struct {
 	// The type of error returned
-	dotTag string `const:"invalid_region" json:".tag"`
+	DotTag AddressErrorInvalidRegionTag `json:".tag"`
 	// A human-readable error message, which might include information specific to
 	// the request that was made.
 	//
 	Message string `json:"message"`
 }
 
-func (a AddressErrorInvalidRegion) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(a, "", false)
-}
-
-func (a *AddressErrorInvalidRegion) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, true); err != nil {
-		return err
+func (o *AddressErrorInvalidRegion) GetDotTag() AddressErrorInvalidRegionTag {
+	if o == nil {
+		return AddressErrorInvalidRegionTag("")
 	}
-	return nil
-}
-
-func (o *AddressErrorInvalidRegion) GetDotTag() string {
-	return "invalid_region"
+	return o.DotTag
 }
 
 func (o *AddressErrorInvalidRegion) GetMessage() string {

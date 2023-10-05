@@ -5,8 +5,31 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/speakeasy-sdks/test-bolt/pkg/utils"
 )
+
+type PaymentMethodCreditCardTag string
+
+const (
+	PaymentMethodCreditCardTagCreditCard PaymentMethodCreditCardTag = "credit_card"
+)
+
+func (e PaymentMethodCreditCardTag) ToPointer() *PaymentMethodCreditCardTag {
+	return &e
+}
+
+func (e *PaymentMethodCreditCardTag) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "credit_card":
+		*e = PaymentMethodCreditCardTag(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for PaymentMethodCreditCardTag: %v", v)
+	}
+}
 
 // PaymentMethodCreditCardNetwork - The credit card network.
 type PaymentMethodCreditCardNetwork string
@@ -83,8 +106,8 @@ func (e *PaymentMethodCreditCardType) UnmarshalJSON(data []byte) error {
 }
 
 type PaymentMethodCreditCard struct {
-	dotTag         string           `const:"credit_card" json:".tag"`
-	BillingAddress AddressReference `json:"billing_address"`
+	DotTag         PaymentMethodCreditCardTag `json:".tag"`
+	BillingAddress AddressReference           `json:"billing_address"`
 	// The Bank Identification Number for the credit card. This is typically the first 4-6 digits of the credit card number.
 	Bin string `json:"bin"`
 	// The expiration date of the credit card. TODO TO MAKE EXPIRATION REUSABLE
@@ -100,19 +123,11 @@ type PaymentMethodCreditCard struct {
 	Type PaymentMethodCreditCardType `json:"type"`
 }
 
-func (p PaymentMethodCreditCard) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(p, "", false)
-}
-
-func (p *PaymentMethodCreditCard) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
-		return err
+func (o *PaymentMethodCreditCard) GetDotTag() PaymentMethodCreditCardTag {
+	if o == nil {
+		return PaymentMethodCreditCardTag("")
 	}
-	return nil
-}
-
-func (o *PaymentMethodCreditCard) GetDotTag() string {
-	return "credit_card"
+	return o.DotTag
 }
 
 func (o *PaymentMethodCreditCard) GetBillingAddress() AddressReference {

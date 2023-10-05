@@ -26,6 +26,8 @@ type WebhookEvent struct {
 
 func CreateWebhookEventGroup(group EventGroup) WebhookEvent {
 	typ := WebhookEventTypeGroup
+	typStr := EventGroupTag(typ)
+	group.DotTag = typStr
 
 	return WebhookEvent{
 		EventGroup: &group,
@@ -35,6 +37,8 @@ func CreateWebhookEventGroup(group EventGroup) WebhookEvent {
 
 func CreateWebhookEventList(list EventList) WebhookEvent {
 	typ := WebhookEventTypeList
+	typStr := EventListTag(typ)
+	list.DotTag = typStr
 
 	return WebhookEvent{
 		EventList: &list,
