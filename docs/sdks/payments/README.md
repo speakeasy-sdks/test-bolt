@@ -75,7 +75,12 @@ func main() {
                 OrderReference: "order_100",
                 Shipments: []shared.CartShipment{
                     shared.CartShipment{
-                        Address: &shared.AddressReference{},
+                        Address: shared.CreateAddressReferenceAddressReferenceID(
+                                shared.AddressReferenceID{
+                                    DotTag: shared.AddressReferenceIDTagID,
+                                    ID: "D4g3h5tBuVYK9",
+                                },
+                        ),
                         Carrier: testbolt.String("FedEx"),
                         Cost: &shared.Amounts{
                             Currency: "USD",
@@ -85,7 +90,13 @@ func main() {
                     },
                 },
             },
-            PaymentMethod: shared.GuestPaymentMethodInitializeRequestPaymentMethod{},
+            PaymentMethod: shared.CreateGuestPaymentMethodInitializeRequestPaymentMethodPaymentMethodPaypal(
+                    shared.PaymentMethodPaypal{
+                        DotTag: shared.PaymentMethodPaypalTagPaypal,
+                        Cancel: "www.example.com/handle_paypal_cancel",
+                        Success: "www.example.com/handle_paypal_success",
+                    },
+            ),
         },
     })
     if err != nil {
@@ -174,7 +185,12 @@ func main() {
                 OrderReference: "order_100",
                 Shipments: []shared.CartShipment{
                     shared.CartShipment{
-                        Address: &shared.AddressReference{},
+                        Address: shared.CreateAddressReferenceAddressReferenceID(
+                                shared.AddressReferenceID{
+                                    DotTag: shared.AddressReferenceIDTagID,
+                                    ID: "D4g3h5tBuVYK9",
+                                },
+                        ),
                         Carrier: testbolt.String("FedEx"),
                         Cost: &shared.Amounts{
                             Currency: "USD",
@@ -184,7 +200,12 @@ func main() {
                     },
                 },
             },
-            PaymentMethod: shared.PaymentMethodInitializeRequestPaymentMethod{},
+            PaymentMethod: shared.CreatePaymentMethodInitializeRequestPaymentMethodPaymentMethodSavedPaymentMethod(
+                    shared.PaymentMethodSavedPaymentMethod{
+                        DotTag: shared.PaymentMethodSavedPaymentMethodTagSavedPaymentMethod,
+                        ID: "id",
+                    },
+            ),
         },
     }, operationSecurity)
     if err != nil {
