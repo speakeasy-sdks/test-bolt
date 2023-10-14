@@ -33,9 +33,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(shared.Security{
-            APIKey: "",
-        }),
+        testbolt.WithSecurity(""),
     )
 
     ctx := context.Background()
@@ -85,9 +83,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(shared.Security{
-            APIKey: "",
-        }),
+        testbolt.WithSecurity(""),
     )
 
     ctx := context.Background()
@@ -156,9 +152,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(shared.Security{
-            APIKey: "",
-        }),
+        testbolt.WithSecurity(""),
     )
 
     ctx := context.Background()

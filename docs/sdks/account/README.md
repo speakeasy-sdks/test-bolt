@@ -39,6 +39,8 @@ import(
 
 func main() {
     s := testbolt.New()
+
+
     operationSecurity := operations.AccountAddPaymentMethodSecurity{
             APIKey: "",
             Oauth: "",
@@ -109,6 +111,8 @@ import(
 
 func main() {
     s := testbolt.New()
+
+
     operationSecurity := operations.AccountAddressCreateSecurity{
             APIKey: "",
             Oauth: "",
@@ -178,9 +182,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(shared.Security{
-            APIKey: "",
-        }),
+        testbolt.WithSecurity(""),
     )
 
     ctx := context.Background()
@@ -233,6 +235,8 @@ import(
 
 func main() {
     s := testbolt.New()
+
+
     operationSecurity := operations.AccountAddressEditSecurity{
             APIKey: "",
             Oauth: "",
@@ -301,9 +305,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(shared.Security{
-            APIKey: "",
-        }),
+        testbolt.WithSecurity(""),
     )
 
     ctx := context.Background()
@@ -355,6 +357,8 @@ import(
 
 func main() {
     s := testbolt.New()
+
+
     operationSecurity := operations.AccountGetSecurity{
             APIKey: "",
             Oauth: "",
