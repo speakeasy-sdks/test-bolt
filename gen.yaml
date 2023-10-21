@@ -2,27 +2,31 @@ configVersion: 1.0.0
 management:
   docChecksum: 33c07e585caae3e31a297b1d7ada0ec2
   docVersion: 3.0.1
-  speakeasyVersion: 1.99.2
-  generationVersion: 2.155.1
+  speakeasyVersion: 1.104.0
+  generationVersion: 2.169.0
 generation:
   comments:
     disableComments: false
     omitDescriptionIfSummaryPresent: false
   baseServerURL: ""
+  repoURL: https://github.com/speakeasy-sdks/test-bolt.git
   sdkClassName: test-bolt
   singleTagPerOp: false
   tagNamespacingDisabled: false
 features:
   go:
-    core: 2.91.5
+    core: 2.94.0
     globalSecurity: 2.82.2
     globalServerURLs: 2.82.0
     inputOutputModels: 2.81.1
     methodSecurity: 2.82.1
-    unions: 2.83.1
+    unions: 2.84.0
 go:
-  version: 0.6.3
+  version: 0.7.0
   clientServerStatusCodesAsErrors: true
   flattenGlobalSecurity: true
+  installationURL: https://github.com/speakeasy-sdks/test-bolt
   maxMethodParams: 0
   packageName: github.com/speakeasy-sdks/test-bolt
+  published: true
+  repoSubDirectory: .

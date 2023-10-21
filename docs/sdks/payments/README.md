@@ -38,7 +38,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Payments.GuestPaymentsInitialize(ctx, operations.GuestPaymentsInitializeRequest{
-        XPublishableKey: "Soap whereas input",
+        XPublishableKey: "string",
         GuestPaymentMethodInitializeRequest: shared.GuestPaymentMethodInitializeRequest{
             Cart: shared.Cart{
                 Amounts: shared.Amounts{
@@ -150,7 +150,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Payments.PaymentsInitialize(ctx, operations.PaymentsInitializeRequest{
-        XPublishableKey: "possimus",
+        XPublishableKey: "string",
         PaymentMethodInitializeRequest: shared.PaymentMethodInitializeRequest{
             Cart: shared.Cart{
                 Amounts: shared.Amounts{
@@ -185,10 +185,21 @@ func main() {
                 OrderReference: "order_100",
                 Shipments: []shared.CartShipment{
                     shared.CartShipment{
-                        Address: shared.CreateAddressReferenceAddressReferenceID(
-                                shared.AddressReferenceID{
-                                    DotTag: shared.AddressReferenceIDTagID,
+                        Address: shared.CreateAddressReferenceAddressReferenceExplicit(
+                                shared.AddressReferenceExplicit{
+                                    DotTag: shared.AddressReferenceExplicitTagExplicit,
+                                    Company: testbolt.String("ACME Corporation"),
+                                    CountryCode: "US",
+                                    Email: testbolt.String("alice@example.com"),
+                                    FirstName: "Alice",
                                     ID: "D4g3h5tBuVYK9",
+                                    LastName: "Baker",
+                                    Locality: "San Francisco",
+                                    Phone: testbolt.String("+14155550199"),
+                                    PostalCode: "94105",
+                                    Region: testbolt.String("CA"),
+                                    StreetAddress1: "535 Mission St, Ste 1401",
+                                    StreetAddress2: testbolt.String("c/o Shipping Department"),
                                 },
                         ),
                         Carrier: testbolt.String("FedEx"),

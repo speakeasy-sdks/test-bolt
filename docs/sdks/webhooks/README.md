@@ -195,7 +195,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Webhooks.WebhooksGetAll(ctx, operations.WebhooksGetAllRequest{
-        XPublishableKey: "maxime",
+        XPublishableKey: "string",
     })
     if err != nil {
         log.Fatal(err)

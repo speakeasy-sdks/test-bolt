@@ -31,7 +31,7 @@ func main() {
 
 	ctx := context.Background()
 	res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
-		XPublishableKey: "maroon Silicon female",
+		XPublishableKey: "string",
 		PaymentMethod: shared.CreatePaymentMethodPaymentMethodCreditCard(
 			shared.PaymentMethodCreditCard{
 				DotTag: shared.PaymentMethodCreditCardTagCreditCard,
