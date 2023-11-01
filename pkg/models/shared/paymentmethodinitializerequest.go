@@ -30,9 +30,9 @@ func CreatePaymentMethodInitializeRequestPaymentMethodPaymentMethodSavedPaymentM
 
 func (u *PaymentMethodInitializeRequestPaymentMethod) UnmarshalJSON(data []byte) error {
 
-	paymentMethodSavedPaymentMethod := new(PaymentMethodSavedPaymentMethod)
+	paymentMethodSavedPaymentMethod := PaymentMethodSavedPaymentMethod{}
 	if err := utils.UnmarshalJSON(data, &paymentMethodSavedPaymentMethod, "", true, true); err == nil {
-		u.PaymentMethodSavedPaymentMethod = paymentMethodSavedPaymentMethod
+		u.PaymentMethodSavedPaymentMethod = &paymentMethodSavedPaymentMethod
 		u.Type = PaymentMethodInitializeRequestPaymentMethodTypePaymentMethodSavedPaymentMethod
 		return nil
 	}

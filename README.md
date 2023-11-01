@@ -125,6 +125,237 @@ Here's an example of one such pagination call:
 
 <!-- End Go Types -->
 
+
+
+<!-- Start Error Handling -->
+# Error Handling
+
+Handling errors in your SDK should largely match your expectations.  All operations return a response object or an error, they will never return both.  When specified by the OpenAPI spec document, the SDK will return the appropriate subclass.
+
+
+## Example
+
+```go
+package main
+
+import (
+	"context"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"log"
+)
+
+func main() {
+	s := testbolt.New()
+
+	operationSecurity := operations.AccountAddressCreateSecurity{
+		APIKey: "",
+		Oauth:  "",
+	}
+
+	ctx := context.Background()
+	res, err := s.Account.AccountAddressCreate(ctx, operations.AccountAddressCreateRequest{
+		XPublishableKey: "string",
+		AddressListing: shared.AddressListing{
+			Company:        testbolt.String("ACME Corporation"),
+			CountryCode:    "US",
+			Email:          testbolt.String("alice@example.com"),
+			FirstName:      "Alice",
+			ID:             "D4g3h5tBuVYK9",
+			IsDefault:      testbolt.Bool(true),
+			LastName:       "Baker",
+			Locality:       "San Francisco",
+			Phone:          testbolt.String("+14155550199"),
+			PostalCode:     "94105",
+			Region:         testbolt.String("CA"),
+			StreetAddress1: "535 Mission St, Ste 1401",
+			StreetAddress2: testbolt.String("c/o Shipping Department"),
+		},
+	}, operationSecurity)
+	if err != nil {
+
+		var e *accountAddressCreate_400ApplicationJSON_OneOf
+		if errors.As(err, &e) {
+			// handle error
+			log.Fatal(e.Error())
+		}
+
+	}
+}
+
+```
+<!-- End Error Handling -->
+
+
+
+<!-- Start Server Selection -->
+# Server Selection
+
+## Select Server by Index
+
+You can override the default server globally using the `WithServerIndex` option when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
+
+| # | Server | Variables |
+| - | ------ | --------- |
+| 0 | `https://api.{username}.dev.bolt.me/v3` | `username` (default is `BL_DOMAIN`) |
+| 1 | `https://{environment}.bolt.com/v3` | `environment` (default is `api-sandbox`) |
+
+
+Some of the server options above contain variables. If you want to set the values of those variables, the following options are provided for doing so:
+ * `WithEnvironment ServerEnvironment`
+
+ * `WithUsername string`
+
+For example:
+
+
+```go
+package main
+
+import (
+	"context"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"log"
+)
+
+func main() {
+	s := testbolt.New(
+		testbolt.WithServerIndex(1),
+	)
+
+	operationSecurity := operations.AccountAddPaymentMethodSecurity{
+		APIKey: "",
+		Oauth:  "",
+	}
+
+	ctx := context.Background()
+	res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
+		XPublishableKey: "string",
+		PaymentMethod: shared.CreatePaymentMethodPaymentMethodCreditCard(
+			shared.PaymentMethodCreditCard{
+				DotTag: shared.PaymentMethodCreditCardTagCreditCard,
+				BillingAddress: shared.CreateAddressReferenceAddressReferenceID(
+					shared.AddressReferenceID{
+						DotTag: shared.AddressReferenceIDTagID,
+						ID:     "D4g3h5tBuVYK9",
+					},
+				),
+				Bin:        "411111",
+				Expiration: "2025-03",
+				ID:         testbolt.String("X5h6j8uLpVGK0"),
+				Last4:      "1004",
+				Network:    shared.PaymentMethodCreditCardNetworkVisa,
+				Token:      "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
+				Type:       shared.PaymentMethodCreditCardTypeCredit,
+			},
+		),
+	}, operationSecurity)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if res.PaymentMethod != nil {
+		// handle response
+	}
+}
+
+```
+
+
+## Override Server URL Per-Client
+
+The default server can also be overridden globally using the `WithServerURL` option when initializing the SDK client instance. For example:
+
+
+```go
+package main
+
+import (
+	"context"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"log"
+)
+
+func main() {
+	s := testbolt.New(
+		testbolt.WithServerURL("https://api.{username}.dev.bolt.me/v3"),
+	)
+
+	operationSecurity := operations.AccountAddPaymentMethodSecurity{
+		APIKey: "",
+		Oauth:  "",
+	}
+
+	ctx := context.Background()
+	res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
+		XPublishableKey: "string",
+		PaymentMethod: shared.CreatePaymentMethodPaymentMethodCreditCard(
+			shared.PaymentMethodCreditCard{
+				DotTag: shared.PaymentMethodCreditCardTagCreditCard,
+				BillingAddress: shared.CreateAddressReferenceAddressReferenceID(
+					shared.AddressReferenceID{
+						DotTag: shared.AddressReferenceIDTagID,
+						ID:     "D4g3h5tBuVYK9",
+					},
+				),
+				Bin:        "411111",
+				Expiration: "2025-03",
+				ID:         testbolt.String("X5h6j8uLpVGK0"),
+				Last4:      "1004",
+				Network:    shared.PaymentMethodCreditCardNetworkVisa,
+				Token:      "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
+				Type:       shared.PaymentMethodCreditCardTypeCredit,
+			},
+		),
+	}, operationSecurity)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if res.PaymentMethod != nil {
+		// handle response
+	}
+}
+
+```
+<!-- End Server Selection -->
+
+
+
+<!-- Start Custom HTTP Client -->
+# Custom HTTP Client
+
+The Go SDK makes API calls that wrap an internal HTTP client. The requirements for the HTTP client are very simple. It must match this interface:
+
+```go
+type HTTPClient interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+```
+
+The built-in `net/http` client satisfies this interface and a default client based on the built-in is provided by default. To replace this default with a client of your own, you can implement this interface yourself or provide your own client configured as desired. Here's a simple example, which adds a client with a 30 second timeout.
+
+```go
+import (
+	"net/http"
+	"time"
+	"github.com/myorg/your-go-sdk"
+)
+
+var (
+	httpClient = &http.Client{Timeout: 30 * time.Second}
+	sdkClient  = sdk.New(sdk.WithClient(httpClient))
+)
+```
+
+This can be a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration.
+<!-- End Custom HTTP Client -->
+
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
 
