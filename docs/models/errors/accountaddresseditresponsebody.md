@@ -1,4 +1,4 @@
-# AccountAddressCreate400ApplicationJSON
+# AccountAddressEditResponseBody
 
 The address is invalid and cannot be added
 

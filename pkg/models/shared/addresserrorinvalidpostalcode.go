@@ -7,43 +7,43 @@ import (
 	"fmt"
 )
 
-// AddressErrorInvalidPostalCodeTag - The type of error returned
-type AddressErrorInvalidPostalCodeTag string
+// DotTag - The type of error returned
+type DotTag string
 
 const (
-	AddressErrorInvalidPostalCodeTagInvalidPostalCode AddressErrorInvalidPostalCodeTag = "invalid_postal_code"
+	DotTagInvalidPostalCode DotTag = "invalid_postal_code"
 )
 
-func (e AddressErrorInvalidPostalCodeTag) ToPointer() *AddressErrorInvalidPostalCodeTag {
+func (e DotTag) ToPointer() *DotTag {
 	return &e
 }
 
-func (e *AddressErrorInvalidPostalCodeTag) UnmarshalJSON(data []byte) error {
+func (e *DotTag) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "invalid_postal_code":
-		*e = AddressErrorInvalidPostalCodeTag(v)
+		*e = DotTag(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AddressErrorInvalidPostalCodeTag: %v", v)
+		return fmt.Errorf("invalid value for DotTag: %v", v)
 	}
 }
 
 type AddressErrorInvalidPostalCode struct {
 	// The type of error returned
-	DotTag AddressErrorInvalidPostalCodeTag `json:".tag"`
+	DotTag DotTag `json:".tag"`
 	// A human-readable error message, which might include information specific to
 	// the request that was made.
 	//
 	Message string `json:"message"`
 }
 
-func (o *AddressErrorInvalidPostalCode) GetDotTag() AddressErrorInvalidPostalCodeTag {
+func (o *AddressErrorInvalidPostalCode) GetDotTag() DotTag {
 	if o == nil {
-		return AddressErrorInvalidPostalCodeTag("")
+		return DotTag("")
 	}
 	return o.DotTag
 }

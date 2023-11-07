@@ -43,26 +43,26 @@ func (e *ShipmentTrackingUpdateStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type ShipmentTrackingUpdateTrackingDetailsStatus string
+type ShipmentTrackingUpdateSchemasStatus string
 
 const (
-	ShipmentTrackingUpdateTrackingDetailsStatusUnknown            ShipmentTrackingUpdateTrackingDetailsStatus = "unknown"
-	ShipmentTrackingUpdateTrackingDetailsStatusPreTransit         ShipmentTrackingUpdateTrackingDetailsStatus = "pre_transit"
-	ShipmentTrackingUpdateTrackingDetailsStatusInTransit          ShipmentTrackingUpdateTrackingDetailsStatus = "in_transit"
-	ShipmentTrackingUpdateTrackingDetailsStatusOutForDelivery     ShipmentTrackingUpdateTrackingDetailsStatus = "out_for_delivery"
-	ShipmentTrackingUpdateTrackingDetailsStatusDelivered          ShipmentTrackingUpdateTrackingDetailsStatus = "delivered"
-	ShipmentTrackingUpdateTrackingDetailsStatusAvailableForPickup ShipmentTrackingUpdateTrackingDetailsStatus = "available_for_pickup"
-	ShipmentTrackingUpdateTrackingDetailsStatusReturnToSender     ShipmentTrackingUpdateTrackingDetailsStatus = "return_to_sender"
-	ShipmentTrackingUpdateTrackingDetailsStatusFailure            ShipmentTrackingUpdateTrackingDetailsStatus = "failure"
-	ShipmentTrackingUpdateTrackingDetailsStatusCancelled          ShipmentTrackingUpdateTrackingDetailsStatus = "cancelled"
-	ShipmentTrackingUpdateTrackingDetailsStatusError              ShipmentTrackingUpdateTrackingDetailsStatus = "error"
+	ShipmentTrackingUpdateSchemasStatusUnknown            ShipmentTrackingUpdateSchemasStatus = "unknown"
+	ShipmentTrackingUpdateSchemasStatusPreTransit         ShipmentTrackingUpdateSchemasStatus = "pre_transit"
+	ShipmentTrackingUpdateSchemasStatusInTransit          ShipmentTrackingUpdateSchemasStatus = "in_transit"
+	ShipmentTrackingUpdateSchemasStatusOutForDelivery     ShipmentTrackingUpdateSchemasStatus = "out_for_delivery"
+	ShipmentTrackingUpdateSchemasStatusDelivered          ShipmentTrackingUpdateSchemasStatus = "delivered"
+	ShipmentTrackingUpdateSchemasStatusAvailableForPickup ShipmentTrackingUpdateSchemasStatus = "available_for_pickup"
+	ShipmentTrackingUpdateSchemasStatusReturnToSender     ShipmentTrackingUpdateSchemasStatus = "return_to_sender"
+	ShipmentTrackingUpdateSchemasStatusFailure            ShipmentTrackingUpdateSchemasStatus = "failure"
+	ShipmentTrackingUpdateSchemasStatusCancelled          ShipmentTrackingUpdateSchemasStatus = "cancelled"
+	ShipmentTrackingUpdateSchemasStatusError              ShipmentTrackingUpdateSchemasStatus = "error"
 )
 
-func (e ShipmentTrackingUpdateTrackingDetailsStatus) ToPointer() *ShipmentTrackingUpdateTrackingDetailsStatus {
+func (e ShipmentTrackingUpdateSchemasStatus) ToPointer() *ShipmentTrackingUpdateSchemasStatus {
 	return &e
 }
 
-func (e *ShipmentTrackingUpdateTrackingDetailsStatus) UnmarshalJSON(data []byte) error {
+func (e *ShipmentTrackingUpdateSchemasStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -87,14 +87,14 @@ func (e *ShipmentTrackingUpdateTrackingDetailsStatus) UnmarshalJSON(data []byte)
 	case "cancelled":
 		fallthrough
 	case "error":
-		*e = ShipmentTrackingUpdateTrackingDetailsStatus(v)
+		*e = ShipmentTrackingUpdateSchemasStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ShipmentTrackingUpdateTrackingDetailsStatus: %v", v)
+		return fmt.Errorf("invalid value for ShipmentTrackingUpdateSchemasStatus: %v", v)
 	}
 }
 
-type ShipmentTrackingUpdateTrackingDetails struct {
+type TrackingDetails struct {
 	// The country associated this this set of tracking details, if any.
 	CountryCode *string `json:"country_code,omitempty"`
 	// The tracking detail's timestamp.
@@ -106,53 +106,53 @@ type ShipmentTrackingUpdateTrackingDetails struct {
 	// The postal associated this this set of tracking details, if any.
 	PostalCode *string `json:"postal_code,omitempty"`
 	// The region associated this this set of tracking details, if any.
-	Region *string                                      `json:"region,omitempty"`
-	Status *ShipmentTrackingUpdateTrackingDetailsStatus `json:"status,omitempty"`
+	Region *string                              `json:"region,omitempty"`
+	Status *ShipmentTrackingUpdateSchemasStatus `json:"status,omitempty"`
 }
 
-func (o *ShipmentTrackingUpdateTrackingDetails) GetCountryCode() *string {
+func (o *TrackingDetails) GetCountryCode() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CountryCode
 }
 
-func (o *ShipmentTrackingUpdateTrackingDetails) GetEventDate() *string {
+func (o *TrackingDetails) GetEventDate() *string {
 	if o == nil {
 		return nil
 	}
 	return o.EventDate
 }
 
-func (o *ShipmentTrackingUpdateTrackingDetails) GetLocality() *string {
+func (o *TrackingDetails) GetLocality() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Locality
 }
 
-func (o *ShipmentTrackingUpdateTrackingDetails) GetMessage() *string {
+func (o *TrackingDetails) GetMessage() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Message
 }
 
-func (o *ShipmentTrackingUpdateTrackingDetails) GetPostalCode() *string {
+func (o *TrackingDetails) GetPostalCode() *string {
 	if o == nil {
 		return nil
 	}
 	return o.PostalCode
 }
 
-func (o *ShipmentTrackingUpdateTrackingDetails) GetRegion() *string {
+func (o *TrackingDetails) GetRegion() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Region
 }
 
-func (o *ShipmentTrackingUpdateTrackingDetails) GetStatus() *ShipmentTrackingUpdateTrackingDetailsStatus {
+func (o *TrackingDetails) GetStatus() *ShipmentTrackingUpdateSchemasStatus {
 	if o == nil {
 		return nil
 	}
@@ -165,7 +165,7 @@ type ShipmentTrackingUpdate struct {
 	// The shipment's status.
 	Status ShipmentTrackingUpdateStatus `json:"status"`
 	// A list of tracking updates that contain the shipment's status, location, and any unique messages.
-	TrackingDetails []ShipmentTrackingUpdateTrackingDetails `json:"tracking_details"`
+	TrackingDetails []TrackingDetails `json:"tracking_details"`
 	// The carrier's tracking number for the shipment. Must be prefixed with `MockBolt`.
 	TrackingNumber string `json:"tracking_number"`
 }
@@ -195,9 +195,9 @@ func (o *ShipmentTrackingUpdate) GetStatus() ShipmentTrackingUpdateStatus {
 	return o.Status
 }
 
-func (o *ShipmentTrackingUpdate) GetTrackingDetails() []ShipmentTrackingUpdateTrackingDetails {
+func (o *ShipmentTrackingUpdate) GetTrackingDetails() []TrackingDetails {
 	if o == nil {
-		return []ShipmentTrackingUpdateTrackingDetails{}
+		return []TrackingDetails{}
 	}
 	return o.TrackingDetails
 }

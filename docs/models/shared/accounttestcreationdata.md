@@ -1,4 +1,4 @@
-# AccountTestCreationDataOutput
+# AccountTestCreationData
 
 
 ## Fields
@@ -6,9 +6,7 @@
 | Field                                                  | Type                                                   | Required                                               | Description                                            | Example                                                |
 | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |
 | `DeactivateAt`                                         | [time.Time](https://pkg.go.dev/time#Time)              | :heavy_check_mark:                                     | N/A                                                    | 2017-07-21T17:32:28Z                                   |
-| `Email`                                                | *string*                                               | :heavy_check_mark:                                     | N/A                                                    | alice@example.com                                      |
 | `EmailState`                                           | [shared.EmailState](../../models/shared/emailstate.md) | :heavy_check_mark:                                     | N/A                                                    | unverified                                             |
-| `OauthCode`                                            | *string*                                               | :heavy_check_mark:                                     | N/A                                                    | 7GSjMRSHs6Ak7C_zvVW6P2IhZOHxMK7HZKW1fMX85ms            |
-| `OtpCode`                                              | *string*                                               | :heavy_check_mark:                                     | N/A                                                    | 123456                                                 |
-| `Phone`                                                | *string*                                               | :heavy_check_mark:                                     | N/A                                                    | +14155550199                                           |
+| `HasAddress`                                           | **bool*                                                | :heavy_minus_sign:                                     | N/A                                                    | true                                                   |
+| `IsMigrated`                                           | **bool*                                                | :heavy_minus_sign:                                     | N/A                                                    | true                                                   |
 | `PhoneState`                                           | [shared.PhoneState](../../models/shared/phonestate.md) | :heavy_check_mark:                                     | N/A                                                    | verified                                               |

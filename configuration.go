@@ -15,21 +15,21 @@ import (
 	"strings"
 )
 
-// Merchant configuration endpoints allow you to retrieve and configure merchant-level
+// Configuration - Merchant configuration endpoints allow you to retrieve and configure merchant-level
 // configuration, such as callback URLs, identifiers, secrets, etc...
-type configuration struct {
+type Configuration struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newConfiguration(sdkConfig sdkConfiguration) *configuration {
-	return &configuration{
+func newConfiguration(sdkConfig sdkConfiguration) *Configuration {
+	return &Configuration{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // MerchantCallbacksGet - Retrieve callback URLs for the merchant
 // Return callback URLs configured on the merchant such as OAuth URLs.
-func (s *configuration) MerchantCallbacksGet(ctx context.Context, request operations.MerchantCallbacksGetRequest) (*operations.MerchantCallbacksGetResponse, error) {
+func (s *Configuration) MerchantCallbacksGet(ctx context.Context, request operations.MerchantCallbacksGetRequest) (*operations.MerchantCallbacksGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/merchant/callbacks"
 
@@ -90,7 +90,7 @@ func (s *configuration) MerchantCallbacksGet(ctx context.Context, request operat
 
 // MerchantCallbacksUpdate - Update callback URLs for the merchant
 // Update and configure callback URLs on the merchant such as OAuth URLs.
-func (s *configuration) MerchantCallbacksUpdate(ctx context.Context, request operations.MerchantCallbacksUpdateRequest) (*operations.MerchantCallbacksUpdateResponse, error) {
+func (s *Configuration) MerchantCallbacksUpdate(ctx context.Context, request operations.MerchantCallbacksUpdateRequest) (*operations.MerchantCallbacksUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/merchant/callbacks"
 
@@ -153,7 +153,7 @@ func (s *configuration) MerchantCallbacksUpdate(ctx context.Context, request ope
 	case httpRes.StatusCode == 400:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out sdkerrors.MerchantCallbacksUpdate400ApplicationJSON
+			var out sdkerrors.MerchantCallbacksUpdateResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -174,7 +174,7 @@ func (s *configuration) MerchantCallbacksUpdate(ctx context.Context, request ope
 
 // MerchantIdentifiersGet - Retrieve identifiers for the merchant
 // Return several identifiers for the merchant, such as public IDs, publishable keys, signing secrets, etc...
-func (s *configuration) MerchantIdentifiersGet(ctx context.Context) (*operations.MerchantIdentifiersGetResponse, error) {
+func (s *Configuration) MerchantIdentifiersGet(ctx context.Context) (*operations.MerchantIdentifiersGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/merchant/identifiers"
 

@@ -9,19 +9,19 @@ import (
 	"time"
 )
 
-type AccountTestCreationDataEmailState string
+type EmailState string
 
 const (
-	AccountTestCreationDataEmailStateMissing    AccountTestCreationDataEmailState = "missing"
-	AccountTestCreationDataEmailStateUnverified AccountTestCreationDataEmailState = "unverified"
-	AccountTestCreationDataEmailStateVerified   AccountTestCreationDataEmailState = "verified"
+	EmailStateMissing    EmailState = "missing"
+	EmailStateUnverified EmailState = "unverified"
+	EmailStateVerified   EmailState = "verified"
 )
 
-func (e AccountTestCreationDataEmailState) ToPointer() *AccountTestCreationDataEmailState {
+func (e EmailState) ToPointer() *EmailState {
 	return &e
 }
 
-func (e *AccountTestCreationDataEmailState) UnmarshalJSON(data []byte) error {
+func (e *EmailState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -32,26 +32,26 @@ func (e *AccountTestCreationDataEmailState) UnmarshalJSON(data []byte) error {
 	case "unverified":
 		fallthrough
 	case "verified":
-		*e = AccountTestCreationDataEmailState(v)
+		*e = EmailState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AccountTestCreationDataEmailState: %v", v)
+		return fmt.Errorf("invalid value for EmailState: %v", v)
 	}
 }
 
-type AccountTestCreationDataPhoneState string
+type PhoneState string
 
 const (
-	AccountTestCreationDataPhoneStateMissing    AccountTestCreationDataPhoneState = "missing"
-	AccountTestCreationDataPhoneStateUnverified AccountTestCreationDataPhoneState = "unverified"
-	AccountTestCreationDataPhoneStateVerified   AccountTestCreationDataPhoneState = "verified"
+	PhoneStateMissing    PhoneState = "missing"
+	PhoneStateUnverified PhoneState = "unverified"
+	PhoneStateVerified   PhoneState = "verified"
 )
 
-func (e AccountTestCreationDataPhoneState) ToPointer() *AccountTestCreationDataPhoneState {
+func (e PhoneState) ToPointer() *PhoneState {
 	return &e
 }
 
-func (e *AccountTestCreationDataPhoneState) UnmarshalJSON(data []byte) error {
+func (e *PhoneState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -62,75 +62,75 @@ func (e *AccountTestCreationDataPhoneState) UnmarshalJSON(data []byte) error {
 	case "unverified":
 		fallthrough
 	case "verified":
-		*e = AccountTestCreationDataPhoneState(v)
+		*e = PhoneState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AccountTestCreationDataPhoneState: %v", v)
+		return fmt.Errorf("invalid value for PhoneState: %v", v)
 	}
 }
 
-type AccountTestCreationDataInput struct {
-	DeactivateAt time.Time                         `json:"deactivate_at"`
-	EmailState   AccountTestCreationDataEmailState `json:"email_state"`
-	HasAddress   *bool                             `json:"has_address,omitempty"`
-	IsMigrated   *bool                             `json:"is_migrated,omitempty"`
-	PhoneState   AccountTestCreationDataPhoneState `json:"phone_state"`
+type AccountTestCreationData struct {
+	DeactivateAt time.Time  `json:"deactivate_at"`
+	EmailState   EmailState `json:"email_state"`
+	HasAddress   *bool      `json:"has_address,omitempty"`
+	IsMigrated   *bool      `json:"is_migrated,omitempty"`
+	PhoneState   PhoneState `json:"phone_state"`
 }
 
-func (a AccountTestCreationDataInput) MarshalJSON() ([]byte, error) {
+func (a AccountTestCreationData) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(a, "", false)
 }
 
-func (a *AccountTestCreationDataInput) UnmarshalJSON(data []byte) error {
+func (a *AccountTestCreationData) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AccountTestCreationDataInput) GetDeactivateAt() time.Time {
+func (o *AccountTestCreationData) GetDeactivateAt() time.Time {
 	if o == nil {
 		return time.Time{}
 	}
 	return o.DeactivateAt
 }
 
-func (o *AccountTestCreationDataInput) GetEmailState() AccountTestCreationDataEmailState {
+func (o *AccountTestCreationData) GetEmailState() EmailState {
 	if o == nil {
-		return AccountTestCreationDataEmailState("")
+		return EmailState("")
 	}
 	return o.EmailState
 }
 
-func (o *AccountTestCreationDataInput) GetHasAddress() *bool {
+func (o *AccountTestCreationData) GetHasAddress() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.HasAddress
 }
 
-func (o *AccountTestCreationDataInput) GetIsMigrated() *bool {
+func (o *AccountTestCreationData) GetIsMigrated() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IsMigrated
 }
 
-func (o *AccountTestCreationDataInput) GetPhoneState() AccountTestCreationDataPhoneState {
+func (o *AccountTestCreationData) GetPhoneState() PhoneState {
 	if o == nil {
-		return AccountTestCreationDataPhoneState("")
+		return PhoneState("")
 	}
 	return o.PhoneState
 }
 
 type AccountTestCreationDataOutput struct {
-	DeactivateAt time.Time                         `json:"deactivate_at"`
-	Email        string                            `json:"email"`
-	EmailState   AccountTestCreationDataEmailState `json:"email_state"`
-	OauthCode    string                            `json:"oauth_code"`
-	OtpCode      string                            `json:"otp_code"`
-	Phone        string                            `json:"phone"`
-	PhoneState   AccountTestCreationDataPhoneState `json:"phone_state"`
+	DeactivateAt time.Time  `json:"deactivate_at"`
+	Email        string     `json:"email"`
+	EmailState   EmailState `json:"email_state"`
+	OauthCode    string     `json:"oauth_code"`
+	OtpCode      string     `json:"otp_code"`
+	Phone        string     `json:"phone"`
+	PhoneState   PhoneState `json:"phone_state"`
 }
 
 func (a AccountTestCreationDataOutput) MarshalJSON() ([]byte, error) {
@@ -158,9 +158,9 @@ func (o *AccountTestCreationDataOutput) GetEmail() string {
 	return o.Email
 }
 
-func (o *AccountTestCreationDataOutput) GetEmailState() AccountTestCreationDataEmailState {
+func (o *AccountTestCreationDataOutput) GetEmailState() EmailState {
 	if o == nil {
-		return AccountTestCreationDataEmailState("")
+		return EmailState("")
 	}
 	return o.EmailState
 }
@@ -186,9 +186,9 @@ func (o *AccountTestCreationDataOutput) GetPhone() string {
 	return o.Phone
 }
 
-func (o *AccountTestCreationDataOutput) GetPhoneState() AccountTestCreationDataPhoneState {
+func (o *AccountTestCreationDataOutput) GetPhoneState() PhoneState {
 	if o == nil {
-		return AccountTestCreationDataPhoneState("")
+		return PhoneState("")
 	}
 	return o.PhoneState
 }

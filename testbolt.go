@@ -69,25 +69,25 @@ type TestBolt struct {
 	// Account endpoints allow you to view and manage shoppers' accounts. For example,
 	// you can add or remove addresses and payment information.
 	//
-	Account *account
-	// Merchant configuration endpoints allow you to retrieve and configure merchant-level
-	// configuration, such as callback URLs, identifiers, secrets, etc...
-	//
-	Configuration *configuration
+	Account *Account
 	// Use the Payments API to tokenize and process alternative payment methods including Paypal with Bolt. This API is for the Bolt
 	// Accounts package.
 	//
-	Payments *payments
+	Payments *Payments
+	// Merchant configuration endpoints allow you to retrieve and configure merchant-level
+	// configuration, such as callback URLs, identifiers, secrets, etc...
+	//
+	Configuration *Configuration
 	// Endpoints that allow you to generate and retrieve test data to verify certain
 	// flows in non-production environments.
 	//
-	Testing *testing
+	Testing *Testing
 	// Set up webhooks to notify your backend of events within Bolt. These webhooks
 	// can communicate with your OMS or other systems to keep them up to date with Bolt.
 	//
 	//
 	// https://help.bolt.com/get-started/during-checkout/webhooks/
-	Webhooks *webhooks
+	Webhooks *Webhooks
 
 	sdkConfiguration sdkConfiguration
 }
@@ -213,9 +213,9 @@ func New(opts ...SDKOption) *TestBolt {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "3.0.1",
-			SDKVersion:        "0.7.1",
-			GenVersion:        "2.173.0",
-			UserAgent:         "speakeasy-sdk/go 0.7.1 2.173.0 3.0.1 github.com/speakeasy-sdks/test-bolt",
+			SDKVersion:        "0.8.0",
+			GenVersion:        "2.181.1",
+			UserAgent:         "speakeasy-sdk/go 0.8.0 2.181.1 3.0.1 github.com/speakeasy-sdks/test-bolt",
 			ServerDefaults: []map[string]string{
 				{
 					"username": "BL_DOMAIN",
@@ -244,9 +244,9 @@ func New(opts ...SDKOption) *TestBolt {
 
 	sdk.Account = newAccount(sdk.sdkConfiguration)
 
-	sdk.Configuration = newConfiguration(sdk.sdkConfiguration)
-
 	sdk.Payments = newPayments(sdk.sdkConfiguration)
+
+	sdk.Configuration = newConfiguration(sdk.sdkConfiguration)
 
 	sdk.Testing = newTesting(sdk.sdkConfiguration)
 

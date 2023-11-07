@@ -7,25 +7,25 @@ import (
 	"fmt"
 )
 
-// CreditCardNetwork - The credit card network.
-type CreditCardNetwork string
+// Network - The credit card network.
+type Network string
 
 const (
-	CreditCardNetworkVisa         CreditCardNetwork = "visa"
-	CreditCardNetworkMastercard   CreditCardNetwork = "mastercard"
-	CreditCardNetworkAmex         CreditCardNetwork = "amex"
-	CreditCardNetworkDiscover     CreditCardNetwork = "discover"
-	CreditCardNetworkJcb          CreditCardNetwork = "jcb"
-	CreditCardNetworkUnionpay     CreditCardNetwork = "unionpay"
-	CreditCardNetworkAlliancedata CreditCardNetwork = "alliancedata"
-	CreditCardNetworkCitiplcc     CreditCardNetwork = "citiplcc"
+	NetworkVisa         Network = "visa"
+	NetworkMastercard   Network = "mastercard"
+	NetworkAmex         Network = "amex"
+	NetworkDiscover     Network = "discover"
+	NetworkJcb          Network = "jcb"
+	NetworkUnionpay     Network = "unionpay"
+	NetworkAlliancedata Network = "alliancedata"
+	NetworkCitiplcc     Network = "citiplcc"
 )
 
-func (e CreditCardNetwork) ToPointer() *CreditCardNetwork {
+func (e Network) ToPointer() *Network {
 	return &e
 }
 
-func (e *CreditCardNetwork) UnmarshalJSON(data []byte) error {
+func (e *Network) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -46,10 +46,10 @@ func (e *CreditCardNetwork) UnmarshalJSON(data []byte) error {
 	case "alliancedata":
 		fallthrough
 	case "citiplcc":
-		*e = CreditCardNetwork(v)
+		*e = Network(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CreditCardNetwork: %v", v)
+		return fmt.Errorf("invalid value for Network: %v", v)
 	}
 }
 
@@ -61,7 +61,7 @@ type CreditCard struct {
 	// The last 4 digits of the credit card number.
 	Last4 string `json:"last4"`
 	// The credit card network.
-	Network CreditCardNetwork `json:"network"`
+	Network Network `json:"network"`
 	// The Bolt token associated to the credit card.
 	Token string `json:"token"`
 }
@@ -87,9 +87,9 @@ func (o *CreditCard) GetLast4() string {
 	return o.Last4
 }
 
-func (o *CreditCard) GetNetwork() CreditCardNetwork {
+func (o *CreditCard) GetNetwork() Network {
 	if o == nil {
-		return CreditCardNetwork("")
+		return Network("")
 	}
 	return o.Network
 }

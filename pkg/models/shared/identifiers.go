@@ -2,11 +2,11 @@
 
 package shared
 
-type IdentifiersMerchantDivisions struct {
+type MerchantDivisions struct {
 	PublishableKey string `json:"publishable_key"`
 }
 
-func (o *IdentifiersMerchantDivisions) GetPublishableKey() string {
+func (o *MerchantDivisions) GetPublishableKey() string {
 	if o == nil {
 		return ""
 	}
@@ -14,14 +14,14 @@ func (o *IdentifiersMerchantDivisions) GetPublishableKey() string {
 }
 
 type Identifiers struct {
-	MerchantDivisions []IdentifiersMerchantDivisions `json:"merchant_divisions"`
-	MerchantID        string                         `json:"merchant_id"`
-	SigningSecret     string                         `json:"signing_secret"`
+	MerchantDivisions []MerchantDivisions `json:"merchant_divisions"`
+	MerchantID        string              `json:"merchant_id"`
+	SigningSecret     string              `json:"signing_secret"`
 }
 
-func (o *Identifiers) GetMerchantDivisions() []IdentifiersMerchantDivisions {
+func (o *Identifiers) GetMerchantDivisions() []MerchantDivisions {
 	if o == nil {
-		return []IdentifiersMerchantDivisions{}
+		return []MerchantDivisions{}
 	}
 	return o.MerchantDivisions
 }

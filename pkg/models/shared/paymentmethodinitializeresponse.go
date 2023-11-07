@@ -7,18 +7,18 @@ import (
 	"fmt"
 )
 
-type PaymentMethodInitializeResponseActionMethod string
+type Method string
 
 const (
-	PaymentMethodInitializeResponseActionMethodGet  PaymentMethodInitializeResponseActionMethod = "GET"
-	PaymentMethodInitializeResponseActionMethodPost PaymentMethodInitializeResponseActionMethod = "POST"
+	MethodGet  Method = "GET"
+	MethodPost Method = "POST"
 )
 
-func (e PaymentMethodInitializeResponseActionMethod) ToPointer() *PaymentMethodInitializeResponseActionMethod {
+func (e Method) ToPointer() *Method {
 	return &e
 }
 
-func (e *PaymentMethodInitializeResponseActionMethod) UnmarshalJSON(data []byte) error {
+func (e *Method) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -27,25 +27,25 @@ func (e *PaymentMethodInitializeResponseActionMethod) UnmarshalJSON(data []byte)
 	case "GET":
 		fallthrough
 	case "POST":
-		*e = PaymentMethodInitializeResponseActionMethod(v)
+		*e = Method(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for PaymentMethodInitializeResponseActionMethod: %v", v)
+		return fmt.Errorf("invalid value for Method: %v", v)
 	}
 }
 
-type PaymentMethodInitializeResponseActionType string
+type PaymentMethodInitializeResponseType string
 
 const (
-	PaymentMethodInitializeResponseActionTypeRedirect PaymentMethodInitializeResponseActionType = "redirect"
-	PaymentMethodInitializeResponseActionTypeFinalize PaymentMethodInitializeResponseActionType = "finalize"
+	PaymentMethodInitializeResponseTypeRedirect PaymentMethodInitializeResponseType = "redirect"
+	PaymentMethodInitializeResponseTypeFinalize PaymentMethodInitializeResponseType = "finalize"
 )
 
-func (e PaymentMethodInitializeResponseActionType) ToPointer() *PaymentMethodInitializeResponseActionType {
+func (e PaymentMethodInitializeResponseType) ToPointer() *PaymentMethodInitializeResponseType {
 	return &e
 }
 
-func (e *PaymentMethodInitializeResponseActionType) UnmarshalJSON(data []byte) error {
+func (e *PaymentMethodInitializeResponseType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -54,54 +54,54 @@ func (e *PaymentMethodInitializeResponseActionType) UnmarshalJSON(data []byte) e
 	case "redirect":
 		fallthrough
 	case "finalize":
-		*e = PaymentMethodInitializeResponseActionType(v)
+		*e = PaymentMethodInitializeResponseType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for PaymentMethodInitializeResponseActionType: %v", v)
+		return fmt.Errorf("invalid value for PaymentMethodInitializeResponseType: %v", v)
 	}
 }
 
-type PaymentMethodInitializeResponseAction struct {
-	Method *PaymentMethodInitializeResponseActionMethod `json:"method,omitempty"`
-	Type   *PaymentMethodInitializeResponseActionType   `json:"type,omitempty"`
-	URL    *string                                      `json:"url,omitempty"`
+type Action struct {
+	Method *Method                              `json:"method,omitempty"`
+	Type   *PaymentMethodInitializeResponseType `json:"type,omitempty"`
+	URL    *string                              `json:"url,omitempty"`
 }
 
-func (o *PaymentMethodInitializeResponseAction) GetMethod() *PaymentMethodInitializeResponseActionMethod {
+func (o *Action) GetMethod() *Method {
 	if o == nil {
 		return nil
 	}
 	return o.Method
 }
 
-func (o *PaymentMethodInitializeResponseAction) GetType() *PaymentMethodInitializeResponseActionType {
+func (o *Action) GetType() *PaymentMethodInitializeResponseType {
 	if o == nil {
 		return nil
 	}
 	return o.Type
 }
 
-func (o *PaymentMethodInitializeResponseAction) GetURL() *string {
+func (o *Action) GetURL() *string {
 	if o == nil {
 		return nil
 	}
 	return o.URL
 }
 
-type PaymentMethodInitializeResponseStatus string
+type Status string
 
 const (
-	PaymentMethodInitializeResponseStatusAwaitingUserConfirmation PaymentMethodInitializeResponseStatus = "awaiting_user_confirmation"
-	PaymentMethodInitializeResponseStatusPaymentReady             PaymentMethodInitializeResponseStatus = "payment_ready"
-	PaymentMethodInitializeResponseStatusUpdatePaymentMethod      PaymentMethodInitializeResponseStatus = "update_payment_method"
-	PaymentMethodInitializeResponseStatusSuccess                  PaymentMethodInitializeResponseStatus = "success"
+	StatusAwaitingUserConfirmation Status = "awaiting_user_confirmation"
+	StatusPaymentReady             Status = "payment_ready"
+	StatusUpdatePaymentMethod      Status = "update_payment_method"
+	StatusSuccess                  Status = "success"
 )
 
-func (e PaymentMethodInitializeResponseStatus) ToPointer() *PaymentMethodInitializeResponseStatus {
+func (e Status) ToPointer() *Status {
 	return &e
 }
 
-func (e *PaymentMethodInitializeResponseStatus) UnmarshalJSON(data []byte) error {
+func (e *Status) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -114,20 +114,20 @@ func (e *PaymentMethodInitializeResponseStatus) UnmarshalJSON(data []byte) error
 	case "update_payment_method":
 		fallthrough
 	case "success":
-		*e = PaymentMethodInitializeResponseStatus(v)
+		*e = Status(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for PaymentMethodInitializeResponseStatus: %v", v)
+		return fmt.Errorf("invalid value for Status: %v", v)
 	}
 }
 
 type PaymentMethodInitializeResponse struct {
-	Action *PaymentMethodInitializeResponseAction `json:"action,omitempty"`
-	ID     *string                                `json:"id,omitempty"`
-	Status *PaymentMethodInitializeResponseStatus `json:"status,omitempty"`
+	Action *Action `json:"action,omitempty"`
+	ID     *string `json:"id,omitempty"`
+	Status *Status `json:"status,omitempty"`
 }
 
-func (o *PaymentMethodInitializeResponse) GetAction() *PaymentMethodInitializeResponseAction {
+func (o *PaymentMethodInitializeResponse) GetAction() *Action {
 	if o == nil {
 		return nil
 	}
@@ -141,7 +141,7 @@ func (o *PaymentMethodInitializeResponse) GetID() *string {
 	return o.ID
 }
 
-func (o *PaymentMethodInitializeResponse) GetStatus() *PaymentMethodInitializeResponseStatus {
+func (o *PaymentMethodInitializeResponse) GetStatus() *Status {
 	if o == nil {
 		return nil
 	}

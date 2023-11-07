@@ -1,5 +1,5 @@
 # Configuration
-(*Configuration*)
+(*.Configuration*)
 
 ## Overview
 

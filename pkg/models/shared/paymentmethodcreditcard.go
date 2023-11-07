@@ -77,19 +77,19 @@ func (e *PaymentMethodCreditCardNetwork) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// PaymentMethodCreditCardType - Credit card type
-type PaymentMethodCreditCardType string
+// Type - Credit card type
+type Type string
 
 const (
-	PaymentMethodCreditCardTypeCredit PaymentMethodCreditCardType = "credit"
-	PaymentMethodCreditCardTypePlcc   PaymentMethodCreditCardType = "plcc"
+	TypeCredit Type = "credit"
+	TypePlcc   Type = "plcc"
 )
 
-func (e PaymentMethodCreditCardType) ToPointer() *PaymentMethodCreditCardType {
+func (e Type) ToPointer() *Type {
 	return &e
 }
 
-func (e *PaymentMethodCreditCardType) UnmarshalJSON(data []byte) error {
+func (e *Type) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -98,10 +98,10 @@ func (e *PaymentMethodCreditCardType) UnmarshalJSON(data []byte) error {
 	case "credit":
 		fallthrough
 	case "plcc":
-		*e = PaymentMethodCreditCardType(v)
+		*e = Type(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for PaymentMethodCreditCardType: %v", v)
+		return fmt.Errorf("invalid value for Type: %v", v)
 	}
 }
 
@@ -120,7 +120,7 @@ type PaymentMethodCreditCard struct {
 	// The Bolt token associated to the credit card.
 	Token string `json:"token"`
 	// Credit card type
-	Type PaymentMethodCreditCardType `json:"type"`
+	Type Type `json:"type"`
 }
 
 func (o *PaymentMethodCreditCard) GetDotTag() PaymentMethodCreditCardTag {
@@ -187,9 +187,9 @@ func (o *PaymentMethodCreditCard) GetToken() string {
 	return o.Token
 }
 
-func (o *PaymentMethodCreditCard) GetType() PaymentMethodCreditCardType {
+func (o *PaymentMethodCreditCard) GetType() Type {
 	if o == nil {
-		return PaymentMethodCreditCardType("")
+		return Type("")
 	}
 	return o.Type
 }

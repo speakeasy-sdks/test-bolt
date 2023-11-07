@@ -47,7 +47,7 @@ func main() {
 				Last4:      "1004",
 				Network:    shared.PaymentMethodCreditCardNetworkVisa,
 				Token:      "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
-				Type:       shared.PaymentMethodCreditCardTypeCredit,
+				Type:       shared.TypeCredit,
 			},
 		),
 	}, operationSecurity)
@@ -67,7 +67,7 @@ func main() {
 ## Available Resources and Operations
 
 
-### [Account](docs/sdks/account/README.md)
+### [.Account](docs/sdks/account/README.md)
 
 * [AccountAddPaymentMethod](docs/sdks/account/README.md#accountaddpaymentmethod) - Add a payment method to a shopper's Bolt account Wallet.
 * [AccountAddressCreate](docs/sdks/account/README.md#accountaddresscreate) - Add an address
@@ -76,24 +76,24 @@ func main() {
 * [AccountExists](docs/sdks/account/README.md#accountexists) - Determine the existence of a Bolt account
 * [AccountGet](docs/sdks/account/README.md#accountget) - Retrieve account details
 
-### [Configuration](docs/sdks/configuration/README.md)
+### [.Payments](docs/sdks/payments/README.md)
+
+* [GuestPaymentsInitialize](docs/sdks/payments/README.md#guestpaymentsinitialize) - Initialize a Bolt payment for guest shoppers
+* [PaymentsInitialize](docs/sdks/payments/README.md#paymentsinitialize) - Initialize a Bolt payment for logged in shoppers
+
+### [.Configuration](docs/sdks/configuration/README.md)
 
 * [MerchantCallbacksGet](docs/sdks/configuration/README.md#merchantcallbacksget) - Retrieve callback URLs for the merchant
 * [MerchantCallbacksUpdate](docs/sdks/configuration/README.md#merchantcallbacksupdate) - Update callback URLs for the merchant
 * [MerchantIdentifiersGet](docs/sdks/configuration/README.md#merchantidentifiersget) - Retrieve identifiers for the merchant
 
-### [Payments](docs/sdks/payments/README.md)
-
-* [GuestPaymentsInitialize](docs/sdks/payments/README.md#guestpaymentsinitialize) - Initialize a Bolt payment for guest shoppers
-* [PaymentsInitialize](docs/sdks/payments/README.md#paymentsinitialize) - Initialize a Bolt payment for logged in shoppers
-
-### [Testing](docs/sdks/testing/README.md)
+### [.Testing](docs/sdks/testing/README.md)
 
 * [TestingAccountCreate](docs/sdks/testing/README.md#testingaccountcreate) - Create a test account
 * [TestingCreditCardGet](docs/sdks/testing/README.md#testingcreditcardget) - Retrieve a test credit card, including its token
 * [TestingShipmentTrackingCreate](docs/sdks/testing/README.md#testingshipmenttrackingcreate) - Simulate a shipment tracking update
 
-### [Webhooks](docs/sdks/webhooks/README.md)
+### [.Webhooks](docs/sdks/webhooks/README.md)
 
 * [WebhooksCreate](docs/sdks/webhooks/README.md#webhookscreate) - Create a webhook to subscribe to certain events
 * [WebhooksDelete](docs/sdks/webhooks/README.md#webhooksdelete) - Delete an existing webhook
@@ -175,7 +175,7 @@ func main() {
 	}, operationSecurity)
 	if err != nil {
 
-		var e *accountAddressCreate_400ApplicationJSON_OneOf
+		var e *sdkerrors.AccountAddressCreateResponseBody
 		if errors.As(err, &e) {
 			// handle error
 			log.Fatal(e.Error())
@@ -203,12 +203,11 @@ You can override the default server globally using the `WithServerIndex` option 
 
 
 Some of the server options above contain variables. If you want to set the values of those variables, the following options are provided for doing so:
- * `WithEnvironment ServerEnvironment`
+ * `WithEnvironment testbolt.ServerEnvironment`
 
  * `WithUsername string`
 
 For example:
-
 
 ```go
 package main
@@ -249,7 +248,7 @@ func main() {
 				Last4:      "1004",
 				Network:    shared.PaymentMethodCreditCardNetworkVisa,
 				Token:      "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
-				Type:       shared.PaymentMethodCreditCardTypeCredit,
+				Type:       shared.TypeCredit,
 			},
 		),
 	}, operationSecurity)
@@ -268,7 +267,6 @@ func main() {
 ## Override Server URL Per-Client
 
 The default server can also be overridden globally using the `WithServerURL` option when initializing the SDK client instance. For example:
-
 
 ```go
 package main
@@ -309,7 +307,7 @@ func main() {
 				Last4:      "1004",
 				Network:    shared.PaymentMethodCreditCardNetworkVisa,
 				Token:      "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
-				Type:       shared.PaymentMethodCreditCardTypeCredit,
+				Type:       shared.TypeCredit,
 			},
 		),
 	}, operationSecurity)
@@ -355,6 +353,131 @@ var (
 
 This can be a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration.
 <!-- End Custom HTTP Client -->
+
+
+
+<!-- Start Authentication -->
+
+# Authentication
+
+## Per-Client Security Schemes
+
+Your SDK supports the following security scheme globally:
+
+| Name     | Type     | Scheme   |
+| -------- | -------- | -------- |
+| `APIKey` | apiKey   | API key  |
+
+You can configure it using the `WithSecurity` option when initializing the SDK client instance. For example:
+
+```go
+package main
+
+import (
+	"context"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"log"
+)
+
+func main() {
+	s := testbolt.New()
+
+	operationSecurity := operations.AccountAddPaymentMethodSecurity{
+		APIKey: "",
+		Oauth:  "",
+	}
+
+	ctx := context.Background()
+	res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
+		XPublishableKey: "string",
+		PaymentMethod: shared.CreatePaymentMethodPaymentMethodCreditCard(
+			shared.PaymentMethodCreditCard{
+				DotTag: shared.PaymentMethodCreditCardTagCreditCard,
+				BillingAddress: shared.CreateAddressReferenceAddressReferenceID(
+					shared.AddressReferenceID{
+						DotTag: shared.AddressReferenceIDTagID,
+						ID:     "D4g3h5tBuVYK9",
+					},
+				),
+				Bin:        "411111",
+				Expiration: "2025-03",
+				ID:         testbolt.String("X5h6j8uLpVGK0"),
+				Last4:      "1004",
+				Network:    shared.PaymentMethodCreditCardNetworkVisa,
+				Token:      "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
+				Type:       shared.TypeCredit,
+			},
+		),
+	}, operationSecurity)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if res.PaymentMethod != nil {
+		// handle response
+	}
+}
+
+```
+
+## Per-Operation Security Schemes
+
+Some operations in your SDK require the security scheme to be specified at the request level. For example:
+
+```go
+package main
+
+import (
+	"context"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"log"
+)
+
+func main() {
+	s := testbolt.New()
+
+	operationSecurity := operations.AccountAddPaymentMethodSecurity{
+		APIKey: "",
+		Oauth:  "",
+	}
+
+	ctx := context.Background()
+	res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
+		XPublishableKey: "string",
+		PaymentMethod: shared.CreatePaymentMethodPaymentMethodCreditCard(
+			shared.PaymentMethodCreditCard{
+				DotTag: shared.PaymentMethodCreditCardTagCreditCard,
+				BillingAddress: shared.CreateAddressReferenceAddressReferenceID(
+					shared.AddressReferenceID{
+						DotTag: shared.AddressReferenceIDTagID,
+						ID:     "D4g3h5tBuVYK9",
+					},
+				),
+				Bin:        "411111",
+				Expiration: "2025-03",
+				ID:         testbolt.String("X5h6j8uLpVGK0"),
+				Last4:      "1004",
+				Network:    shared.PaymentMethodCreditCardNetworkVisa,
+				Token:      "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
+				Type:       shared.TypeCredit,
+			},
+		),
+	}, operationSecurity)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if res.PaymentMethod != nil {
+		// handle response
+	}
+}
+
+```
+<!-- End Authentication -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

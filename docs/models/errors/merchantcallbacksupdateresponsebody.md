@@ -1,4 +1,4 @@
-# MerchantCallbacksUpdate400ApplicationJSON
+# MerchantCallbacksUpdateResponseBody
 
 The URL is invalid and cannot be set
 

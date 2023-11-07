@@ -15,23 +15,23 @@ import (
 	"strings"
 )
 
-// webhooks - Set up webhooks to notify your backend of events within Bolt. These webhooks
+// Webhooks - Set up webhooks to notify your backend of events within Bolt. These webhooks
 // can communicate with your OMS or other systems to keep them up to date with Bolt.
 //
 // https://help.bolt.com/get-started/during-checkout/webhooks/
-type webhooks struct {
+type Webhooks struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newWebhooks(sdkConfig sdkConfiguration) *webhooks {
-	return &webhooks{
+func newWebhooks(sdkConfig sdkConfiguration) *Webhooks {
+	return &Webhooks{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // WebhooksCreate - Create a webhook to subscribe to certain events
 // Create a new webhook to receive notifications from Bolt about various events, such as transaction status.
-func (s *webhooks) WebhooksCreate(ctx context.Context, request shared.WebhookInput) (*operations.WebhooksCreateResponse, error) {
+func (s *Webhooks) WebhooksCreate(ctx context.Context, request shared.WebhookInput) (*operations.WebhooksCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/webhooks"
 
@@ -100,7 +100,7 @@ func (s *webhooks) WebhooksCreate(ctx context.Context, request shared.WebhookInp
 
 // WebhooksDelete - Delete an existing webhook
 // Delete an existing webhook. You will no longer receive notifications from Bolt about its events.
-func (s *webhooks) WebhooksDelete(ctx context.Context, request operations.WebhooksDeleteRequest) (*operations.WebhooksDeleteResponse, error) {
+func (s *Webhooks) WebhooksDelete(ctx context.Context, request operations.WebhooksDeleteRequest) (*operations.WebhooksDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/webhooks/{id}", request, nil)
 	if err != nil {
@@ -162,7 +162,7 @@ func (s *webhooks) WebhooksDelete(ctx context.Context, request operations.Webhoo
 
 // WebhooksGet - Retrieve information for a specific webhook
 // Retrieve information for an existing webhook.
-func (s *webhooks) WebhooksGet(ctx context.Context, request operations.WebhooksGetRequest) (*operations.WebhooksGetResponse, error) {
+func (s *Webhooks) WebhooksGet(ctx context.Context, request operations.WebhooksGetRequest) (*operations.WebhooksGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/webhooks/{id}", request, nil)
 	if err != nil {
@@ -235,7 +235,7 @@ func (s *webhooks) WebhooksGet(ctx context.Context, request operations.WebhooksG
 
 // WebhooksGetAll - Retrieve information about all existing webhooks
 // Retrieve information about all existing webhooks.
-func (s *webhooks) WebhooksGetAll(ctx context.Context, request operations.WebhooksGetAllRequest) (*operations.WebhooksGetAllResponse, error) {
+func (s *Webhooks) WebhooksGetAll(ctx context.Context, request operations.WebhooksGetAllRequest) (*operations.WebhooksGetAllResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/webhooks"
 
@@ -276,12 +276,12 @@ func (s *webhooks) WebhooksGetAll(ctx context.Context, request operations.Webhoo
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out operations.WebhooksGetAll200ApplicationJSON
+			var out operations.WebhooksGetAllResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.WebhooksGetAll200ApplicationJSONObject = &out
+			res.Object = &out
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}

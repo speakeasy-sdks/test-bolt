@@ -1,5 +1,5 @@
 # Account
-(*Account*)
+(*.Account*)
 
 ## Overview
 
@@ -64,7 +64,7 @@ func main() {
                     Last4: "1004",
                     Network: shared.PaymentMethodCreditCardNetworkVisa,
                     Token: "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
-                    Type: shared.PaymentMethodCreditCardTypeCredit,
+                    Type: shared.TypeCredit,
                 },
         ),
     }, operationSecurity)
@@ -312,7 +312,7 @@ func main() {
     res, err := s.Account.AccountExists(ctx, operations.AccountExistsRequest{
         XPublishableKey: "string",
         Identifier: shared.Identifier{
-            IdentifierType: shared.IdentifierIdentifierTypeEmail,
+            IdentifierType: shared.IdentifierTypeEmail,
             IdentifierValue: "alice@example.com",
         },
     })

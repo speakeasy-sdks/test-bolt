@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-// IdentifierIdentifierType - The type of identifier
-type IdentifierIdentifierType string
+// IdentifierType - The type of identifier
+type IdentifierType string
 
 const (
-	IdentifierIdentifierTypeEmail       IdentifierIdentifierType = "email"
-	IdentifierIdentifierTypeEmailSha256 IdentifierIdentifierType = "email_sha256"
+	IdentifierTypeEmail       IdentifierType = "email"
+	IdentifierTypeEmailSha256 IdentifierType = "email_sha256"
 )
 
-func (e IdentifierIdentifierType) ToPointer() *IdentifierIdentifierType {
+func (e IdentifierType) ToPointer() *IdentifierType {
 	return &e
 }
 
-func (e *IdentifierIdentifierType) UnmarshalJSON(data []byte) error {
+func (e *IdentifierType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -28,23 +28,23 @@ func (e *IdentifierIdentifierType) UnmarshalJSON(data []byte) error {
 	case "email":
 		fallthrough
 	case "email_sha256":
-		*e = IdentifierIdentifierType(v)
+		*e = IdentifierType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for IdentifierIdentifierType: %v", v)
+		return fmt.Errorf("invalid value for IdentifierType: %v", v)
 	}
 }
 
 type Identifier struct {
 	// The type of identifier
-	IdentifierType IdentifierIdentifierType `queryParam:"name=identifier_type"`
+	IdentifierType IdentifierType `queryParam:"name=identifier_type"`
 	// The value of the identifier. The value must be valid for the specified `identifier_type`
 	IdentifierValue string `queryParam:"name=identifier_value"`
 }
 
-func (o *Identifier) GetIdentifierType() IdentifierIdentifierType {
+func (o *Identifier) GetIdentifierType() IdentifierType {
 	if o == nil {
-		return IdentifierIdentifierType("")
+		return IdentifierType("")
 	}
 	return o.IdentifierType
 }

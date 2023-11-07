@@ -15,21 +15,21 @@ import (
 	"strings"
 )
 
-// testing - Endpoints that allow you to generate and retrieve test data to verify certain
+// Testing - Endpoints that allow you to generate and retrieve test data to verify certain
 // flows in non-production environments.
-type testing struct {
+type Testing struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newTesting(sdkConfig sdkConfiguration) *testing {
-	return &testing{
+func newTesting(sdkConfig sdkConfiguration) *Testing {
+	return &Testing{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // TestingAccountCreate - Create a test account
 // Create a Bolt shopper account for testing purposes.
-func (s *testing) TestingAccountCreate(ctx context.Context, request shared.AccountTestCreationDataInput) (*operations.TestingAccountCreateResponse, error) {
+func (s *Testing) TestingAccountCreate(ctx context.Context, request shared.AccountTestCreationData) (*operations.TestingAccountCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/testing/accounts"
 
@@ -99,7 +99,7 @@ func (s *testing) TestingAccountCreate(ctx context.Context, request shared.Accou
 // TestingCreditCardGet - Retrieve a test credit card, including its token
 // Retrieve test credit card information. This includes its token, which is
 // generated against the `4111 1111 1111 1004` test card.
-func (s *testing) TestingCreditCardGet(ctx context.Context) (*operations.TestingCreditCardGetResponse, error) {
+func (s *Testing) TestingCreditCardGet(ctx context.Context) (*operations.TestingCreditCardGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/testing/credit-cards"
 
@@ -160,7 +160,7 @@ func (s *testing) TestingCreditCardGet(ctx context.Context) (*operations.Testing
 // Simulate a shipment tracking update, such as those that Bolt would ingest from
 // third-party shipping providers that would allow updating tracking and delivery
 // information to shipments associated with orders.
-func (s *testing) TestingShipmentTrackingCreate(ctx context.Context, request shared.ShipmentTrackingUpdate) (*operations.TestingShipmentTrackingCreateResponse, error) {
+func (s *Testing) TestingShipmentTrackingCreate(ctx context.Context, request shared.ShipmentTrackingUpdate) (*operations.TestingShipmentTrackingCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/testing/shipments"
 

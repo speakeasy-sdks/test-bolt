@@ -1,5 +1,5 @@
 # Testing
-(*Testing*)
+(*.Testing*)
 
 ## Overview
 
@@ -37,12 +37,12 @@ func main() {
     )
 
     ctx := context.Background()
-    res, err := s.Testing.TestingAccountCreate(ctx, shared.AccountTestCreationDataInput{
+    res, err := s.Testing.TestingAccountCreate(ctx, shared.AccountTestCreationData{
         DeactivateAt: types.MustTimeFromString("2017-07-21T17:32:28Z"),
-        EmailState: shared.AccountTestCreationDataEmailStateUnverified,
+        EmailState: shared.EmailStateUnverified,
         HasAddress: testbolt.Bool(true),
         IsMigrated: testbolt.Bool(true),
-        PhoneState: shared.AccountTestCreationDataPhoneStateVerified,
+        PhoneState: shared.PhoneStateVerified,
     })
     if err != nil {
         log.Fatal(err)
@@ -56,10 +56,10 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
-| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| `ctx`                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                      | :heavy_check_mark:                                                                         | The context to use for the request.                                                        |
-| `request`                                                                                  | [shared.AccountTestCreationDataInput](../../models/shared/accounttestcreationdatainput.md) | :heavy_check_mark:                                                                         | The request object to use for the request.                                                 |
+| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `ctx`                                                                            | [context.Context](https://pkg.go.dev/context#Context)                            | :heavy_check_mark:                                                               | The context to use for the request.                                              |
+| `request`                                                                        | [shared.AccountTestCreationData](../../models/shared/accounttestcreationdata.md) | :heavy_check_mark:                                                               | The request object to use for the request.                                       |
 
 
 ### Response
@@ -143,15 +143,15 @@ func main() {
     res, err := s.Testing.TestingShipmentTrackingCreate(ctx, shared.ShipmentTrackingUpdate{
         DeliveryDate: types.MustTimeFromString("2014-08-23:T06:00:00Z"),
         Status: shared.ShipmentTrackingUpdateStatusInTransit,
-        TrackingDetails: []shared.ShipmentTrackingUpdateTrackingDetails{
-            shared.ShipmentTrackingUpdateTrackingDetails{
+        TrackingDetails: []shared.TrackingDetails{
+            shared.TrackingDetails{
                 CountryCode: testbolt.String("US"),
                 EventDate: testbolt.String("2014-08-21:T14:24:00Z"),
                 Locality: testbolt.String("San Francisco"),
                 Message: testbolt.String("Billing information received"),
                 PostalCode: testbolt.String("94105"),
                 Region: testbolt.String("CA"),
-                Status: shared.ShipmentTrackingUpdateTrackingDetailsStatusPreTransit.ToPointer(),
+                Status: shared.ShipmentTrackingUpdateSchemasStatusPreTransit.ToPointer(),
             },
         },
         TrackingNumber: "MockBolt-143292",

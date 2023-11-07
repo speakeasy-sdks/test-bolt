@@ -7,15 +7,15 @@ import (
 	"net/http"
 )
 
-// MerchantCallbacksUpdate400ApplicationJSON - The URL is invalid and cannot be set
-type MerchantCallbacksUpdate400ApplicationJSON struct {
+// MerchantCallbacksUpdateResponseBody - The URL is invalid and cannot be set
+type MerchantCallbacksUpdateResponseBody struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response `json:"-"`
 }
 
-var _ error = &MerchantCallbacksUpdate400ApplicationJSON{}
+var _ error = &MerchantCallbacksUpdateResponseBody{}
 
-func (e *MerchantCallbacksUpdate400ApplicationJSON) Error() string {
+func (e *MerchantCallbacksUpdateResponseBody) Error() string {
 	data, _ := json.Marshal(e)
 	return string(data)
 }

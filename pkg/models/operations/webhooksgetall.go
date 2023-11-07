@@ -19,12 +19,12 @@ func (o *WebhooksGetAllRequest) GetXPublishableKey() string {
 	return o.XPublishableKey
 }
 
-// WebhooksGetAll200ApplicationJSON - All existing webhook information has been retrieved
-type WebhooksGetAll200ApplicationJSON struct {
+// WebhooksGetAllResponseBody - All existing webhook information has been retrieved
+type WebhooksGetAllResponseBody struct {
 	Webhooks []shared.Webhook `json:"webhooks,omitempty"`
 }
 
-func (o *WebhooksGetAll200ApplicationJSON) GetWebhooks() []shared.Webhook {
+func (o *WebhooksGetAllResponseBody) GetWebhooks() []shared.Webhook {
 	if o == nil {
 		return nil
 	}
@@ -39,7 +39,7 @@ type WebhooksGetAllResponse struct {
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// All existing webhook information has been retrieved
-	WebhooksGetAll200ApplicationJSONObject *WebhooksGetAll200ApplicationJSON
+	Object *WebhooksGetAllResponseBody
 }
 
 func (o *WebhooksGetAllResponse) GetContentType() string {
@@ -63,9 +63,9 @@ func (o *WebhooksGetAllResponse) GetRawResponse() *http.Response {
 	return o.RawResponse
 }
 
-func (o *WebhooksGetAllResponse) GetWebhooksGetAll200ApplicationJSONObject() *WebhooksGetAll200ApplicationJSON {
+func (o *WebhooksGetAllResponse) GetObject() *WebhooksGetAllResponseBody {
 	if o == nil {
 		return nil
 	}
-	return o.WebhooksGetAll200ApplicationJSONObject
+	return o.Object
 }

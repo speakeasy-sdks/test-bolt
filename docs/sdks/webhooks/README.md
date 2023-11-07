@@ -1,5 +1,5 @@
 # Webhooks
-(*Webhooks*)
+(*.Webhooks*)
 
 ## Overview
 
@@ -39,7 +39,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Webhooks.WebhooksCreate(ctx, shared.WebhookInput{
-        Event: shared.CreateWebhookEventEventList(
+        Event: shared.CreateEventEventList(
                 shared.EventList{
                     DotTag: shared.EventListTagList,
                     EventList: []shared.EventListEventList{
@@ -201,7 +201,7 @@ func main() {
         log.Fatal(err)
     }
 
-    if res.WebhooksGetAll200ApplicationJSONObject != nil {
+    if res.Object != nil {
         // handle response
     }
 }

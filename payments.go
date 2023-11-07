@@ -15,14 +15,14 @@ import (
 	"strings"
 )
 
-// payments - Use the Payments API to tokenize and process alternative payment methods including Paypal with Bolt. This API is for the Bolt
+// Payments - Use the Payments API to tokenize and process alternative payment methods including Paypal with Bolt. This API is for the Bolt
 // Accounts package.
-type payments struct {
+type Payments struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newPayments(sdkConfig sdkConfiguration) *payments {
-	return &payments{
+func newPayments(sdkConfig sdkConfiguration) *Payments {
+	return &Payments{
 		sdkConfiguration: sdkConfig,
 	}
 }
@@ -30,7 +30,7 @@ func newPayments(sdkConfig sdkConfiguration) *payments {
 // GuestPaymentsInitialize - Initialize a Bolt payment for guest shoppers
 // Initialize a Bolt payment token that will be used to reference this payment to
 // Bolt when it is updated or finalized for guest shoppers.
-func (s *payments) GuestPaymentsInitialize(ctx context.Context, request operations.GuestPaymentsInitializeRequest) (*operations.GuestPaymentsInitializeResponse, error) {
+func (s *Payments) GuestPaymentsInitialize(ctx context.Context, request operations.GuestPaymentsInitializeRequest) (*operations.GuestPaymentsInitializeResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/guest/payments"
 
@@ -102,7 +102,7 @@ func (s *payments) GuestPaymentsInitialize(ctx context.Context, request operatio
 // PaymentsInitialize - Initialize a Bolt payment for logged in shoppers
 // Initialize a Bolt payment token that will be used to reference this payment to
 // Bolt when it is updated or finalized for logged in shoppers.
-func (s *payments) PaymentsInitialize(ctx context.Context, request operations.PaymentsInitializeRequest, security operations.PaymentsInitializeSecurity) (*operations.PaymentsInitializeResponse, error) {
+func (s *Payments) PaymentsInitialize(ctx context.Context, request operations.PaymentsInitializeRequest, security operations.PaymentsInitializeSecurity) (*operations.PaymentsInitializeResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/payments"
 

@@ -1,4 +1,4 @@
-# WebhooksGetAll200ApplicationJSON
+# WebhooksGetAllResponseBody
 
 All existing webhook information has been retrieved
 

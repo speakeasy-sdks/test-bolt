@@ -15,14 +15,14 @@ import (
 	"strings"
 )
 
-// account - Account endpoints allow you to view and manage shoppers' accounts. For example,
+// Account endpoints allow you to view and manage shoppers' accounts. For example,
 // you can add or remove addresses and payment information.
-type account struct {
+type Account struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAccount(sdkConfig sdkConfiguration) *account {
-	return &account{
+func newAccount(sdkConfig sdkConfiguration) *Account {
+	return &Account{
 		sdkConfiguration: sdkConfig,
 	}
 }
@@ -32,7 +32,7 @@ func newAccount(sdkConfig sdkConfiguration) *account {
 // your backend because authentication requires the use of your private key.<br />
 // **Note**: Before using this API, the credit card details must be tokenized using Bolt's JavaScript library function,
 // which is documented in [Install the Bolt Tokenizer](https://help.bolt.com/developers/references/bolt-tokenizer).
-func (s *account) AccountAddPaymentMethod(ctx context.Context, request operations.AccountAddPaymentMethodRequest, security operations.AccountAddPaymentMethodSecurity) (*operations.AccountAddPaymentMethodResponse, error) {
+func (s *Account) AccountAddPaymentMethod(ctx context.Context, request operations.AccountAddPaymentMethodRequest, security operations.AccountAddPaymentMethodSecurity) (*operations.AccountAddPaymentMethodResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/account/payment-methods"
 
@@ -103,7 +103,7 @@ func (s *account) AccountAddPaymentMethod(ctx context.Context, request operation
 
 // AccountAddressCreate - Add an address
 // Add an address to the shopper's account
-func (s *account) AccountAddressCreate(ctx context.Context, request operations.AccountAddressCreateRequest, security operations.AccountAddressCreateSecurity) (*operations.AccountAddressCreateResponse, error) {
+func (s *Account) AccountAddressCreate(ctx context.Context, request operations.AccountAddressCreateRequest, security operations.AccountAddressCreateSecurity) (*operations.AccountAddressCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/account/addresses"
 
@@ -166,7 +166,7 @@ func (s *account) AccountAddressCreate(ctx context.Context, request operations.A
 	case httpRes.StatusCode == 400:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out sdkerrors.AccountAddressCreate400ApplicationJSON
+			var out sdkerrors.AccountAddressCreateResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -188,7 +188,7 @@ func (s *account) AccountAddressCreate(ctx context.Context, request operations.A
 // AccountAddressDelete - Delete an existing address
 // Delete an existing address. Deleting an address does not invalidate transactions or
 // shipments that are associated with it.
-func (s *account) AccountAddressDelete(ctx context.Context, request operations.AccountAddressDeleteRequest) (*operations.AccountAddressDeleteResponse, error) {
+func (s *Account) AccountAddressDelete(ctx context.Context, request operations.AccountAddressDeleteRequest) (*operations.AccountAddressDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/account/addresses/{id}", request, nil)
 	if err != nil {
@@ -254,7 +254,7 @@ func (s *account) AccountAddressDelete(ctx context.Context, request operations.A
 // Edit an existing address on the shopper's account. This does not edit addresses
 // that are already associated with other resources, such as transactions or
 // shipments.
-func (s *account) AccountAddressEdit(ctx context.Context, request operations.AccountAddressEditRequest, security operations.AccountAddressEditSecurity) (*operations.AccountAddressEditResponse, error) {
+func (s *Account) AccountAddressEdit(ctx context.Context, request operations.AccountAddressEditRequest, security operations.AccountAddressEditSecurity) (*operations.AccountAddressEditResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/account/addresses/{id}", request, nil)
 	if err != nil {
@@ -320,7 +320,7 @@ func (s *account) AccountAddressEdit(ctx context.Context, request operations.Acc
 	case httpRes.StatusCode == 400:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out sdkerrors.AccountAddressEdit400ApplicationJSON
+			var out sdkerrors.AccountAddressEditResponseBody
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -341,7 +341,7 @@ func (s *account) AccountAddressEdit(ctx context.Context, request operations.Acc
 
 // AccountExists - Determine the existence of a Bolt account
 // Determine whether or not an identifier is associated with an existing Bolt account.
-func (s *account) AccountExists(ctx context.Context, request operations.AccountExistsRequest) (*operations.AccountExistsResponse, error) {
+func (s *Account) AccountExists(ctx context.Context, request operations.AccountExistsRequest) (*operations.AccountExistsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/account/exists"
 
@@ -406,7 +406,7 @@ func (s *account) AccountExists(ctx context.Context, request operations.AccountE
 
 // AccountGet - Retrieve account details
 // Retrieve a shopper's account details, such as addresses and payment information
-func (s *account) AccountGet(ctx context.Context, request operations.AccountGetRequest, security operations.AccountGetSecurity) (*operations.AccountGetResponse, error) {
+func (s *Account) AccountGet(ctx context.Context, request operations.AccountGetRequest, security operations.AccountGetSecurity) (*operations.AccountGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/account"
 

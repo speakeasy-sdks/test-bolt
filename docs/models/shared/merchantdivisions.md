@@ -1,4 +1,4 @@
-# IdentifiersMerchantDivisions
+# MerchantDivisions
 
 
 ## Fields
