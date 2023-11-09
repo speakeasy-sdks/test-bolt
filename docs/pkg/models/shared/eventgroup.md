@@ -1,0 +1,9 @@
+# EventGroup
+
+
+## Fields
+
+| Field                                                                             | Type                                                                              | Required                                                                          | Description                                                                       | Example                                                                           |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `DotTag`                                                                          | [shared.EventGroupTag](../../../pkg/models/shared/eventgrouptag.md)               | :heavy_check_mark:                                                                | N/A                                                                               | group                                                                             |
+| `EventGroup`                                                                      | [shared.EventGroupEventGroup](../../../pkg/models/shared/eventgroupeventgroup.md) | :heavy_check_mark:                                                                | N/A                                                                               | all                                                                               |

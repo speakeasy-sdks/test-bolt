@@ -2,22 +2,22 @@ configVersion: 1.0.0
 management:
   docChecksum: 33c07e585caae3e31a297b1d7ada0ec2
   docVersion: 3.0.1
-  speakeasyVersion: 1.114.1
-  generationVersion: 2.181.1
+  speakeasyVersion: 1.116.0
+  generationVersion: 2.185.0
 generation:
   comments: {}
   sdkClassName: test-bolt
   repoURL: https://github.com/speakeasy-sdks/test-bolt.git
 features:
   go:
-    core: 3.1.0
+    core: 3.1.2
     globalSecurity: 2.82.2
     globalServerURLs: 2.82.0
-    inputOutputModels: 2.81.1
+    inputOutputModels: 2.82.0
     methodSecurity: 2.82.1
     unions: 2.85.0
 go:
-  version: 0.8.0
+  version: 0.9.0
   clientServerStatusCodesAsErrors: true
   flattenGlobalSecurity: true
   imports:
@@ -28,8 +28,10 @@ go:
       operations: pkg/models/operations
       shared: pkg/models/shared
       webhooks: pkg/models/webhooks
+  inputModelSuffix: input
   installationURL: https://github.com/speakeasy-sdks/test-bolt
   maxMethodParams: 0
+  outputModelSuffix: output
   packageName: github.com/speakeasy-sdks/test-bolt
   published: true
   repoSubDirectory: .
