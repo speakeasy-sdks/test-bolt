@@ -29,7 +29,6 @@ import(
 	"log"
 	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/callbacks"
 )
 
 func main() {

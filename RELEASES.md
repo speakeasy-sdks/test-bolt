@@ -129,3 +129,13 @@ Based on:
 - [go v0.9.0] .
 ### Releases
 - [Go v0.9.0] https://github.com/speakeasy-sdks/test-bolt/releases/tag/v0.9.0 - .
+
+## 2023-11-10 01:04:49
+### Changes
+Based on:
+- OpenAPI Doc 3.0.1 
+- Speakeasy CLI 1.118.3 (2.187.7) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [go v0.9.1] .
+### Releases
+- [Go v0.9.1] https://github.com/speakeasy-sdks/test-bolt/releases/tag/v0.9.1 - .
