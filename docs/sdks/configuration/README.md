@@ -24,11 +24,11 @@ Return callback URLs configured on the merchant such as OAuth URLs.
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"log"
 )
 
 func main() {
@@ -76,11 +76,11 @@ Update and configure callback URLs on the merchant such as OAuth URLs.
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"log"
 )
 
 func main() {
@@ -149,10 +149,10 @@ Return several identifiers for the merchant, such as public IDs, publishable key
 package main
 
 import(
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"context"
 	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
 
 func main() {

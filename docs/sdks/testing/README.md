@@ -24,11 +24,11 @@ Create a Bolt shopper account for testing purposes.
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/types"
+	"log"
 )
 
 func main() {
@@ -81,10 +81,10 @@ generated against the `4111 1111 1111 1004` test card.
 package main
 
 import(
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"context"
 	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
 
 func main() {
@@ -131,11 +131,12 @@ information to shipments associated with orders.
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/types"
+	"log"
+	"net/http"
 )
 
 func main() {

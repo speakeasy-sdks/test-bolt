@@ -24,11 +24,11 @@ Bolt when it is updated or finalized for guest shoppers.
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"log"
 )
 
 func main() {
@@ -134,11 +134,11 @@ Bolt when it is updated or finalized for logged in shoppers.
 package main
 
 import(
-	"context"
-	"log"
 	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"log"
 )
 
 func main() {

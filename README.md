@@ -146,8 +146,10 @@ package main
 
 import (
 	"context"
+	"errors"
 	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/sdkerrors"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"log"
 )

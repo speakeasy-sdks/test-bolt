@@ -30,11 +30,11 @@ which is documented in [Install the Bolt Tokenizer](https://help.bolt.com/develo
 package main
 
 import(
-	"context"
-	"log"
 	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"log"
 )
 
 func main() {
@@ -104,11 +104,11 @@ Add an address to the shopper's account
 package main
 
 import(
-	"context"
-	"log"
 	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"log"
 )
 
 func main() {
@@ -178,11 +178,12 @@ shipments that are associated with it.
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"log"
+	"net/http"
 )
 
 func main() {
@@ -234,11 +235,11 @@ shipments.
 package main
 
 import(
-	"context"
-	"log"
 	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	"log"
 )
 
 func main() {
@@ -307,11 +308,12 @@ Determine whether or not an identifier is associated with an existing Bolt accou
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"log"
+	"net/http"
 )
 
 func main() {
@@ -363,10 +365,10 @@ Retrieve a shopper's account details, such as addresses and payment information
 package main
 
 import(
-	"context"
-	"log"
 	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"context"
+	"log"
 )
 
 func main() {

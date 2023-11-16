@@ -25,10 +25,10 @@ Create a new webhook to receive notifications from Bolt about various events, su
 package main
 
 import(
+	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"context"
 	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 )
 
 func main() {
@@ -84,11 +84,12 @@ Delete an existing webhook. You will no longer receive notifications from Bolt a
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"log"
+	"net/http"
 )
 
 func main() {
@@ -136,11 +137,11 @@ Retrieve information for an existing webhook.
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"log"
 )
 
 func main() {
@@ -188,11 +189,11 @@ Retrieve information about all existing webhooks.
 package main
 
 import(
-	"context"
-	"log"
-	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
+	testbolt "github.com/speakeasy-sdks/test-bolt"
+	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
+	"log"
 )
 
 func main() {
