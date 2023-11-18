@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 )
 
+// Error - The specified resource was not found
 type Error struct {
 	// The type of error returned
 	DotTag string `json:".tag"`

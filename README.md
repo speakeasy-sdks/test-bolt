@@ -273,8 +273,8 @@ func main() {
 #### Variables
 
 Some of the server options above contain variables. If you want to set the values of those variables, the following options are provided for doing so:
- * `WithEnvironment testbolt.ServerEnvironment`
  * `WithUsername string`
+ * `WithEnvironment testbolt.ServerEnvironment`
 
 ### Override Server URL Per-Client
 

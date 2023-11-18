@@ -1,5 +1,7 @@
 # Error
 
+The specified resource was not found
+
 
 ## Fields
 

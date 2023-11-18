@@ -123,6 +123,19 @@ func WithServerIndex(serverIndex int) SDKOption {
 	}
 }
 
+// WithUsername allows setting the username variable for url substitution
+func WithUsername(username string) SDKOption {
+	return func(sdk *TestBolt) {
+		for idx := range sdk.sdkConfiguration.ServerDefaults {
+			if _, ok := sdk.sdkConfiguration.ServerDefaults[idx]["username"]; !ok {
+				continue
+			}
+
+			sdk.sdkConfiguration.ServerDefaults[idx]["username"] = fmt.Sprintf("%v", username)
+		}
+	}
+}
+
 type ServerEnvironment string
 
 const (
@@ -166,19 +179,6 @@ func WithEnvironment(environment ServerEnvironment) SDKOption {
 	}
 }
 
-// WithUsername allows setting the username variable for url substitution
-func WithUsername(username string) SDKOption {
-	return func(sdk *TestBolt) {
-		for idx := range sdk.sdkConfiguration.ServerDefaults {
-			if _, ok := sdk.sdkConfiguration.ServerDefaults[idx]["username"]; !ok {
-				continue
-			}
-
-			sdk.sdkConfiguration.ServerDefaults[idx]["username"] = fmt.Sprintf("%v", username)
-		}
-	}
-}
-
 // WithClient allows the overriding of the default HTTP client used by the SDK
 func WithClient(client HTTPClient) SDKOption {
 	return func(sdk *TestBolt) {
@@ -213,9 +213,9 @@ func New(opts ...SDKOption) *TestBolt {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "3.0.1",
-			SDKVersion:        "0.9.2",
-			GenVersion:        "2.192.1",
-			UserAgent:         "speakeasy-sdk/go 0.9.2 2.192.1 3.0.1 github.com/speakeasy-sdks/test-bolt",
+			SDKVersion:        "0.9.3",
+			GenVersion:        "2.194.1",
+			UserAgent:         "speakeasy-sdk/go 0.9.3 2.194.1 3.0.1 github.com/speakeasy-sdks/test-bolt",
 			ServerDefaults: []map[string]string{
 				{
 					"username": "BL_DOMAIN",
