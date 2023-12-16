@@ -33,7 +33,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(""),
+        testbolt.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
     ctx := context.Background()
@@ -85,7 +85,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(""),
+        testbolt.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
     ctx := context.Background()
@@ -157,7 +157,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(""),
+        testbolt.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
     ctx := context.Background()

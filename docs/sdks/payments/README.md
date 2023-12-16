@@ -33,7 +33,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(""),
+        testbolt.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
     ctx := context.Background()
@@ -146,8 +146,8 @@ func main() {
 
 
     operationSecurity := operations.PaymentsInitializeSecurity{
-            APIKey: "",
-            Oauth: "",
+            APIKey: "<YOUR_API_KEY_HERE>",
+            Oauth: "Bearer <YOUR_ACCESS_TOKEN_HERE>",
         }
 
     ctx := context.Background()

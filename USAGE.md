@@ -1,4 +1,4 @@
-<!-- Start SDK Example Usage -->
+<!-- Start SDK Example Usage [usage] -->
 ```go
 package main
 
@@ -14,8 +14,8 @@ func main() {
 	s := testbolt.New()
 
 	operationSecurity := operations.AccountAddPaymentMethodSecurity{
-		APIKey: "",
-		Oauth:  "",
+		APIKey: "<YOUR_API_KEY_HERE>",
+		Oauth:  "Bearer <YOUR_ACCESS_TOKEN_HERE>",
 	}
 
 	ctx := context.Background()
@@ -50,4 +50,4 @@ func main() {
 }
 
 ```
-<!-- End SDK Example Usage -->
+<!-- End SDK Example Usage [usage] -->

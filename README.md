@@ -1,15 +1,16 @@
 # github.com/speakeasy-sdks/test-bolt
 
-<!-- Start SDK Installation -->
+<!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
 ```bash
 go get github.com/speakeasy-sdks/test-bolt
 ```
-<!-- End SDK Installation -->
+<!-- End SDK Installation [installation] -->
 
+<!-- Start SDK Example Usage [usage] -->
 ## SDK Example Usage
-<!-- Start SDK Example Usage -->
+
 ### Example
 
 ```go
@@ -27,8 +28,8 @@ func main() {
 	s := testbolt.New()
 
 	operationSecurity := operations.AccountAddPaymentMethodSecurity{
-		APIKey: "",
-		Oauth:  "",
+		APIKey: "<YOUR_API_KEY_HERE>",
+		Oauth:  "Bearer <YOUR_ACCESS_TOKEN_HERE>",
 	}
 
 	ctx := context.Background()
@@ -63,11 +64,10 @@ func main() {
 }
 
 ```
-<!-- End SDK Example Usage -->
+<!-- End SDK Example Usage [usage] -->
 
-<!-- Start SDK Available Operations -->
+<!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
-
 
 ### [Account](docs/sdks/account/README.md)
 
@@ -101,35 +101,23 @@ func main() {
 * [WebhooksDelete](docs/sdks/webhooks/README.md#webhooksdelete) - Delete an existing webhook
 * [WebhooksGet](docs/sdks/webhooks/README.md#webhooksget) - Retrieve information for a specific webhook
 * [WebhooksGetAll](docs/sdks/webhooks/README.md#webhooksgetall) - Retrieve information about all existing webhooks
-<!-- End SDK Available Operations -->
+<!-- End Available Resources and Operations [operations] -->
 
 
 
-<!-- Start Dev Containers -->
-
-<!-- End Dev Containers -->
 
 
 
-<!-- Start Pagination -->
-# Pagination
 
-Some of the endpoints in this SDK support pagination. To use pagination, you make your SDK calls as usual, but the
-returned response object will have a `Next` method that can be called to pull down the next group of results. If the
-return value of `Next` is `nil`, then there are no more pages to be fetched.
+<!-- Start Special Types [types] -->
+## Special Types
 
-Here's an example of one such pagination call:
-<!-- End Pagination -->
+
+<!-- End Special Types [types] -->
 
 
 
-<!-- Start Go Types -->
-
-<!-- End Go Types -->
-
-
-
-<!-- Start Error Handling -->
+<!-- Start Error Handling [errors] -->
 ## Error Handling
 
 Handling errors in this SDK should largely match your expectations.  All operations return a response object or an error, they will never return both.  When specified by the OpenAPI spec document, the SDK will return the appropriate subclass.
@@ -158,8 +146,8 @@ func main() {
 	s := testbolt.New()
 
 	operationSecurity := operations.AccountAddressCreateSecurity{
-		APIKey: "",
-		Oauth:  "",
+		APIKey: "<YOUR_API_KEY_HERE>",
+		Oauth:  "Bearer <YOUR_ACCESS_TOKEN_HERE>",
 	}
 
 	ctx := context.Background()
@@ -198,11 +186,11 @@ func main() {
 }
 
 ```
-<!-- End Error Handling -->
+<!-- End Error Handling [errors] -->
 
 
 
-<!-- Start Server Selection -->
+<!-- Start Server Selection [server] -->
 ## Server Selection
 
 ### Select Server by Index
@@ -233,8 +221,8 @@ func main() {
 	)
 
 	operationSecurity := operations.AccountAddPaymentMethodSecurity{
-		APIKey: "",
-		Oauth:  "",
+		APIKey: "<YOUR_API_KEY_HERE>",
+		Oauth:  "Bearer <YOUR_ACCESS_TOKEN_HERE>",
 	}
 
 	ctx := context.Background()
@@ -296,8 +284,8 @@ func main() {
 	)
 
 	operationSecurity := operations.AccountAddPaymentMethodSecurity{
-		APIKey: "",
-		Oauth:  "",
+		APIKey: "<YOUR_API_KEY_HERE>",
+		Oauth:  "Bearer <YOUR_ACCESS_TOKEN_HERE>",
 	}
 
 	ctx := context.Background()
@@ -332,11 +320,11 @@ func main() {
 }
 
 ```
-<!-- End Server Selection -->
+<!-- End Server Selection [server] -->
 
 
 
-<!-- Start Custom HTTP Client -->
+<!-- Start Custom HTTP Client [http-client] -->
 ## Custom HTTP Client
 
 The Go SDK makes API calls that wrap an internal HTTP client. The requirements for the HTTP client are very simple. It must match this interface:
@@ -363,11 +351,11 @@ var (
 ```
 
 This can be a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration.
-<!-- End Custom HTTP Client -->
+<!-- End Custom HTTP Client [http-client] -->
 
 
 
-<!-- Start Authentication -->
+<!-- Start Authentication [security] -->
 ## Authentication
 
 ### Per-Client Security Schemes
@@ -386,45 +374,25 @@ import (
 	"context"
 	testbolt "github.com/speakeasy-sdks/test-bolt"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
-	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"log"
+	"net/http"
 )
 
 func main() {
-	s := testbolt.New()
-
-	operationSecurity := operations.AccountAddPaymentMethodSecurity{
-		APIKey: "",
-		Oauth:  "",
-	}
+	s := testbolt.New(
+		testbolt.WithSecurity("<YOUR_API_KEY_HERE>"),
+	)
 
 	ctx := context.Background()
-	res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
+	res, err := s.Account.AccountAddressDelete(ctx, operations.AccountAddressDeleteRequest{
 		XPublishableKey: "string",
-		PaymentMethod: shared.CreatePaymentMethodPaymentMethodCreditCard(
-			shared.PaymentMethodCreditCard{
-				DotTag: shared.PaymentMethodCreditCardTagCreditCard,
-				BillingAddress: shared.CreateAddressReferenceAddressReferenceID(
-					shared.AddressReferenceID{
-						DotTag: shared.AddressReferenceIDTagID,
-						ID:     "D4g3h5tBuVYK9",
-					},
-				),
-				Bin:        "411111",
-				Expiration: "2025-03",
-				ID:         testbolt.String("X5h6j8uLpVGK0"),
-				Last4:      "1004",
-				Network:    shared.PaymentMethodCreditCardNetworkVisa,
-				Token:      "a1B2c3D4e5F6G7H8i9J0k1L2m3N4o5P6Q7r8S9t0",
-				Type:       shared.TypeCredit,
-			},
-		),
-	}, operationSecurity)
+		ID:              "D4g3h5tBuVYK9",
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if res.PaymentMethod != nil {
+	if res.StatusCode == http.StatusOK {
 		// handle response
 	}
 }
@@ -449,8 +417,8 @@ func main() {
 	s := testbolt.New()
 
 	operationSecurity := operations.AccountAddPaymentMethodSecurity{
-		APIKey: "",
-		Oauth:  "",
+		APIKey: "<YOUR_API_KEY_HERE>",
+		Oauth:  "Bearer <YOUR_ACCESS_TOKEN_HERE>",
 	}
 
 	ctx := context.Background()
@@ -485,7 +453,7 @@ func main() {
 }
 
 ```
-<!-- End Authentication -->
+<!-- End Authentication [security] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 

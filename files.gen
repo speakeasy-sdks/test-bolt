@@ -77,7 +77,6 @@ pkg/utils/utils.go
 /pkg/models/sdkerrors/accountaddressedit.go
 /pkg/models/sdkerrors/merchantcallbacksupdate.go
 /pkg/models/callbacks/webhookscreate.go
-USAGE.md
 docs/pkg/models/operations/accountaddpaymentmethodsecurity.md
 docs/pkg/models/operations/accountaddpaymentmethodrequest.md
 docs/pkg/models/operations/accountaddpaymentmethodresponse.md
@@ -189,4 +188,5 @@ docs/sdks/payments/README.md
 docs/sdks/configuration/README.md
 docs/sdks/testing/README.md
 docs/sdks/webhooks/README.md
+USAGE.md
 .gitattributes

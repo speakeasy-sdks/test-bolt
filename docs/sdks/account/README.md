@@ -42,8 +42,8 @@ func main() {
 
 
     operationSecurity := operations.AccountAddPaymentMethodSecurity{
-            APIKey: "",
-            Oauth: "",
+            APIKey: "<YOUR_API_KEY_HERE>",
+            Oauth: "Bearer <YOUR_ACCESS_TOKEN_HERE>",
         }
 
     ctx := context.Background()
@@ -116,8 +116,8 @@ func main() {
 
 
     operationSecurity := operations.AccountAddressCreateSecurity{
-            APIKey: "",
-            Oauth: "",
+            APIKey: "<YOUR_API_KEY_HERE>",
+            Oauth: "Bearer <YOUR_ACCESS_TOKEN_HERE>",
         }
 
     ctx := context.Background()
@@ -188,7 +188,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(""),
+        testbolt.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
     ctx := context.Background()
@@ -247,8 +247,8 @@ func main() {
 
 
     operationSecurity := operations.AccountAddressEditSecurity{
-            APIKey: "",
-            Oauth: "",
+            APIKey: "<YOUR_API_KEY_HERE>",
+            Oauth: "Bearer <YOUR_ACCESS_TOKEN_HERE>",
         }
 
     ctx := context.Background()
@@ -318,7 +318,7 @@ import(
 
 func main() {
     s := testbolt.New(
-        testbolt.WithSecurity(""),
+        testbolt.WithSecurity("<YOUR_API_KEY_HERE>"),
     )
 
     ctx := context.Background()
@@ -376,8 +376,8 @@ func main() {
 
 
     operationSecurity := operations.AccountGetSecurity{
-            APIKey: "",
-            Oauth: "",
+            APIKey: "<YOUR_API_KEY_HERE>",
+            Oauth: "Bearer <YOUR_ACCESS_TOKEN_HERE>",
         }
 
     ctx := context.Background()
