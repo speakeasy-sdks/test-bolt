@@ -92,7 +92,7 @@ func main() {
 **[*operations.AccountAddPaymentMethodResponse](../../pkg/models/operations/accountaddpaymentmethodresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 400-600            | */*                |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |
 
 ## AccountAddressCreate
 
@@ -164,7 +164,7 @@ func main() {
 | Error Object                               | Status Code                                | Content Type                               |
 | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ |
 | sdkerrors.AccountAddressCreateResponseBody | 400                                        | application/json                           |
-| sdkerrors.SDKError                         | 400-600                                    | */*                                        |
+| sdkerrors.SDKError                         | 4xx-5xx                                    | */*                                        |
 
 ## AccountAddressDelete
 
@@ -220,7 +220,7 @@ func main() {
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.Error    | 422                | application/json   |
-| sdkerrors.SDKError | 400-600            | */*                |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |
 
 ## AccountAddressEdit
 
@@ -296,7 +296,7 @@ func main() {
 | Error Object                             | Status Code                              | Content Type                             |
 | ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
 | sdkerrors.AccountAddressEditResponseBody | 400                                      | application/json                         |
-| sdkerrors.SDKError                       | 400-600                                  | */*                                      |
+| sdkerrors.SDKError                       | 4xx-5xx                                  | */*                                      |
 
 ## AccountExists
 
@@ -353,7 +353,7 @@ func main() {
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
 | sdkerrors.Error    | 422                | application/json   |
-| sdkerrors.SDKError | 400-600            | */*                |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |
 
 ## AccountGet
 
@@ -408,4 +408,4 @@ func main() {
 **[*operations.AccountGetResponse](../../pkg/models/operations/accountgetresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 400-600            | */*                |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |

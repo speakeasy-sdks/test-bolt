@@ -63,7 +63,7 @@ func main() {
 **[*operations.MerchantCallbacksGetResponse](../../pkg/models/operations/merchantcallbacksgetresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 400-600            | */*                |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |
 
 ## MerchantCallbacksUpdate
 
@@ -137,7 +137,7 @@ func main() {
 | Error Object                                  | Status Code                                   | Content Type                                  |
 | --------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
 | sdkerrors.MerchantCallbacksUpdateResponseBody | 400                                           | application/json                              |
-| sdkerrors.SDKError                            | 400-600                                       | */*                                           |
+| sdkerrors.SDKError                            | 4xx-5xx                                       | */*                                           |
 
 ## MerchantIdentifiersGet
 
@@ -184,4 +184,4 @@ func main() {
 **[*operations.MerchantIdentifiersGetResponse](../../pkg/models/operations/merchantidentifiersgetresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 400-600            | */*                |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |

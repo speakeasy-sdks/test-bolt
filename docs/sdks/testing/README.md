@@ -67,7 +67,7 @@ func main() {
 **[*operations.TestingAccountCreateResponse](../../pkg/models/operations/testingaccountcreateresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 400-600            | */*                |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |
 
 ## TestingCreditCardGet
 
@@ -116,7 +116,7 @@ func main() {
 **[*operations.TestingCreditCardGetResponse](../../pkg/models/operations/testingcreditcardgetresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 400-600            | */*                |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |
 
 ## TestingShipmentTrackingCreate
 
@@ -184,4 +184,4 @@ func main() {
 **[*operations.TestingShipmentTrackingCreateResponse](../../pkg/models/operations/testingshipmenttrackingcreateresponse.md), error**
 | Error Object       | Status Code        | Content Type       |
 | ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 400-600            | */*                |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |
