@@ -26,6 +26,7 @@ type Event struct {
 
 func CreateEventGroup(group EventGroup) Event {
 	typ := EventTypeGroup
+
 	typStr := EventGroupTag(typ)
 	group.DotTag = typStr
 
@@ -37,6 +38,7 @@ func CreateEventGroup(group EventGroup) Event {
 
 func CreateEventList(list EventList) Event {
 	typ := EventTypeList
+
 	typStr := EventListTag(typ)
 	list.DotTag = typStr
 

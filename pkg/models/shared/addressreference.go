@@ -25,6 +25,7 @@ type AddressReference struct {
 
 func CreateAddressReferenceExplicit(explicit AddressReferenceExplicit) AddressReference {
 	typ := AddressReferenceTypeExplicit
+
 	typStr := AddressReferenceExplicitTag(typ)
 	explicit.DotTag = typStr
 
@@ -36,6 +37,7 @@ func CreateAddressReferenceExplicit(explicit AddressReferenceExplicit) AddressRe
 
 func CreateAddressReferenceID(id AddressReferenceID) AddressReference {
 	typ := AddressReferenceTypeID
+
 	typStr := AddressReferenceIDTag(typ)
 	id.DotTag = typStr
 
