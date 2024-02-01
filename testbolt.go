@@ -200,6 +200,15 @@ func WithSecurity(apiKey string) SDKOption {
 	}
 }
 
+// WithSecuritySource configures the SDK to invoke the Security Source function on each method call to determine authentication
+func WithSecuritySource(security func(context.Context) (shared.Security, error)) SDKOption {
+	return func(sdk *TestBolt) {
+		sdk.sdkConfiguration.Security = func(ctx context.Context) (interface{}, error) {
+			return security(ctx)
+		}
+	}
+}
+
 func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
 	return func(sdk *TestBolt) {
 		sdk.sdkConfiguration.RetryConfig = &retryConfig
@@ -212,9 +221,9 @@ func New(opts ...SDKOption) *TestBolt {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "3.0.1",
-			SDKVersion:        "0.11.2",
-			GenVersion:        "2.237.2",
-			UserAgent:         "speakeasy-sdk/go 0.11.2 2.237.2 3.0.1 github.com/speakeasy-sdks/test-bolt",
+			SDKVersion:        "0.11.3",
+			GenVersion:        "2.245.1",
+			UserAgent:         "speakeasy-sdk/go 0.11.3 2.245.1 3.0.1 github.com/speakeasy-sdks/test-bolt",
 			ServerDefaults: []map[string]string{
 				{
 					"username": "BL_DOMAIN",
