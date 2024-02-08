@@ -51,7 +51,7 @@ func CreateEventList(list EventList) Event {
 func (u *Event) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
-		DotTag string
+		DotTag string `json:".tag"`
 	}
 
 	dis := new(discriminator)

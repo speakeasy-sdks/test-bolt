@@ -50,7 +50,7 @@ func CreateAddressReferenceID(id AddressReferenceID) AddressReference {
 func (u *AddressReference) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
-		DotTag string
+		DotTag string `json:".tag"`
 	}
 
 	dis := new(discriminator)
