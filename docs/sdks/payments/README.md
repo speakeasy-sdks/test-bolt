@@ -46,47 +46,9 @@ func main() {
                     Tax: testbolt.Int64(900),
                     Total: 900,
                 },
-                Discounts: []shared.CartDiscount{
-                    shared.CartDiscount{
-                        Amounts: shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                        Code: testbolt.String("SUMMER10DISCOUNT"),
-                        DetailsURL: testbolt.String("https://www.example.com/SUMMER-SALE"),
-                    },
-                },
                 DisplayID: testbolt.String("215614191"),
-                Items: []shared.CartItem{
-                    shared.CartItem{
-                        Description: testbolt.String("Large tote with Bolt logo."),
-                        ImageURL: testbolt.String("https://www.example.com/products/123456/images/1.png"),
-                        Name: "Bolt Swag Bag",
-                        Quantity: 1,
-                        Reference: "item_100",
-                        TotalAmount: 1000,
-                        UnitPrice: 1000,
-                    },
-                },
                 OrderDescription: testbolt.String("Order #1234567890"),
                 OrderReference: "order_100",
-                Shipments: []shared.CartShipment{
-                    shared.CartShipment{
-                        Address: shared.CreateAddressReferenceAddressReferenceID(
-                                shared.AddressReferenceID{
-                                    DotTag: shared.AddressReferenceIDTagID,
-                                    ID: "D4g3h5tBuVYK9",
-                                },
-                        ),
-                        Carrier: testbolt.String("FedEx"),
-                        Cost: &shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                    },
-                },
             },
             PaymentMethod: shared.CreateGuestPaymentMethodInitializeRequestPaymentMethodPaymentMethodPaypal(
                     shared.PaymentMethodPaypal{
@@ -160,58 +122,9 @@ func main() {
                     Tax: testbolt.Int64(900),
                     Total: 900,
                 },
-                Discounts: []shared.CartDiscount{
-                    shared.CartDiscount{
-                        Amounts: shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                        Code: testbolt.String("SUMMER10DISCOUNT"),
-                        DetailsURL: testbolt.String("https://www.example.com/SUMMER-SALE"),
-                    },
-                },
                 DisplayID: testbolt.String("215614191"),
-                Items: []shared.CartItem{
-                    shared.CartItem{
-                        Description: testbolt.String("Large tote with Bolt logo."),
-                        ImageURL: testbolt.String("https://www.example.com/products/123456/images/1.png"),
-                        Name: "Bolt Swag Bag",
-                        Quantity: 1,
-                        Reference: "item_100",
-                        TotalAmount: 1000,
-                        UnitPrice: 1000,
-                    },
-                },
                 OrderDescription: testbolt.String("Order #1234567890"),
                 OrderReference: "order_100",
-                Shipments: []shared.CartShipment{
-                    shared.CartShipment{
-                        Address: shared.CreateAddressReferenceAddressReferenceExplicit(
-                                shared.AddressReferenceExplicit{
-                                    DotTag: shared.AddressReferenceExplicitTagExplicit,
-                                    Company: testbolt.String("ACME Corporation"),
-                                    CountryCode: "US",
-                                    Email: testbolt.String("alice@example.com"),
-                                    FirstName: "Alice",
-                                    ID: "D4g3h5tBuVYK9",
-                                    LastName: "Baker",
-                                    Locality: "San Francisco",
-                                    Phone: testbolt.String("+14155550199"),
-                                    PostalCode: "94105",
-                                    Region: testbolt.String("CA"),
-                                    StreetAddress1: "535 Mission St, Ste 1401",
-                                    StreetAddress2: testbolt.String("c/o Shipping Department"),
-                                },
-                        ),
-                        Carrier: testbolt.String("FedEx"),
-                        Cost: &shared.Amounts{
-                            Currency: "USD",
-                            Tax: testbolt.Int64(900),
-                            Total: 900,
-                        },
-                    },
-                },
             },
             PaymentMethod: shared.CreatePaymentMethodInitializeRequestPaymentMethodPaymentMethodSavedPaymentMethod(
                     shared.PaymentMethodSavedPaymentMethod{

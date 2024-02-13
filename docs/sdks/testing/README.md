@@ -146,7 +146,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Testing.TestingShipmentTrackingCreate(ctx, shared.ShipmentTrackingUpdate{
-        DeliveryDate: types.MustTimeFromString("2014-08-23:T06:00:00Z"),
+        DeliveryDate: types.MustNewTimeFromString("2014-08-23:T06:00:00Z"),
         Status: shared.ShipmentTrackingUpdateStatusInTransit,
         TrackingDetails: []shared.TrackingDetails{
             shared.TrackingDetails{

@@ -4,7 +4,7 @@ management:
   docChecksum: 33c07e585caae3e31a297b1d7ada0ec2
   docVersion: 3.0.1
   speakeasyVersion: internal
-  generationVersion: 2.250.16
+  generationVersion: 2.253.0
   releaseVersion: 0.13.0
   configChecksum: a7e19a5d3faf364cb69fe2b50c8b1652
   repoURL: https://github.com/speakeasy-sdks/test-bolt.git
