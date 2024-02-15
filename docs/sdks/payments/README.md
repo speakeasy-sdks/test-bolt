@@ -38,7 +38,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Payments.GuestPaymentsInitialize(ctx, operations.GuestPaymentsInitializeRequest{
-        XPublishableKey: "string",
+        XPublishableKey: "<value>",
         GuestPaymentMethodInitializeRequest: shared.GuestPaymentMethodInitializeRequest{
             Cart: shared.Cart{
                 Amounts: shared.Amounts{
@@ -114,7 +114,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Payments.PaymentsInitialize(ctx, operations.PaymentsInitializeRequest{
-        XPublishableKey: "string",
+        XPublishableKey: "<value>",
         PaymentMethodInitializeRequest: shared.PaymentMethodInitializeRequest{
             Cart: shared.Cart{
                 Amounts: shared.Amounts{

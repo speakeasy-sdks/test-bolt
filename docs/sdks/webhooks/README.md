@@ -203,7 +203,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Webhooks.WebhooksGetAll(ctx, operations.WebhooksGetAllRequest{
-        XPublishableKey: "string",
+        XPublishableKey: "<value>",
     })
     if err != nil {
         log.Fatal(err)

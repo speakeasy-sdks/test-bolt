@@ -48,7 +48,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountAddPaymentMethod(ctx, operations.AccountAddPaymentMethodRequest{
-        XPublishableKey: "string",
+        XPublishableKey: "<value>",
         PaymentMethod: shared.CreatePaymentMethodPaymentMethodCreditCard(
                 shared.PaymentMethodCreditCard{
                     DotTag: shared.PaymentMethodCreditCardTagCreditCard,
@@ -122,7 +122,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountAddressCreate(ctx, operations.AccountAddressCreateRequest{
-        XPublishableKey: "string",
+        XPublishableKey: "<value>",
         AddressListing: shared.AddressListing{
             Company: testbolt.String("ACME Corporation"),
             CountryCode: "US",
@@ -193,7 +193,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountAddressDelete(ctx, operations.AccountAddressDeleteRequest{
-        XPublishableKey: "string",
+        XPublishableKey: "<value>",
         ID: "D4g3h5tBuVYK9",
     })
     if err != nil {
@@ -253,7 +253,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountAddressEdit(ctx, operations.AccountAddressEditRequest{
-        XPublishableKey: "string",
+        XPublishableKey: "<value>",
         AddressListing: shared.AddressListing{
             Company: testbolt.String("ACME Corporation"),
             CountryCode: "US",
@@ -323,7 +323,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountExists(ctx, operations.AccountExistsRequest{
-        XPublishableKey: "string",
+        XPublishableKey: "<value>",
         Identifier: shared.Identifier{
             IdentifierType: shared.IdentifierTypeEmail,
             IdentifierValue: "alice@example.com",
@@ -382,7 +382,7 @@ func main() {
 
     ctx := context.Background()
     res, err := s.Account.AccountGet(ctx, operations.AccountGetRequest{
-        XPublishableKey: "string",
+        XPublishableKey: "<value>",
     }, operationSecurity)
     if err != nil {
         log.Fatal(err)
