@@ -4,9 +4,9 @@ management:
   docChecksum: 33c07e585caae3e31a297b1d7ada0ec2
   docVersion: 3.0.1
   speakeasyVersion: internal
-  generationVersion: 2.275.4
-  releaseVersion: 0.15.0
-  configChecksum: b0931928d341d95a5e52d355489bbcd9
+  generationVersion: 2.277.0
+  releaseVersion: 0.15.1
+  configChecksum: 829817ba9fafe2a9c0790da45b8b9ec6
   repoURL: https://github.com/speakeasy-sdks/test-bolt.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/test-bolt
@@ -19,7 +19,7 @@ features:
     globalServerURLs: 2.82.1
     inputOutputModels: 2.83.0
     methodSecurity: 2.82.2
-    unions: 2.85.3
+    unions: 2.85.4
 generatedFiles:
   - account.go
   - payments.go
