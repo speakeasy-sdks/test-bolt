@@ -47,7 +47,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
     if res.AccountTestCreationData != nil {
         // handle response
     }
@@ -97,7 +96,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
     if res.CreditCard != nil {
         // handle response
     }
@@ -136,7 +134,6 @@ import(
 	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/types"
 	"log"
-	"net/http"
 )
 
 func main() {
@@ -164,8 +161,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
-    if res.StatusCode == http.StatusOK {
+    if res != nil {
         // handle response
     }
 }

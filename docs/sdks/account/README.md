@@ -71,7 +71,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
     if res.PaymentMethod != nil {
         // handle response
     }
@@ -142,7 +141,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
     if res.AddressListing != nil {
         // handle response
     }
@@ -183,7 +181,6 @@ import(
 	"context"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"log"
-	"net/http"
 )
 
 func main() {
@@ -199,8 +196,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
-    if res.StatusCode == http.StatusOK {
+    if res != nil {
         // handle response
     }
 }
@@ -274,7 +270,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
     if res.AddressListing != nil {
         // handle response
     }
@@ -313,7 +308,6 @@ import(
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/shared"
 	"github.com/speakeasy-sdks/test-bolt/pkg/models/operations"
 	"log"
-	"net/http"
 )
 
 func main() {
@@ -330,8 +324,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
-    if res.StatusCode == http.StatusOK {
+    if res != nil {
         // handle response
     }
 }
@@ -385,7 +378,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
     if res.Account != nil {
         // handle response
     }

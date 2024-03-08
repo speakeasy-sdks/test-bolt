@@ -10,7 +10,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 go:
-  version: 0.15.1
+  version: 0.16.0
   additionalDependencies: {}
   clientServerStatusCodesAsErrors: true
   flattenGlobalSecurity: true
@@ -26,3 +26,4 @@ go:
   maxMethodParams: 0
   outputModelSuffix: output
   packageName: github.com/speakeasy-sdks/test-bolt
+  responseFormat: envelope

@@ -43,7 +43,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
     if res.CallbackUrls != nil {
         // handle response
     }
@@ -116,7 +115,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
     if res.CallbackUrls != nil {
         // handle response
     }
@@ -165,7 +163,6 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-
     if res.Identifiers != nil {
         // handle response
     }
