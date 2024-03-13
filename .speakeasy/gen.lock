@@ -3,10 +3,10 @@ id: dbf70e8a-59a2-4bda-b045-4a85997bbf3b
 management:
   docChecksum: 33c07e585caae3e31a297b1d7ada0ec2
   docVersion: 3.0.1
-  speakeasyVersion: 1.204.1
-  generationVersion: 2.279.1
-  releaseVersion: 0.16.0
-  configChecksum: a63c8f7e8ba0efa77e5d9642989a9a32
+  speakeasyVersion: 1.207.1
+  generationVersion: 2.280.6
+  releaseVersion: 0.16.1
+  configChecksum: 0416be739c17398649bb3a7d21028188
   repoURL: https://github.com/speakeasy-sdks/test-bolt.git
   repoSubDirectory: .
   installationURL: https://github.com/speakeasy-sdks/test-bolt
@@ -16,7 +16,7 @@ features:
     callbacks: 1.0.0
     core: 3.4.4
     globalSecurity: 2.82.8
-    globalServerURLs: 2.82.1
+    globalServerURLs: 2.82.2
     inputOutputModels: 2.83.0
     methodSecurity: 2.82.2
     responseFormat: 0.1.0
