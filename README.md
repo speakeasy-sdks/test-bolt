@@ -71,9 +71,7 @@ func main() {
 ### [Account](docs/sdks/account/README.md)
 
 * [AccountAddPaymentMethod](docs/sdks/account/README.md#accountaddpaymentmethod) - Add a payment method to a shopper's Bolt account Wallet.
-* [AccountAddressCreate](docs/sdks/account/README.md#accountaddresscreate) - Add an address
 * [AccountAddressDelete](docs/sdks/account/README.md#accountaddressdelete) - Delete an existing address
-* [AccountAddressEdit](docs/sdks/account/README.md#accountaddressedit) - Edit an existing address
 * [AccountExists](docs/sdks/account/README.md#accountexists) - Determine the existence of a Bolt account
 * [AccountGet](docs/sdks/account/README.md#accountget) - Retrieve account details
 
@@ -85,7 +83,6 @@ func main() {
 ### [Configuration](docs/sdks/configuration/README.md)
 
 * [MerchantCallbacksGet](docs/sdks/configuration/README.md#merchantcallbacksget) - Retrieve callback URLs for the merchant
-* [MerchantCallbacksUpdate](docs/sdks/configuration/README.md#merchantcallbacksupdate) - Update callback URLs for the merchant
 * [MerchantIdentifiersGet](docs/sdks/configuration/README.md#merchantidentifiersget) - Retrieve identifiers for the merchant
 
 ### [Testing](docs/sdks/testing/README.md)
@@ -121,10 +118,10 @@ func main() {
 
 Handling errors in this SDK should largely match your expectations.  All operations return a response object or an error, they will never return both.  When specified by the OpenAPI spec document, the SDK will return the appropriate subclass.
 
-| Error Object                               | Status Code                                | Content Type                               |
-| ------------------------------------------ | ------------------------------------------ | ------------------------------------------ |
-| sdkerrors.AccountAddressCreateResponseBody | 400                                        | application/json                           |
-| sdkerrors.SDKError                         | 4xx-5xx                                    | */*                                        |
+| Error Object       | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| sdkerrors.Error    | 422                | application/json   |
+| sdkerrors.SDKError | 4xx-5xx            | */*                |
 
 ### Example
 
@@ -142,35 +139,18 @@ import (
 )
 
 func main() {
-	s := testbolt.New()
-
-	operationSecurity := operations.AccountAddressCreateSecurity{
-		APIKey: "<YOUR_API_KEY_HERE>",
-		Oauth:  "Bearer <YOUR_ACCESS_TOKEN_HERE>",
-	}
+	s := testbolt.New(
+		testbolt.WithSecurity("<YOUR_API_KEY_HERE>"),
+	)
 
 	ctx := context.Background()
-	res, err := s.Account.AccountAddressCreate(ctx, operations.AccountAddressCreateRequest{
+	res, err := s.Account.AccountAddressDelete(ctx, operations.AccountAddressDeleteRequest{
 		XPublishableKey: "<value>",
-		AddressListing: shared.AddressListing{
-			Company:        testbolt.String("ACME Corporation"),
-			CountryCode:    "US",
-			Email:          testbolt.String("alice@example.com"),
-			FirstName:      "Alice",
-			ID:             "D4g3h5tBuVYK9",
-			IsDefault:      testbolt.Bool(true),
-			LastName:       "Baker",
-			Locality:       "San Francisco",
-			Phone:          testbolt.String("+14155550199"),
-			PostalCode:     "94105",
-			Region:         testbolt.String("CA"),
-			StreetAddress1: "535 Mission St, Ste 1401",
-			StreetAddress2: testbolt.String("c/o Shipping Department"),
-		},
-	}, operationSecurity)
+		ID:              "D4g3h5tBuVYK9",
+	})
 	if err != nil {
 
-		var e *sdkerrors.AccountAddressCreateResponseBody
+		var e *sdkerrors.Error
 		if errors.As(err, &e) {
 			// handle error
 			log.Fatal(e.Error())
