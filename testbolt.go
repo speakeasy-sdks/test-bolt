@@ -222,9 +222,9 @@ func New(opts ...SDKOption) *TestBolt {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "3.0.1",
-			SDKVersion:        "0.16.2",
-			GenVersion:        "2.283.1",
-			UserAgent:         "speakeasy-sdk/go 0.16.2 2.283.1 3.0.1 github.com/speakeasy-sdks/test-bolt",
+			SDKVersion:        "0.16.3",
+			GenVersion:        "2.291.0",
+			UserAgent:         "speakeasy-sdk/go 0.16.3 2.291.0 3.0.1 github.com/speakeasy-sdks/test-bolt",
 			ServerDefaults: []map[string]string{
 				{
 					"username": "BL_DOMAIN",
